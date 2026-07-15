@@ -31,3 +31,21 @@ tcyb-r2-submission-20260715/         # 本轮（第二轮/小修）交付
 
 见 `tcyb-r2-submission-20260715/rebuttal/Rebuttal.tex` 顶部「待填清单」注释块（F1–F8）：
 Fig.6 样本数据集与三个单图 IoU；失败案例拼图（3行×3列）及其数据集来源、三个单图 IoU。
+
+
+## 交付版本轨道
+
+- 回复信: `tcyb-r2-submission-20260715/releases/vN/Rebuttal_vN.{tex,pdf}` (发版脚本 `release.sh`)
+- 正文: `tcyb-r2-submission-20260715/manuscript_releases/vN/main_vN.{tex,pdf}` (发版脚本 `release_manuscript.sh`)
+- 两轨独立编号, 每次 v(n+1) 不覆盖旧版
+- 正文工作源: `02_manuscript_小修0715/IEEEtran/main.tex`
+
+## 本轮正文改动 (R2)
+
+- 上轮红字全部转黑, 仅本轮新改动标红 (共15处)
+- FAM/T-M/HFM 各加"Design intuition"直觉段(公式前); 删除FAM三处重复解释+三段逐式点评(回应R1-Q2精简)
+- 新增 IV-H "Failure Cases and Limitations" 小节 + Fig.7 失败案例图(占位)
+- Fig.6 图注重写: 标配置名+单图IoU占位; IV-F/IV-G 加选样标准句 (回应R1-Q1)
+- Related Work 补7篇近两年文献 (回应AE)
+- 全文13页 (TCYB硬顶14页内)
+- 待填占位 F1-F7 用黄底红字, PDF无黄块即填完
