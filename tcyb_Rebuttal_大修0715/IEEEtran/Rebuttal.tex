@@ -1,0 +1,969 @@
+\documentclass[lettersize,journal,onecolumn,12pt]{IEEEtran}
+\hyphenation{op-tical net-works semi-conduc-tor}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{listings}
+\usepackage{footnote}
+\usepackage{bm}
+\usepackage{cite}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage{amsfonts}
+\usepackage[numbers,sort]{natbib} 
+\usepackage[dvipsnames]{xcolor}
+\usepackage{setspace}
+\usepackage{xcolor}
+\onehalfspacing
+\usepackage[bottom=2.0cm, top=2.0cm,left=2cm,right=2cm]{geometry}
+
+
+\begin{document}
+
+\definecolor{myblue}{RGB}{0,0,255} 
+
+\title{Response to Review of paper:\\
+Harnessing Frequency-Aware Network for Crack Detection in Road-Perceptive Autonomous Vehicles Scene}
+
+\author{Senyun Kuang, Yintao Wei,
+
+Yang Liu, and Xiaobo Qu,~\IEEEmembership{Senior Member,~IEEE}
+}
+
+\markboth{Submit to IEEE Transactions on Cybernetics}%
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
+
+\maketitle
+
+\textbf{Dear AE and Reviewers:}
+
+We thank you for the detailed and constructive feedback on our manuscript “Harnessing Frequency-Aware Network for Crack Detection in Road-Perceptive Autonomous Vehicles Scene.” 
+We 
+appreciate the opportunity to address the AE' and reviewers’ comments. 
+We have carefully considered each point raised and have revised the manuscript accordingly. 
+In this response, we provide a point-by-point rebuttal to all concerns and outline the changes made in the revised manuscript. 
+We have conducted additional experiments where necessary, clarified terminology and baseline references, corrected the overstatements, and improved the overall presentation as requested.
+
+Below, we address each comment from the AE and reviewers in turn. 
+For clarity, the AE and reviewers’ comments are labelled in bold and blue, followed by our response.
+
+\clearpage
+
+\tableofcontents
+\newpage
+
+\section{Response to AE}
+
+{\color{BlueGreen} \textbf{Comments to the Author:}
+
+\textbf{The paper presents a promising frequency-aware network for crack detection, but the novelty is overstated, key modules like FAM are not well explained, and important metrics and comparisons are missing. Writing, figures, and experiments also need improvement. Major revisions are needed before resubmission.}} 
+
+\textbf{Response:} 
+We sincerely appreciate your time and effort in handling our manuscript. We have carefully studied all the comments from the reviewers and yourself. In the revised version, we have thoroughly addressed each concern through extensive revisions and clarifications. Specifically, we have:
+\begin{itemize}
+
+    \item We revise the description of key modules. The Frequency-Aware Module (FAM) and other core components are now clearly illustrated with detailed explanations and updated figures.
+
+    \item We expand the experimental validation. Additional ablation studies, comparisons with recent frequency-based and RGB-domain methods, and new evaluation metrics are included to strengthen the technical soundness and fairness of the comparison.
+    
+    \item We improve the overall quality. The writing is refined, figure clarity is enhanced, and several sections are reorganized for better readability and coherence.
+
+\end{itemize}
+
+We believe these extensive revisions have substantially improved the quality and clarity of the paper. All changes have been highlighted in red in the revised manuscript. \\[10pt]
+
+
+\clearpage
+
+\section{Response to Reviewer 1}
+
+%%%%%%%%%%%%%%%%%%  r1  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q1 Comments to the Author:}
+
+\textbf{The claim that this work is the first to integrate frequency domain information with RGB-based image segmentation is not entirely accurate. Several prior works, such as "Frequency-aware Interaction Network for Ultrasound Image Segmentation, DOI: 10.1109/TCSVT.2024.3514181" have already explored this approach. The authors should rephrase Contribution 1 to acknowledge prior research and clearly distinguish their method from existing approaches.}} 
+
+\textbf{Response:}
+We thank the reviewer for this valuable comment. 
+In the revised manuscript, we have carefully revised the first contribution to acknowledge prior frequency-domain segmentation studies and to clearly highlight the uniqueness of our approach. 
+Specifically, we have removed the statement claiming to be the first to integrate frequency-domain information and rephrased the contribution to emphasize that FANet achieves a deeper and more unified frequency–spatial modeling than previous methods. 
+The revised version now focuses on the distinctive two-stage design of FANet, which consists of frequency-guided coarse localization and detail-preserving fine segmentation, enabling adaptive interaction between spatial and spectral features for improved accuracy and robustness.
+
+\textcolor{red}{In the revised manuscript, the modified content is shown below:}
+
+\textcolor{red}{
+Recently, several studies have introduced frequency-domain cues into image segmentation, such as FsaNet~\cite{DBLP:journals/tip/ZhangPG23}, LGFFM~\cite{11129883TMI}, FMamba~\cite{DBLP:journals/tim/LiuLLWZS25}, and FINet~\cite{DBLP:journals/tcsv/WangZZGY25}. 
+Although these methods validate the potential of frequency features, they typically treat frequency information as auxiliary input rather than achieving a deeply coupled frequency–spatial representation. 
+For instance, FsaNet focuses only on low-frequency tokens without adaptive fusion with spatial branches, LGFFM employs dual encoders with heavy computation, FMamba emphasizes global consistency while losing fine texture detail, and FINet is restricted to ultrasound imagery. 
+These limitations reveal that existing frequency-based networks lack generalization and efficient integration with spatial representations, especially in complex natural scenes.
+}
+
+%%%%%
+
+\textcolor{red}{Addressing this, our study introduces the Frequency-aware network (FANet), a novel architecture that integrates RGB and frequency domain information. This dual-strategy approach aims to overcome the limitations of relying solely on RGB information by enhancing the network's sensitivity to subtle textural features often obscured in the spatial domain. FANet represents a significant leap forward, offering enhanced accuracy in crack detection through a more holistic analysis of road surface characteristics.}
+
+\textcolor{red}{FANet commences its detection process with a frequency-guided coarse positioning phase, where the primary aim is to leverage frequency domain features for identifying potential crack locations, known as breakthrough points. Distinguished by a transformer backbone, FANet proficiently extracts different level features from the input. A specialized frequency-aware module (FAM) then distinguishes these features into high- and low-frequency components, which correspond to the texture and contour details of the road surface, respectively. This division allows for a comprehensive representation of the frequency domain, enabling the coarse but accurate localization of road cracks. The process is enhanced by a neighbor interaction mechanism that promotes the integration of frequency-aware features across various levels, facilitating an initial yet refined crack detection.}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\linewidth]{IEEEtran/spider0330.pdf}
+\caption{{Performance of our proposed method and other methods, including AFFMM~\cite{DBLP:journals/tits/QuCWYL22} and MSFE~\cite{DBLP:journals/tiv/ZhouQJ23}, in Crack500~\cite{DBLP:journals/tits/YangZYPML20}, GAPs384~\cite{DBLP:conf/ijcnn/EisenbachSSADSE17}, CrackTree200~\cite{DBLP:journals/prl/ZouCLMW12}, CFD~\cite{DBLP:journals/tits/ShiCQMC16} and AEL~\cite{DBLP:journals/tits/AmhazCIB16}.}}
+\label{introdvis}
+\end{figure}
+
+\textcolor{red}{Transitioning into the detail-preserving fine segmentation phase, FANet refines the previously identified crack locations through a process of prior-guided correction and cross-layer feature fusion. This refinement is achieved with the help of the hybrid fusion module (HFM), which manages the interplay of high-level features across different layers to boost the accuracy of the detection framework. The inclusion of shallow, high-resolution features ensures the meticulous delineation of structural information, leading to the production of the final crack detection output. This dual-phase approach, combining coarse positioning with fine localization, allows FANet to not only detect cracks with high precision but also to discern subtle features that traditional methods might overlook, setting a new standard in the field of road surface monitoring. In Fig. \ref{introdvis}, our proposed framework demonstrates superior performance across all five datasets. } \textcolor{red}{The core contributions of this paper are listed as follows:}
+
+\begin{itemize}
+    
+    
+    \item \textcolor{red}{We propose a two-stage Frequency-Aware Network (FANet) that jointly models spatial and frequency information for robust crack detection. 
+    Unlike existing approaches that process frequency cues independently, FANet achieves unified frequency–spatial representation through frequency-guided coarse localization and detail-preserving fine segmentation, 
+    significantly enhancing precision and generalization under complex textures and noise.}
+
+    \item \textcolor{red}{We design a fully integrated frequency-aware module capable of automatically distinguishing between low- and high-frequency features. This module significantly improve the the localization of road cracks.}
+    
+    \item \textcolor{red}{We introduce a hybrid fusion module meticulously integrates high-level features via prior-guided corrections, further refining detection by incorporating shallow features for detailed correction of cracks. The performance in five different datasets demonstrates the effectiveness of FANet.}
+    
+\end{itemize} 
+
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r2  %%%%%%%%%%%%%%%%%%%%%%%%
+ {\color{BlueGreen} \textbf{Q2 Comments to the Author:}
+
+\textbf{The paper does not adequately explain how the Frequency-Aware Module (FAM) facilitates crack localization. A more in-depth discussion of its underlying principles, theoretical justification, and operational mechanisms is needed.}} 
+
+\textbf{Response:}
+We appreciate the reviewer’s valuable suggestion. 
+In the revised manuscript, we have expanded the description of the Frequency-Aware Module (FAM) in \textbf{Section~III-B (Frequency-guided Crack Localization)} to provide a clearer theoretical and operational explanation. 
+The new paragraph elaborates on how FAM performs learnable frequency decomposition and adaptive attention-based fusion to enhance coarse localization. 
+These additions make explicit the mechanism by which FAM highlights structural discontinuities of cracks and suppresses irrelevant texture noise, thereby improving localization accuracy.
+
+\textcolor{red}{In the revised manuscript, the newly added content is shown below:}
+
+\textcolor{red}{
+To further clarify how the proposed Frequency-Aware Module (FAM) facilitates crack localization, we provide a more detailed explanation of its mechanism. 
+Specifically, FAM employs a learnable frequency decomposition to separate each feature map $F_i$ into high- and low-frequency responses through adaptive filtering:
+\begin{equation}
+F_i^{h} = W_h * F_i, \quad F_i^{l} = W_l * F_i,
+\end{equation}
+where $W_h$ and $W_l$ denote convolutional filters emphasizing fine-grained and smooth spectral components, respectively. 
+This adaptive frequency gating enhances coarse localization by highlighting structural discontinuities while suppressing irrelevant texture noise, thus guiding the subsequent fine segmentation to focus on true crack contours.
+}\\ [10pt]
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r3  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q3 Comments to the Author:}
+
+\textbf{The paper reports only the overall execution time of FANet without breaking down the contribution of each module. 
+To better assess computational efficiency, a detailed module-wise time analysis should be provided.}} 
+
+\textbf{Response:} 
+We appreciate the reviewer’s insightful suggestion. 
+In the revised manuscript, we have added module-wise inference speed (FPS) analysis to Table~\ref{abla_r1}, 
+which quantifies the computational efficiency of each component, including the frequency perception module (FAM), 
+the tri-merge decoder (T-M), and the hybrid fusion module (HFM). 
+The results indicate that while each module incrementally enhances detection accuracy, 
+the overall FPS remains stable, demonstrating that FANet achieves an excellent trade-off between accuracy and efficiency. 
+
+\textcolor{red}{The following description has been added to the ablation study section:} 
+
+
+
+%%%%%%%%%%%
+
+
+\begin{table*}[]
+\centering
+\caption{{\textcolor{red}{Ablation studies of the proposed FANet on three datasets (GAPS384, Crack500, and CFD).
+We report AIU, AP, F1, and FPS to analyze the impact of each module and the contribution of frequency components (Low-Freq, High-Freq, and Full) in FAM.
+The results demonstrate that both high- and low-frequency cues improve performance, while the integration of HFM achieves the best balance between accuracy and efficiency.}}}
+\scalebox{0.9}{
+\begin{tabular}{@{}c|ccc|ccc|ccc|c@{}}
+\toprule
+                                  & \multicolumn{3}{c|}{\textbf{GAPS384}}                                                      & \multicolumn{3}{c|}{\textbf{Crack500}}                                                     & \multicolumn{3}{c|}{\textbf{CFD}}                                                          &                                \\ \cmidrule(lr){2-10}
+\multirow{-2}{*}{\textbf{Models}} & AIU                          & AP                           & F1                           & AIU                          & AP                           & F1                           & AIU                          & AP                           & F1                           & \multirow{-2}{*}{\textbf{FPS}} \\ \midrule
+Baseline                          & 0.166                        & 0.164                        & 0.422                        & 0.461                        & 0.475                        & 0.628                        & 0.291                        & 0.300                          & 0.543                        & 13.2                           \\
+Baseline + FAM (Low-Freq)         & 0.192                        & 0.190                         & 0.450                        & 0.538                        & 0.545                        & 0.708                        & 0.319                        & 0.325                        & 0.570                         & 11.3                           \\
+Baseline + FAM (High-Freq)        & 0.195                        & 0.193                        & 0.448                        & 0.541                        & 0.549                        & 0.706                        & 0.322                        & 0.327                        & 0.575                        & 11.2                           \\
+Baseline + FAM (Full)             & 0.200                          & 0.198                        & 0.458                        & 0.550                         & 0.556                        & 0.711                        & 0.324                        & 0.330                         & 0.578                        & 10.8                           \\
+Baseline + FAM + T-M              & 0.231                        & 0.233                        & 0.491                        & 0.528                        & 0.537                        & 0.694                        & 0.358                        & 0.363                        & 0.612                        & 10.4                           \\
+Baseline + FAM + T-M + HFM        & {\color[HTML]{FE0000} 0.266} & {\color[HTML]{FE0000} 0.265} & {\color[HTML]{FE0000} 0.522} & {\color[HTML]{FE0000} 0.563} & {\color[HTML]{FE0000} 0.572} & {\color[HTML]{FE0000} 0.726} & {\color[HTML]{FE0000} 0.391} & {\color[HTML]{FE0000} 0.397} & {\color[HTML]{FE0000} 0.644} & {\color[HTML]{FE0000} 10.2}    \\ \bottomrule
+\end{tabular}}
+\label{abla_r1}
+\end{table*}
+
+%%%%%%%%
+\textcolor{red}{The outcomes of these comparative analyses are detailed in Table~\ref{abla_r1}, demonstrating the incremental improvements in crack detection performance attributable to each module.}
+\textcolor{red}{
+In particular, we further divide the Frequency-aware Module (FAM) into three configurations, namely Low-Frequency, High-Frequency, and Full fusion, to quantify their individual and joint contributions.
+The results reveal that both low- and high-frequency cues independently enhance detection accuracy, while their combination achieves optimal balance between precision and stability.
+To better assess computational efficiency, we also report inference speed (FPS) for each configuration, reflecting the module-wise contribution to overall runtime.
+Notably, adding frequency and fusion modules leads to consistent performance gains with only marginal computational cost, highlighting the lightweight design of FANet.}
+\textcolor{red}{As illustrated in Fig.~\ref{ablavis}, these findings are visually consistent with the observed improvements from high- and low-frequency cues.}\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r4  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q4 Comments to the Author:}
+
+\textbf{Table 1 lacks key evaluation metrics such as IoU, Dice Score, and FPS, which are essential for analyzing segmentation performance. The authors should include these additional metrics to strengthen the validity of their results. Additionally, Section IV-C contains an overly detailed explanation of commonly used evaluation metrics, which may not be necessary.}} 
+
+\textbf{Response:}
+We thank the reviewer for the valuable suggestion. 
+In the revised manuscript, we have clarified the relationships among the evaluation metrics and simplified the corresponding explanations in \textbf{Section IV-C}. 
+Specifically, the \textbf{Average IoU (AIU)} reported in our paper is the mean form of IoU computed across thresholds and is therefore conceptually equivalent to the standard IoU metric. 
+Similarly, the \textbf{F1 score} is mathematically identical to the \textbf{Dice Score} in binary segmentation tasks. 
+To avoid redundancy, we retain AIU and F1 as representative metrics for IoU and Dice Score, respectively.  
+Meanwhile, we have added the \textbf{FPS} indicator to Table \ref{totaltable_r1} to evaluate inference efficiency.  
+Furthermore, the overly detailed definitions of evaluation metrics in the previous version have been removed, leaving only concise explanations to improve readability.
+
+\textcolor{red}{In the revised manuscript, the modified content is shown below:}
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{table}[]
+\centering
+\caption{{Comparison of our proposed method's performance with other methods using F1, AIU, and AP metrics across five datasets. 
+Higher values in F1, AIU, and AP indicate superior performance. 
+\textcolor{red}{Values highlighted in \textcolor{red}{red} indicate the best performance, while values in \textcolor{green!50!black}{green} represent the second-best results for each dataset.}}}
+\scalebox{0.52}{
+\begin{tabular}{@{}cc|cccccccccccccccccc@{}}
+\toprule
+\multicolumn{2}{c|}{}                                           & \multicolumn{18}{c}{Method}                                                                                                                                                                                                                                                                                                                                                                                                             \\ \cmidrule(l){3-20} 
+\multicolumn{2}{c|}{\multirow{-2}{*}{Metric}}                   & \textit{BASNet} & \textit{FPHBN} & \textit{SegNet} & \textit{FCN}                & \textit{D-Crack} & \textit{UHDN} & \textit{D-CrackM} & \textit{UNet} & \textit{FFEDN}               & \textit{CrackF-r} & \textit{MSFE}                & \textit{AMMFF}               & \textit{HFF}                 & \textit{CarNet}              & \textit{FsaNet}              & \textit{LGFFM} & \textit{FMamba} & \textit{Ours}                \\ \midrule
+\multicolumn{2}{c|}{\textit{FPS}}                               & 7.9   & 9.3           & 8.6            & 8.8 & 6.9             & 8.6          & 11.4              & 9.3          & 9.4                         & 10.5              & 11.9                         & 10.5                         & 8.8                        & {\color[HTML]{548235}22.2 }                        & {\color[HTML]{FF0000}25.6 }                        & 16.2           & 11.3            &  10.2  \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.508           & 0.492          & 0.500           & 0.383                       & 0.505            & 0.471         & 0.440             & 0.443         & 0.492                        & 0.498             & 0.495                        & 0.507                        & 0.494                        & 0.503                        & {\color[HTML]{00B050} 0.535} & 0.527          & 0.522           & {\color[HTML]{FF0000} 0.563} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.510           & 0.498          & 0.510           & 0.385                       & 0.510            & 0.473         & 0.444             & 0.449         & 0.501                        & 0.505             & 0.496                        & 0.515                        & 0.501                        & 0.511                        & {\color[HTML]{00B050} 0.545} & 0.538          & 0.532           & {\color[HTML]{FF0000} 0.572} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{Crack500}}  & \textit{F1}  & 0.689           & 0.681          & 0.649           & 0.529                       & 0.678            & 0.684         & 0.659             & 0.678         & 0.624                        & 0.640             & 0.682                        & 0.683                        & 0.620                        & 0.642                        & {\color[HTML]{00B050} 0.695} & 0.684          & 0.676           & {\color[HTML]{FF0000} 0.726} \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.163           & 0.174          & 0.162           & 0.022                       & 0.115            & 0.206         & 0.083             & 0.230         & {\color[HTML]{00B050} 0.390} & 0.279             & 0.356                        & 0.255                        & 0.334                        & 0.347                        & 0.372                        & 0.365          & 0.360           & {\color[HTML]{FF0000} 0.391} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.173           & 0.180          & 0.163           & 0.022                       & 0.122            & 0.213         & 0.091             & 0.233         & {\color[HTML]{00B050} 0.394} & 0.281             & 0.363                        & 0.265                        & 0.339                        & 0.351                        & 0.381                        & 0.375          & 0.369           & {\color[HTML]{FF0000} 0.397} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{CFD}}       & \textit{F1}  & 0.275           & 0.379          & 0.261           & 0.234                       & 0.414            & 0.569         & 0.341             & 0.550         & 0.595                        & 0.610             & 0.599                        & 0.616                        & {\color[HTML]{00B050} 0.630} & 0.611                        & 0.618                        & 0.607          & 0.600           & {\color[HTML]{FF0000} 0.644} \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.076           & 0.044          & 0.067           & 0.008                       & 0.027            & 0.048         & 0.024             & 0.072         & 0.136                        & 0.158             & 0.089                        & 0.099                        & 0.148                        & {\color[HTML]{00B050} 0.160} & 0.236                        & 0.230          & 0.226           & {\color[HTML]{FF0000} 0.252} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.082           & 0.045          & 0.071           & 0.012                       & 0.031            & 0.054         & 0.033             & 0.080         & 0.145                        & 0.168             & 0.094                        & 0.106                        & 0.149                        & {\color[HTML]{00B050} 0.169} & 0.240                        & 0.235          & 0.231           & {\color[HTML]{FF0000} 0.253} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{CrackTree}} & \textit{F1}  & 0.190           & 0.137          & 0.188           & 0.109                       & 0.120            & 0.190         & 0.115             & 0.237         & 0.267                        & 0.224             & 0.263                        & 0.290                        & 0.315                        & 0.253                        & {\color[HTML]{00B050} 0.341} & 0.333          & 0.328           & {\color[HTML]{FF0000} 0.362} \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.155           & 0.079          & 0.131           & 0.026                       & 0.064            & 0.108         & 0.038             & 0.112         & 0.270                        & 0.178             & 0.192                        & {\color[HTML]{00B050} 0.299} & 0.272                        & 0.232                        & 0.297                        & 0.292          & 0.288           & {\color[HTML]{FF0000} 0.312} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.156           & 0.085          & 0.139           & 0.036                       & 0.069            & 0.111         & 0.048             & 0.114         & 0.277                        & 0.185             & 0.200                        & {\color[HTML]{548235} 0.301} & 0.275                        & 0.242                        & 0.302                        & 0.298          & 0.294           & {\color[HTML]{FF0000} 0.317} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{AEL}}       & \textit{F1}  & 0.309           & 0.020          & 0.312           & 0.230                       & 0.250            & 0.359         & 0.242             & 0.404         & 0.430                        & 0.442             & 0.436                        & 0.460                        & 0.472                        & 0.483                        & {\color[HTML]{548235} 0.481} & 0.473          & 0.468           & {\color[HTML]{FF0000} 0.505} \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.053           & 0.081          & 0.060           & 0.021                       & 0.066            & 0.092         & 0.047             & 0.077         & 0.170                        & 0.232             & 0.096                        & 0.159                        & 0.177                        & {\color[HTML]{548235} 0.213} & 0.252                        & 0.247          & 0.244           & {\color[HTML]{FF0000} 0.266} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.057           & 0.087          & 0.064           & 0.026                       & 0.076            & 0.095         & 0.047             & 0.078         & 0.178                        & 0.238             & 0.100                        & 0.164                        & 0.179                        & {\color[HTML]{548235} 0.218} & 0.251                        & 0.247          & 0.243           & {\color[HTML]{FF0000} 0.265} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{GAPS384}}   & \textit{F1}  & 0.136           & 0.187          & 0.137           & 0.112                       & 0.241            & 0.333         & 0.268             & 0.259         & 0.389                        & 0.379             & {\color[HTML]{548235} 0.497} & 0.383                        & 0.435                        & 0.394                        & 0.497                        & 0.489          & 0.483           & {\color[HTML]{FF0000} 0.522} \\ \bottomrule
+\end{tabular}}
+\label{totaltable_r1}
+\end{table}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\textcolor{red}{
+In our evaluation, we report four representative metrics to comprehensively assess the performance of our network: 
+the F1 score, Average Intersection over Union (AIU), Average Precision (AP), and Frames Per Second (FPS).
+}
+
+\textcolor{red}{
+\textbf{F1 (Dice Score).} 
+The F1 score, also known as the Dice Score in binary segmentation tasks, is the harmonic mean of precision ($P$) and recall ($R$):}
+
+\textcolor{red}{
+\begin{equation}
+F1 = 2 \cdot \frac{P \cdot R}{P + R}.
+\end{equation}
+}
+
+\textcolor{red}{
+It jointly evaluates the accuracy of the predicted cracks (precision) and the completeness of detection (recall), 
+thereby providing a balanced measure of detection performance.
+}
+
+\textcolor{red}{
+\textbf{AIU (IoU).}
+The Average Intersection over Union (AIU) measures the mean overlap ratio between predicted and ground-truth crack regions, averaged over all thresholds.
+Since AIU is the averaged form of IoU, it is mathematically equivalent to the conventional IoU metric 
+but provides a more stable representation under varying detection thresholds.
+}
+
+\textcolor{red}{
+\textbf{AP.}
+Average Precision (AP) summarizes the precision-recall relationship into a single scalar value, 
+reflecting the model’s overall discriminative ability to separate cracks from the background.
+}
+
+\textcolor{red}{
+\textbf{FPS.}
+Frames Per Second (FPS) quantifies inference efficiency by measuring the number of test images processed per second on an NVIDIA 3090 Ti GPU. 
+Higher FPS values indicate faster model inference and better real-time potential.
+}
+
+\textcolor{red}{
+Since AIU and F1 correspond to IoU and Dice Score respectively, 
+we avoid redundant metrics and instead include FPS to complement segmentation accuracy with computational efficiency analysis.
+}\\ [10pt]
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%  r1  %%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=\linewidth]{IEEEtran/framework1019.pdf}
+\caption{\textcolor{red}{Overall architecture of the proposed Frequency-Aware Network (FANet). 
+The solid arrows denote feature flow between modules, while dashed lines represent skip connections used for cross-layer feature fusion. 
+Each block (FAM, HFM, and Transformer-based backbone) corresponds to a specific processing stage described in Sections III-A--III-C.}}
+\label{Framework}
+\vspace{-0.01cm}
+\end{figure*} 
+
+{\color{BlueGreen} \textbf{Q5 Comments to the Author:}
+
+\textbf{The term "tranformer" in Figure 3 appears to be a typographical error and should be corrected to "transformer." Additionally, the meaning of the lines and connections in the figure is unclear. A more detailed explanation is needed to help readers understand how the different components interact within the framework.}} 
+
+\textbf{Response:}
+We thank the reviewer for this helpful remark. 
+In Figure \ref{Framework}, we have corrected the typographical error “tranformer” to “transformer.” 
+To improve clarity, the caption has been revised to explicitly explain the meaning of arrows and lines in the diagram. 
+Specifically, solid arrows now denote feature flow between modules, and dashed lines represent skip connections used for cross-layer feature fusion. 
+This clarification helps readers better understand how the FAM, HFM, and transformer backbone interact within the overall architecture. \\[10pt]
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r2  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q6 Comments to the Author:}
+
+\textbf{The significance of the green and red fonts in Table 1 is not explicitly stated. This should be clarified in the caption or text to ensure proper interpretation.}} 
+
+\textbf{Response:}
+We thank the reviewer for the helpful suggestion. 
+To make the meaning of the colored fonts in Table \ref{totaltable_r1} clear, we have revised the table caption to explicitly state their significance. 
+The updated caption now indicates that values highlighted in \textcolor{red}{red} represent the best performance, while values in \textcolor{green!50!black}{green} denote the second-best results for each dataset. 
+This clarification ensures the correct interpretation of the table and facilitates easier comparison across methods. 
+
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r3  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q7 Comments to the Author:}
+
+\textbf{The spacing and indentation around mathematical equations are inconsistent, particularly after equations (5) and (6).}} 
+
+\textbf{Response:}
+We thank the reviewer for pointing out the issue regarding the spacing and indentation around the mathematical equations. 
+We have carefully reviewed the entire manuscript and corrected the inconsistent spacing after Equations (5) and (6). 
+In addition, we added concise transitional sentences before and after the equations to improve paragraph flow and readability. 
+
+\textcolor{red}{For example, the revised text around Equations (5) and (6) is now formatted as follows:}
+
+
+\begin{equation}
+\textcolor{red}{f^r_{i+1} = \text{Upsample}(F_{i+1} \otimes S_g).}
+\end{equation}
+
+\textcolor{red}{Given the richness of channel-specific cues in high-level features, the key to augmenting cross-layer feature dialogue and the module engages in channel-level association. This mechanism evaluates pixel-wise similarity across channels, employing a $3 \times 3$ convolution to construct a bottleneck, thus optimizing output channel dimensions:}
+
+\begin{equation}
+\textcolor{red}{A = Conv(F_{i} \odot (f^r_{i+1})).}
+\end{equation}
+
+\textcolor{red}{Subsequent steps involve deriving two weight maps, $\alpha$ and $\beta$, from the feature matrix $A$ via dual $3 \times 3$ convolutions. These weights dynamically modulate $F_{i}$ features, facilitating an advanced synthesis of cross-layer information:}
+
+\begin{equation}
+\textcolor{red}{f^{out}_{i} = f^r_{i+1} + Conv(F_{i}) \times \alpha + \beta.}
+\end{equation}
+
+
+\textcolor{red}{To complement these advanced techniques with detailed spatial insights, 
+we use two $3 \times 3$ convolutions to generate the final output $S_{\text{output}}$.}
+
+We have also checked all other mathematical expressions throughout the paper and ensured consistent indentation and spacing for every equation. \\ [10pt]
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+\clearpage
+
+\section{Response to Reviewer 2}
+
+
+%%%%%%%%%%%%%%%%%%  r1  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q1 Comments to the Author:}
+
+\textbf{The description of frequency components is a bit lacking. The paper simply mentioned a prior work that "separates images into low- and high-frequency components". It might be better to provide a good summary of said prior work, like how the two components are defined and obtained.}} 
+
+\textbf{Response:}
+We thank the reviewer for this constructive suggestion. 
+In the revised manuscript, we have expanded the explanation in \textbf{Section~III-B (Frequency-guided Crack Localization)} to better summarize the prior work~\cite{DBLP:conf/iccv/Chen0XYKRYF19} and clarify how the high- and low-frequency components are defined and obtained. 
+Specifically, we now describe that Octave Convolution explicitly factorizes feature representations along the channel dimension into $\{F_i^h, F_i^l\}$, 
+where the high-frequency branch $F_i^h$ captures rapidly varying textures and edges, 
+and the low-frequency branch $F_i^l$ preserves smoothly varying structural information at a lower spatial resolution (typically half). 
+This factorization provides an efficient spatial-domain approximation of frequency decomposition, 
+allowing the network to jointly model fine-grained and contextual information. 
+
+\textcolor{red}{In the revised manuscript, the newly added paragraph is shown below:}
+
+\textcolor{red}{Leveraging the concept that predators' hunting mechanisms often rely on frequency information to detect subtle anomalies in natural environments, we posit that similar advantages can be applied to road crack detection. This hypothesis is grounded in observations that frequency domain methods, traditionally used in camouflaged object detection, can significantly enhance the detection of subtle road anomalies. Conventional techniques typically employ the DCT to transition from RGB to the frequency domain, a process that, despite its effectiveness, is hindered by the lack of flexibility due to offline processing requirements. However, recent advancements like the work~\cite{DBLP:conf/iccv/Chen0XYKRYF19} have introduced the use of octave convolutions, which enable the partitioning of image data into high and low-frequency components directly, thereby streamlining the detection workflow. }
+
+
+\textcolor{red}{
+In Octave Convolution~\cite{DBLP:conf/iccv/Chen0XYKRYF19}, 
+feature maps are explicitly factorized into high- and low-frequency components along the channel dimension, 
+represented as $\{F_i^h, F_i^l\}$. 
+The high-frequency branch $F_i^h$ captures rapidly varying fine-grained textures and edges, 
+while the low-frequency branch $F_i^l$ models smoothly varying contextual structures by operating at a lower spatial resolution (typically half). 
+This separation enables the network to process detailed and structural information in a complementary way, 
+providing an efficient approximation of frequency decomposition within the spatial domain.
+}
+
+
+
+\textcolor{red}{These low-frequency components often represent smooth regions, such as uniform road surfaces, whereas high-frequency elements are indicative of potential cracks or damage due to their significant intensity variations. Inspired by the work~\cite{DBLP:conf/iccv/Chen0XYKRYF19}, we explicitly factorize $F_i$ and get the high- and low-frequency components $\{F_i^h,F_i^l\}$.}\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%  r2  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q2 Comments to the Author:}
+
+\textbf{Fig. 6: label (d) is missing.}} 
+
+\textbf{Response:}
+In the revised manuscript, we have added the missing label (d) in Fig. \ref{ablavis}. \\ [10pt]
+
+\begin{figure}
+\centering
+\includegraphics[width=0.75\linewidth]{IEEEtran/abl1019.pdf}
+\caption{{\textcolor{red}{Comparison of different settings output from FAM. 
+(a) Input. (b) Ground-truth. (c) means the prediction using the frequency fusing mechanism. 
+(d) means the prediction only using high-frequency information. 
+(e) means the prediction only using low-frequency information.}}}
+\label{ablavis}
+\vspace{-0.5cm}
+\end{figure} 
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r3  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q3 Comments to the Author:}
+
+\textbf{Formula 4: is $f_{mc}$ the same as $f'_{t-m}$?}} 
+
+\textbf{Response:}
+We sincerely apologize for the confusion caused by the inconsistent notation. 
+Both $f_{mc}$ and $f'_{t-m}$ denote the same intermediate feature output generated by the tri-merge decoder. 
+This was a typographical oversight in the previous version. 
+To ensure clarity and consistency, we have revised the manuscript and unified the notation to $f'_{t-m}$ throughout the paper. 
+
+\textcolor{red}{The clarification and correction have been added after Equation (4), and the corrected text is shown below:}
+
+\textcolor{red}{
+\begin{equation}
+\begin{split}
+    f'_3 &= Conv^ {\uparrow }(f_4)   \odot f_3, \\
+    f'_2 &= Conv^ {\uparrow }(f_3)   \odot f_2, \\
+    f'_{t-m} &= \text{Cat}(f_2,f'_2)  \odot \text{Cat}(f_2,f'_3).
+\end{split}
+\end{equation}
+}
+\textcolor{red}{Herein,  $Conv^ {\uparrow }$ represents upsampling followed by a $3 \times 3$ convolution, 
+and $\text{cat}(A, B)$ denotes the concatenation of features $A$ and $B$. }
+\textcolor{red}{The culmination of this phase is $f'_{t-m}$, leading to the formation of a coarse crack detection map $S_1$, 
+signifying the initial phase of road crack identification.}\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\clearpage
+
+
+
+
+\section{Response to Reviewer 3}
+
+
+%%%%%%%%%%%%%%%%%%  r1  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q1 Comments to the Author:}
+
+\textbf{Page 2, In the related work section, although various traditional and deep learning-based crack detection methods are listed, when making comparisons, there is no in-depth analysis of the shortcomings of the existing methods and how FANet can specifically solve these problems.}}
+
+\textbf{Response:}
+We appreciate the reviewer’s insightful comment. 
+In the revised manuscript, we have expanded the \textbf{Related Work} section to include a more detailed analysis of the limitations of existing crack detection methods and how our proposed FANet addresses these issues. 
+Specifically, we have added a new paragraph that discusses recent frequency-based segmentation models, such as FsaNet~\cite{DBLP:journals/tip/ZhangPG23}, LGFFM~\cite{11129883TMI}, FMamba~\cite{DBLP:journals/tim/LiuLLWZS25}, and FINet~\cite{DBLP:journals/tcsv/WangZZGY25}, outlining their main drawbacks, including limited frequency–spatial interaction, high computational cost, and weak generalization to natural scenes. Following this analysis, we explicitly explain how FANet overcomes these challenges through its unified two-stage frequency–spatial synergy, which enables adaptive integration of global structural and local texture information for enhanced robustness and precision.
+
+\textcolor{red} {In the revised manuscript, the newly added content is shown below:}
+
+
+\textcolor{red}{
+In addition to conventional RGB-based frameworks, several recent studies have explored incorporating frequency-domain cues into image segmentation. 
+For instance, FsaNet~\cite{DBLP:journals/tip/ZhangPG23} applies a discrete cosine transform (DCT) to enhance low-frequency representations, 
+yet it lacks adaptive interaction between frequency and spatial branches, limiting its generalization to texture-rich or noisy environments. 
+LGFFM~\cite{11129883TMI} introduces a dual-encoder structure combining CNN and Transformer backbones along with a Frequency Domain Mapping Module, 
+which improves global perception but incurs high computational complexity and training instability. 
+FMamba~\cite{DBLP:journals/tim/LiuLLWZS25} embeds frequency enhancement into a lightweight Vision Mamba backbone, 
+providing efficient feature extraction but prioritizing sequential consistency rather than fine-grained local texture cues. 
+FINet~\cite{DBLP:journals/tcsv/WangZZGY25} proposes a frequency-aware self-attention mechanism for ultrasound image segmentation, 
+but it is task-specific and not easily generalizable to natural road scenes.
+}
+\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%  r2  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q2 Comments to the Author:}
+
+\textbf{“This capability has catalyzed a surge in initiatives aimed at leveraging deep learning for enhancing crack detection methodologies”. Long sentences affect readability. Simplify the sentence structure and avoid overusing the passive voice.}} 
+
+\textbf{Response:}
+We appreciate the reviewer’s suggestion regarding sentence clarity. 
+In the revised manuscript, we have simplified this sentence to improve readability and converted it into active voice. 
+
+\textcolor{red}{The revised version is now written as:}
+\textcolor{red}{
+“This capability has driven rapid progress in applying deep learning to crack detection tasks~\cite{DBLP:journals/cacie/RodriguezLozanoGPO23, DBLP:journals/cacie/ZhouZG23}.”}\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%  r3  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q3 Comments to the Author:}
+
+\textbf{Although the article proposed the new architecture of Frequency-Aware Network (FANet), when introducing the innovation points, it did not fully emphasize the unique advantages of this architecture compared with the existing methods.}} 
+
+\textbf{Response:}
+We thank the reviewer for this helpful comment. 
+In the revised manuscript, we have revised the \textbf{Introduction} and \textbf{Contributions} sections to more clearly highlight the unique advantages of the proposed FANet architecture compared with existing methods. 
+Specifically, we emphasize that FANet introduces a \textbf{two-stage frequency–spatial synergy}, which unifies frequency-guided coarse localization and detail-preserving fine segmentation into a single end-to-end framework. 
+This design enables adaptive interaction between spectral and spatial features, allowing FANet to capture both global structural information and fine-grained textures. 
+Compared with existing RGB-based or frequency-auxiliary approaches, FANet achieves superior robustness and generalization across complex, noisy, and texture-rich road scenes. 
+
+In the revised manuscript, the enhanced description has been added to both the Introduction and the Contributions sections, as highlighted in red. 
+
+\textcolor{red}{The modified content is shown below:}
+
+
+%%%%%%%%%%%%%%%%%%%%%%  R1 - Q1 %%%%%%%%%%%%%%%%%%%%%%
+
+
+\textcolor{red}{
+Recently, several studies have introduced frequency-domain cues into image segmentation, such as FsaNet~\cite{DBLP:journals/tip/ZhangPG23}, LGFFM~\cite{11129883TMI}, FMamba~\cite{DBLP:journals/tim/LiuLLWZS25}, and FINet~\cite{DBLP:journals/tcsv/WangZZGY25}. 
+Although these methods validate the potential of frequency features, they typically treat frequency information as auxiliary input rather than achieving a deeply coupled frequency–spatial representation. 
+For instance, FsaNet focuses only on low-frequency tokens without adaptive fusion with spatial branches, LGFFM employs dual encoders with heavy computation, FMamba emphasizes global consistency while losing fine texture detail, and FINet is restricted to ultrasound imagery. 
+These limitations reveal that existing frequency-based networks lack generalization and efficient integration with spatial representations, especially in complex natural scenes.
+}
+
+%%%%%
+
+\textcolor{red}{Addressing this, our study introduces the Frequency-aware network (FANet), a novel architecture that integrates RGB and frequency domain information. This dual-strategy approach aims to overcome the limitations of relying solely on RGB information by enhancing the network's sensitivity to subtle textural features often obscured in the spatial domain. FANet represents a significant leap forward, offering enhanced accuracy in crack detection through a more holistic analysis of road surface characteristics.}
+
+\textcolor{red}{FANet commences its detection process with a frequency-guided coarse positioning phase, where the primary aim is to leverage frequency domain features for identifying potential crack locations, known as breakthrough points. Distinguished by a transformer backbone, FANet proficiently extracts different level features from the input. A specialized frequency-aware module (FAM) then distinguishes these features into high- and low-frequency components, which correspond to the texture and contour details of the road surface, respectively. This division allows for a comprehensive representation of the frequency domain, enabling the coarse but accurate localization of road cracks. The process is enhanced by a neighbor interaction mechanism that promotes the integration of frequency-aware features across various levels, facilitating an initial yet refined crack detection.}
+
+\textcolor{red}{Transitioning into the detail-preserving fine segmentation phase, FANet refines the previously identified crack locations through a process of prior-guided correction and cross-layer feature fusion. This refinement is achieved with the help of the hybrid fusion module (HFM), which manages the interplay of high-level features across different layers to boost the accuracy of the detection framework. The inclusion of shallow, high-resolution features ensures the meticulous delineation of structural information, leading to the production of the final crack detection output. This dual-phase approach, combining coarse positioning with fine localization, allows FANet to not only detect cracks with high precision but also to discern subtle features that traditional methods might overlook, setting a new standard in the field of road surface monitoring. In Fig. \ref{introdvis}, our proposed framework demonstrates superior performance across all five datasets. }
+
+\textcolor{red}{The core contributions of this paper are listed as follows:}
+
+\begin{itemize}
+    
+    
+    \item \textcolor{red}{We propose a two-stage Frequency-Aware Network (FANet) that jointly models spatial and frequency information for robust crack detection. 
+    Unlike existing approaches that process frequency cues independently, FANet achieves unified frequency–spatial representation through frequency-guided coarse localization and detail-preserving fine segmentation, 
+    significantly enhancing precision and generalization under complex textures and noise.}
+
+    \item \textcolor{red}{We design a fully integrated frequency-aware module capable of automatically distinguishing between low- and high-frequency features. This module significantly improve the the localization of road cracks.}
+    
+    \item \textcolor{red}{We introduce a hybrid fusion module meticulously integrates high-level features via prior-guided corrections, further refining detection by incorporating shallow features for detailed correction of detected cracks. The performance in five different datasets demonstrates the effectiveness of our FANet.}\\ [10pt]
+    
+\end{itemize}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r4  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q4 Comments to the Author:}
+
+\textbf{Page 4, “After obtaining the high- and low-frequency information, FAM we designed can fully utilize these two parts of information…”
+It is mentioned in the text that FAM can distinguish high and low frequency features and apply them to crack detection, but it does not explain in detail how FAM achieves this function.}} 
+
+\textbf{Response:}
+We sincerely thank the reviewer for this insightful comment. 
+The description of the Frequency-Aware Module (FAM) has been revised to clearly explain how it distinguishes and utilizes high- and low-frequency information for crack detection. 
+In the revised Section III-B, we now describe that FAM employs a dual-branch convolutional structure: the high-frequency branch enhances texture-level crack cues, while the low-frequency branch emphasizes global contour consistency. 
+These two branches are adaptively fused through learnable weights, enabling end-to-end frequency-aware feature interaction that highlights salient crack details and suppresses background noise. 
+
+\textcolor{red}{The revised text has been added on the main text, as shown below:}
+
+\textcolor{red}{After obtaining the high- and low-frequency information, the designed FAM dynamically integrates them through a dual-branch convolutional structure, where the high-frequency branch enhances texture-level crack cues and the low-frequency branch emphasizes global contour consistency. 
+These two representations are then adaptively fused via learnable weights, allowing the network to emphasize salient crack details while suppressing irrelevant background noise. 
+This mechanism enables FAM to achieve end-to-end frequency-aware feature interaction, forming a dual-band feature representation optimized for road crack detection.}\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r5  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q5 Comments to the Author:}
+
+\textbf{Page 4, In formulas (1) - (3), the description of the separation and fusion processes of high-frequency and low-frequency features is not intuitive enough}} 
+
+\textbf{Response:}
+We thank the reviewer for this helpful comment. 
+To make the description of formulas (1)–(3) more intuitive, we have substantially revised the corresponding part in Section III-B to explicitly clarify the separation and fusion processes of high- and low-frequency features. 
+In the revised text, we now explain that the high-frequency branch focuses on capturing fine-grained crack textures and sharp edges, while the low-frequency branch preserves large-scale structural context. 
+We further added detailed interpretations after each formula to illustrate the specific feature-interaction mechanisms: 
+(1) injects low-frequency contextual cues into the high-frequency branch to enhance boundary reliability;  
+(2) performs the reverse interaction to stabilize global contours by suppressing spurious high-frequency noise;  
+and (3) forms a frequency-balanced representation by resizing both branches and applying learnable gates for adaptive weighting. 
+These additions make the feature-fusion procedure easier to follow and more conceptually clear. 
+
+\textcolor{red}{The revised text has been added on the main text, as shown below:}
+
+\textcolor{red}{After obtaining the high- and low-frequency information, the designed FAM dynamically integrates them through a dual-branch convolutional structure, where the high-frequency branch enhances texture-level crack cues and the low-frequency branch emphasizes global contour consistency. 
+These two representations are then adaptively fused via learnable weights, allowing the network to emphasize salient crack details while suppressing irrelevant background noise. 
+This mechanism enables FAM to achieve end-to-end frequency-aware feature interaction, forming a dual-band feature representation optimized for road crack detection.}
+% —— 放在你红色段落的最后一句之后（紧接着你的红色段落）——
+\textcolor{red}{Intuitively, the high-frequency branch captures sharp discontinuities and fine textures that indicate crack edges, whereas the low-frequency branch maintains large-scale structural consistency. Their adaptive fusion lets the model highlight salient crack details while suppressing background clutter.
+ Our proposed FAM achieves dynamic, end-to-end frequency information processing, facilitating the direct learning of crack characteristics in real-time. This approach not only avoids the limitations associated with DCT but also benefits from the computational prowess of GPUs, allowing for efficient integration into diverse network structures. As shown in Fig. \ref{Framework}, the FAM process $f^*_{i} = \{f^{h}_{i},f^{l}_{i}\}$ is mathematically represented as follows:}\\ [5pt]
+
+\textcolor{red}{
+\begin{equation}
+f^{h}_{i} = Conv(F^{h}_{i}) + \text{Upsample}(Conv(F^{l}_{i}), 2),
+\end{equation}
+}
+
+
+% —— 紧跟在公式(1)之后 —— 
+\textcolor{red}{Equation (1) injects low-frequency contextual cues (after a $3\times3$ convolution and upsampling) into the high-frequency branch. This cross-branch message passing enriches boundary features with neighborhood context, making fine crack edges more reliable rather than over-fragmented.}
+
+\textcolor{red}{
+\begin{equation}
+f^{l}_{i} = Conv(F^{l}_{i}) + Conv(\text{Pool}(F^{h}_{i}, 2)),
+\end{equation}
+}
+
+% —— 紧跟在公式(2)之后 —— 
+\textcolor{red}{Equation (2) performs the reverse interaction: pooled high-frequency responses are fed into the low-frequency branch. This stabilizes global shapes by attenuating spurious high-frequency noise while preserving meaningful discontinuities aligned with crack structures.}
+
+\textcolor{red}{where $\text{Pool}(X, k)$ represents average pooling with a $k \times k$ kernel, and $\text{Upsample}(X, s)$ signifies upsampling by a scale factor of $s$ through nearest neighbor interpolation. }
+
+\textcolor{red}{Considering the significance of both high-frequency texture attributes for detailing surface irregularities and low-frequency contour attributes for outlining the broader features of the road surface, we integrate these components to form a comprehensive representation of frequency domain information tailored for road crack detection:}
+
+\textcolor{red}{
+\begin{equation}
+f_i = \{ \text{Resize}(f^{h}_{i}) \odot W^{h}_{i} \} \oplus  \{ \text{Resize}(f^{l}_{i})  \odot W^{l}_{i}  
+ \},
+\end{equation}
+}
+
+% —— 紧跟在公式(3)之后 ——
+\textcolor{red}{Finally, Equation (3) forms a frequency-balanced representation by resizing both branches to a common spatial dimension and applying learnable gates $W^{h}_{i}$ and $W^{l}_{i}$ for adaptive weighting. 
+This process allows the network to dynamically control the contribution of each frequency component, producing features that jointly encode global contour integrity (from low-frequency cues) and precise edge localization (from high-frequency cues). 
+Such a balanced representation strengthens both structural completeness and boundary sharpness for downstream crack detection.}
+
+\textcolor{red}{where $\text{Resize}$ denotes the operation to adjust features to a uniform dimension, $W^{h}_{i}$ and $W^{l}_{i}$ are learnable parameters, and $\oplus$ represents the element-wise addition. 
+\textcolor{red}{Here, $\odot$ denotes the element-wise multiplication.}}\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%  r6  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q6 Comments to the Author:}
+
+\textbf{Page 4, “The HFM leverages the coarse crack detection map Sg for prior-guided refinement of subsequent layer features…”
+It is not clear how prior-guided refinement is implemented.}} 
+
+\textbf{Response:}
+We thank the reviewer for pointing out this issue. 
+To clarify how the prior-guided refinement is implemented in the Hierarchical Fusion Module (HFM), we have expanded the corresponding description in Section III-C. 
+In the revised version, we explicitly explain that the coarse crack detection map $S_g$ serves as a spatial prior to modulate the activation strength of subsequent feature maps. 
+Concretely, $S_g$ is multiplied with the feature maps $F_{i+1}$ to generate a prior-weighted response, which emphasizes crack-relevant regions and suppresses irrelevant background information. 
+This addition clarifies the operational mechanism of prior-guided refinement and illustrates how the hierarchical structure enables iterative enhancement of crack localization. 
+
+\textcolor{red}{The revised text has been added on the main text as follows:}
+
+\textcolor{red}{The HFM leverages the coarse crack detection map $S_g$ as a spatial prior to refine subsequent layer features by modulating their activation intensity in crack-relevant regions. 
+Specifically, $S_g$ is multiplied with the feature maps $F_{i+1}$ to generate a prior-weighted response that emphasizes potential crack areas while suppressing irrelevant background noise. 
+This guided interaction enables the network to iteratively refine feature representations, achieving more accurate and stable crack localization across layers.}\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r7  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q7 Comments to the Author:}
+
+\textbf{Page 5, Table 1. The experimental comparison is not compared with the most advanced frequency-domain method in recent years.}} 
+
+\textbf{Response:}
+We appreciate the reviewer’s valuable suggestion. In the revised manuscript, we have updated Table \ref{totaltable} and the corresponding section to include several recent and representative frequency-domain segmentation models for a fair and up-to-date comparison. Specifically, we incorporated FsaNet \cite{DBLP:journals/tip/ZhangPG23}, LGFFM \cite{11129883TMI}, FMamba \cite{DBLP:journals/tim/LiuLLWZS25}, and FINet \cite{DBLP:journals/tcsv/WangZZGY25}, all of which represent the most recent advances in frequency-based image understanding.
+
+Moreover, we added a detailed discussion analyzing their respective mechanisms and limitations. Although these three methods incorporate frequency cues, they generally treat frequency features as auxiliary information rather than establishing an integrated frequency–spatial representation. In contrast, our proposed \textbf{FANet} introduces a two-stage frequency–spatial synergy, consisting of frequency-guided coarse localization and detail-preserving fine segmentation. This design dynamically modulates high- and low-frequency representations under spatial constraints, achieving superior precision, robustness, and computational efficiency.
+
+\textcolor{red}{In the revised manuscript, the newly added paragraph and table are shown below:}
+
+\begin{table}[]
+\centering
+\caption{{Comparison of our proposed method's performance with other methods using F1, AIU, and AP metrics across five datasets. 
+Higher values in F1, AIU, and AP indicate superior performance. 
+\textcolor{red}{Values highlighted in \textcolor{red}{red} indicate the best performance, while values in \textcolor{green!50!black}{green} represent the second-best results for each dataset.}}}
+\scalebox{0.52}{
+\begin{tabular}{@{}cc|cccccccccccccccccc@{}}
+\toprule
+\multicolumn{2}{c|}{}                                           & \multicolumn{18}{c}{Method}                                                                                                                                                                                                                                                                                                                                                                                                             \\ \cmidrule(l){3-20} 
+\multicolumn{2}{c|}{\multirow{-2}{*}{Metric}}                   & \textit{BASNet} & \textit{FPHBN} & \textit{SegNet} & \textit{FCN}                & \textit{D-Crack} & \textit{UHDN} & \textit{D-CrackM} & \textit{UNet} & \textit{FFEDN}               & \textit{CrackF-r} & \textit{MSFE}                & \textit{AMMFF}               & \textit{HFF}                 & \textit{CarNet}              & \textit{FsaNet}              & \textit{LGFFM} & \textit{FMamba} & \textit{Ours}                \\ \midrule
+\multicolumn{2}{c|}{\textit{FPS}}                               & 7.9   & 9.3           & 8.6            & 8.8 & 6.9             & 8.6          & 11.4              & 9.3          & 9.4                         & 10.5              & 11.9                         & 10.5                         & 8.8                        & {\color[HTML]{548235}22.2 }                        & {\color[HTML]{FF0000}25.6 }                        & 16.2           & 11.3            &  10.2  \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.508           & 0.492          & 0.500           & 0.383                       & 0.505            & 0.471         & 0.440             & 0.443         & 0.492                        & 0.498             & 0.495                        & 0.507                        & 0.494                        & 0.503                        & {\color[HTML]{00B050} 0.535} & 0.527          & 0.522           & {\color[HTML]{FF0000} 0.563} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.510           & 0.498          & 0.510           & 0.385                       & 0.510            & 0.473         & 0.444             & 0.449         & 0.501                        & 0.505             & 0.496                        & 0.515                        & 0.501                        & 0.511                        & {\color[HTML]{00B050} 0.545} & 0.538          & 0.532           & {\color[HTML]{FF0000} 0.572} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{Crack500}}  & \textit{F1}  & 0.689           & 0.681          & 0.649           & 0.529                       & 0.678            & 0.684         & 0.659             & 0.678         & 0.624                        & 0.640             & 0.682                        & 0.683                        & 0.620                        & 0.642                        & {\color[HTML]{00B050} 0.695} & 0.684          & 0.676           & {\color[HTML]{FF0000} 0.726} \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.163           & 0.174          & 0.162           & 0.022                       & 0.115            & 0.206         & 0.083             & 0.230         & {\color[HTML]{00B050} 0.390} & 0.279             & 0.356                        & 0.255                        & 0.334                        & 0.347                        & 0.372                        & 0.365          & 0.360           & {\color[HTML]{FF0000} 0.391} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.173           & 0.180          & 0.163           & 0.022                       & 0.122            & 0.213         & 0.091             & 0.233         & {\color[HTML]{00B050} 0.394} & 0.281             & 0.363                        & 0.265                        & 0.339                        & 0.351                        & 0.381                        & 0.375          & 0.369           & {\color[HTML]{FF0000} 0.397} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{CFD}}       & \textit{F1}  & 0.275           & 0.379          & 0.261           & 0.234                       & 0.414            & 0.569         & 0.341             & 0.550         & 0.595                        & 0.610             & 0.599                        & 0.616                        & {\color[HTML]{00B050} 0.630} & 0.611                        & 0.618                        & 0.607          & 0.600           & {\color[HTML]{FF0000} 0.644} \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.076           & 0.044          & 0.067           & 0.008                       & 0.027            & 0.048         & 0.024             & 0.072         & 0.136                        & 0.158             & 0.089                        & 0.099                        & 0.148                        & {\color[HTML]{00B050} 0.160} & 0.236                        & 0.230          & 0.226           & {\color[HTML]{FF0000} 0.252} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.082           & 0.045          & 0.071           & 0.012                       & 0.031            & 0.054         & 0.033             & 0.080         & 0.145                        & 0.168             & 0.094                        & 0.106                        & 0.149                        & {\color[HTML]{00B050} 0.169} & 0.240                        & 0.235          & 0.231           & {\color[HTML]{FF0000} 0.253} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{CrackTree}} & \textit{F1}  & 0.190           & 0.137          & 0.188           & 0.109                       & 0.120            & 0.190         & 0.115             & 0.237         & 0.267                        & 0.224             & 0.263                        & 0.290                        & 0.315                        & 0.253                        & {\color[HTML]{00B050} 0.341} & 0.333          & 0.328           & {\color[HTML]{FF0000} 0.362} \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.155           & 0.079          & 0.131           & 0.026                       & 0.064            & 0.108         & 0.038             & 0.112         & 0.270                        & 0.178             & 0.192                        & {\color[HTML]{00B050} 0.299} & 0.272                        & 0.232                        & 0.297                        & 0.292          & 0.288           & {\color[HTML]{FF0000} 0.312} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.156           & 0.085          & 0.139           & 0.036                       & 0.069            & 0.111         & 0.048             & 0.114         & 0.277                        & 0.185             & 0.200                        & {\color[HTML]{548235} 0.301} & 0.275                        & 0.242                        & 0.302                        & 0.298          & 0.294           & {\color[HTML]{FF0000} 0.317} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{AEL}}       & \textit{F1}  & 0.309           & 0.020          & 0.312           & 0.230                       & 0.250            & 0.359         & 0.242             & 0.404         & 0.430                        & 0.442             & 0.436                        & 0.460                        & 0.472                        & 0.483                        & {\color[HTML]{548235} 0.481} & 0.473          & 0.468           & {\color[HTML]{FF0000} 0.505} \\ \midrule
+\multicolumn{1}{c|}{}                            & \textit{AIU} & 0.053           & 0.081          & 0.060           & 0.021                       & 0.066            & 0.092         & 0.047             & 0.077         & 0.170                        & 0.232             & 0.096                        & 0.159                        & 0.177                        & {\color[HTML]{548235} 0.213} & 0.252                        & 0.247          & 0.244           & {\color[HTML]{FF0000} 0.266} \\
+\multicolumn{1}{c|}{}                            & \textit{AP}  & 0.057           & 0.087          & 0.064           & 0.026                       & 0.076            & 0.095         & 0.047             & 0.078         & 0.178                        & 0.238             & 0.100                        & 0.164                        & 0.179                        & {\color[HTML]{548235} 0.218} & 0.251                        & 0.247          & 0.243           & {\color[HTML]{FF0000} 0.265} \\
+\multicolumn{1}{c|}{\multirow{-3}{*}{GAPS384}}   & \textit{F1}  & 0.136           & 0.187          & 0.137           & 0.112                       & 0.241            & 0.333         & 0.268             & 0.259         & 0.389                        & 0.379             & {\color[HTML]{548235} 0.497} & 0.383                        & 0.435                        & 0.394                        & 0.497                        & 0.489          & 0.483           & {\color[HTML]{FF0000} 0.522} \\ \bottomrule
+\end{tabular}}
+\label{totaltable}
+\end{table}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\textcolor{red}{In our evaluation, FANet's performance is rigorously benchmarked against a wide spectrum of state-of-the-art deep learning models in the domain of road crack detection. To ensure equitable comparison parameters, all considered methods are trained on the same dataset under a uniform learning rate setting. Moreover, if authors provide their results, we directly use these crack maps. }\textcolor{red}{The comparative analysis encompasses a diverse array of methodologies. The comparison methods include BASNet~\cite{DBLP:conf/cvpr/QinZHGDJ19}, 
+SegNet~\cite{DBLP:journals/corr/BadrinarayananK15}, 
+RCF~\cite{DBLP:conf/cvpr/LiuCHWB17}, 
+FPHBN~\cite{DBLP:journals/tits/YangZYPML20}, 
+FCN~\cite{DBLP:conf/cvpr/LongSD15}, 
+D-Crack~\cite{DBLP:journals/tip/ZouZLQWW19}, 
+UHDN~\cite{DBLP:journals/corr/abs-2007-00477}, 
+D-CrackM~\cite{DBLP:journals/ijon/LiuYLXL19}, 
+FFEDN~\cite{DBLP:journals/tits/LiuZXZL22}, 
+CrackF-r~\cite{DBLP:journals/tits/LiuYMMK23}, 
+MSFE~\cite{DBLP:journals/tiv/ZhouQJ23}, 
+AMMFF~\cite{DBLP:journals/tits/QuCWYL22}, 
+CarNet~\cite{DBLP:journals/tits/LiYMWWTQ24}, 
+HFF~\cite{DBLP:journals/tits/QuWWJ22}, 
+FsaNet~\cite{DBLP:journals/tip/ZhangPG23}, 
+LGFFM~\cite{11129883TMI}, 
+and FMamba~\cite{DBLP:journals/tim/LiuLLWZS25} as our primary competitors.}\textcolor{red}{The latter group, comprising FFEDN, AMMFF, HFF, MSFE, CrackFormer and CarNet, represents the forefront of advancements published from 2022 to 2024. These methodologies underscore the rapid evolution within the field, each bringing novel perspectives and solutions to the challenges inherent in crack detection using deep learning frameworks.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\par
+\textcolor{red}{
+In addition, we also include three recent frequency-domain segmentation networks for a fair comparison, 
+namely FsaNet~\cite{DBLP:journals/tip/ZhangPG23}, 
+LGFFM~\cite{11129883TMI}, 
+and FMamba~\cite{DBLP:journals/tim/LiuLLWZS25}. 
+These models extend segmentation architectures into the frequency domain and provide valuable insights into how spectral representations can enhance visual understanding.
+}\textcolor{red}{
+Although FsaNet, LGFFM, and FMamba all incorporate frequency cues, they mainly treat frequency information as an auxiliary enhancement rather than a deeply integrated representation. 
+Specifically, FsaNet applies a discrete cosine transform (DCT) to low-frequency tokens but lacks adaptive interaction between frequency and spatial branches, leading to limited generalization under texture-rich or noisy outdoor scenes. 
+LGFFM introduces a dual-encoder architecture combining CNN and Transformer features in the frequency domain, which enhances global perception yet suffers from high computational complexity and training instability. 
+FMamba further integrates frequency enhancement into a lightweight Vision Mamba backbone; however, its state-space modeling emphasizes sequential consistency, which is less effective for fine-grained cracks with high-frequency fluctuations.
+}
+
+
+\textcolor{red}{
+By contrast, our proposed FANet establishes a \emph{two-stage frequency–spatial synergy}, consisting of a frequency-guided coarse localization followed by a detail-preserving fine segmentation. 
+This design enables dynamic modulation between high- and low-frequency representations under spatial constraints, yielding superior precision, robustness, and computational efficiency across diverse datasets.
+}\\ [10pt]
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%  r8  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q8 Comments to the Author:}
+
+\textbf{Page 8, Table 3, In Figure 6, the visualization result graphs of high frequency and low frequency were proposed, but the independent contributions of the high frequency/low frequency components in FAM were not indicated in the ablation experiment.}} 
+
+\textbf{Response:} 
+We appreciate the reviewer’s insightful observation. 
+In the revised manuscript, we have added additional ablation results in Table~\ref{abla} to explicitly report the independent contributions of high- and low-frequency components in the Frequency-aware Module (FAM). 
+The configurations “Baseline + FAM (Low-Freq)” and “Baseline + FAM (High-Freq)” quantify the individual effects of each frequency component, while “Baseline + FAM (Full)” shows their combined performance. 
+As shown in Table~\ref{abla}, both low- and high-frequency cues improve the segmentation accuracy individually, and their joint fusion achieves optimal results. 
+
+\textcolor{red}{In the revised manuscript, the corresponding modifications have been made as shown below:}
+
+
+%%%%%%%%%%%%%%% 原文 %%%%%%%%%%%
+
+
+
+%%%%%%%%%%%
+
+
+%%%%%%%%
+\textcolor{red}{The outcomes of these comparative analyses are detailed in Table~\ref{abla}, demonstrating the incremental improvements in crack detection performance attributable to each module.}
+\textcolor{red}{
+In particular, we further divide the Frequency-aware Module (FAM) into three configurations, namely Low-Frequency, High-Frequency, and Full fusion, to quantify their individual and joint contributions.
+The results reveal that both low- and high-frequency cues independently enhance detection accuracy, while their combination achieves optimal balance between precision and stability.
+To better assess computational efficiency, we also report inference speed (FPS) for each configuration, reflecting the module-wise contribution to overall runtime.
+Notably, adding frequency and fusion modules leads to consistent performance gains with only marginal computational cost, highlighting the lightweight design of FANet.}
+\textcolor{red}{As illustrated in Fig.~\ref{ablavis}, these findings are visually consistent with the observed improvements from high- and low-frequency cues.}\\ [10pt]
+
+
+\begin{table}[]
+\centering
+\caption{{\textcolor{red}{Ablation studies of the proposed FANet on three datasets (GAPS384, Crack500, and CFD).
+We report AIU, AP, F1, and FPS to analyze the impact of each module and the contribution of frequency components (Low-Freq, High-Freq, and Full) in FAM.
+The results demonstrate that both high- and low-frequency cues improve performance, while the integration of HFM achieves the best balance between accuracy and efficiency.}}}
+\scalebox{0.9}{
+\begin{tabular}{@{}c|ccc|ccc|ccc|c@{}}
+\toprule
+                                  & \multicolumn{3}{c|}{\textbf{GAPS384}}                                                      & \multicolumn{3}{c|}{\textbf{Crack500}}                                                     & \multicolumn{3}{c|}{\textbf{CFD}}                                                          &                                \\ \cmidrule(lr){2-10}
+\multirow{-2}{*}{\textbf{Models}} & AIU                          & AP                           & F1                           & AIU                          & AP                           & F1                           & AIU                          & AP                           & F1                           & \multirow{-2}{*}{\textbf{FPS}} \\ \midrule
+Baseline                          & 0.166                        & 0.164                        & 0.422                        & 0.461                        & 0.475                        & 0.628                        & 0.291                        & 0.300                          & 0.543                        & 13.2                           \\
+Baseline + FAM (Low-Freq)         & 0.192                        & 0.190                         & 0.450                        & 0.538                        & 0.545                        & 0.708                        & 0.319                        & 0.325                        & 0.570                         & 11.3                           \\
+Baseline + FAM (High-Freq)        & 0.195                        & 0.193                        & 0.448                        & 0.541                        & 0.549                        & 0.706                        & 0.322                        & 0.327                        & 0.575                        & 11.2                           \\
+Baseline + FAM (Full)             & 0.200                          & 0.198                        & 0.458                        & 0.550                         & 0.556                        & 0.711                        & 0.324                        & 0.330                         & 0.578                        & 10.8                           \\
+Baseline + FAM + T-M              & 0.231                        & 0.233                        & 0.491                        & 0.528                        & 0.537                        & 0.694                        & 0.358                        & 0.363                        & 0.612                        & 10.4                           \\
+Baseline + FAM + T-M + HFM        & {\color[HTML]{FE0000} 0.266} & {\color[HTML]{FE0000} 0.265} & {\color[HTML]{FE0000} 0.522} & {\color[HTML]{FE0000} 0.563} & {\color[HTML]{FE0000} 0.572} & {\color[HTML]{FE0000} 0.726} & {\color[HTML]{FE0000} 0.391} & {\color[HTML]{FE0000} 0.397} & {\color[HTML]{FE0000} 0.644} & {\color[HTML]{FE0000} 10.2}    \\ \bottomrule
+\end{tabular}}
+\label{abla}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%原文结束 %%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%  r9  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q9 Comments to the Author:}
+
+\textbf{Page 8, Table 3, Although ablation experiments were performed, no detailed comparative analysis of the results under different settings was performed.}} 
+
+\textbf{Response:} 
+We thank the reviewer for this constructive suggestion. 
+In the revised version, we have expanded the ablation study section to provide a more detailed comparative analysis of the results under different settings.
+Specifically, Table~\ref{abla} now includes module-wise performance (AIU, AP, F1) and computational efficiency (FPS) across three datasets.
+The added discussions clarify how each module, including FAM, T-M, and HFM, contributes to both accuracy and inference speed.
+The analysis demonstrates that our FANet achieves a favorable balance between performance and efficiency, further validating the effectiveness of its modular design. 
+
+\textcolor{red}{In the revised manuscript, the corresponding modifications have been made as shown below:}
+
+
+
+%%%%%%%%%%%%%%% 原文 %%%%%%%%%%%
+
+
+
+%%%%%%%%%%%
+
+
+%%%%%%%%
+\textcolor{red}{The outcomes of these comparative analyses are detailed in Table~\ref{abla}, demonstrating the incremental improvements in crack detection performance attributable to each module.}
+\textcolor{red}{
+In particular, we further divide the Frequency-aware Module (FAM) into three configurations, namely Low-Frequency, High-Frequency, and Full fusion, to quantify their individual and joint contributions.
+The results reveal that both low- and high-frequency cues independently enhance detection accuracy, while their combination achieves optimal balance between precision and stability.
+To better assess computational efficiency, we also report inference speed (FPS) for each configuration, reflecting the module-wise contribution to overall runtime.
+Notably, adding frequency and fusion modules leads to consistent performance gains with only marginal computational cost, highlighting the lightweight design of FANet.}
+\textcolor{red}{As illustrated in Fig.~\ref{ablavis}, these findings are visually consistent with the observed improvements from high- and low-frequency cues.}\\ [10pt]
+%%%%%%%%%%%%%%%%%%  end  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+\clearpage
+
+{\small
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEfull}
+}
+
+
+\end{document}
