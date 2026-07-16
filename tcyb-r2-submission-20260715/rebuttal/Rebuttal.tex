@@ -48,7 +48,7 @@
 
 \definecolor{myblue}{RGB}{0,0,255}
 
-\title{Response to Review of paper (Second-Round / Minor Revision):\\
+\title{Response to Review of paper:\\
 Harnessing Frequency-Aware Network for Crack Detection in Road-Perceptive Autonomous Vehicles Scene}
 
 \author{Senyun Kuang, Yintao Wei,
@@ -151,11 +151,11 @@ On the frequency-modeling side, FreqFusion~\cite{TPAMI24_FreqFusion} rectifies f
 with adaptive low-/high-pass filters, and FSEL~\cite{ECCV24_FSEL} entangles frequency and spatial representations
 for camouflaged object detection. Closely related inspection and segmentation problems have also been actively
 studied in IEEE Transactions on Cybernetics, including zero-shot industrial anomaly detection with hybrid
-vision--language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle
+vision-language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle
 structures~\cite{TCYB24_CTNet}. These advances confirm the growing interest in spectral cues and efficient
 architectures; however, they either address generic dense prediction or treat frequency information as an auxiliary
-enhancement, leaving a deeply coupled frequency--spatial representation dedicated to road crack detection --- the
-focus of FANet --- largely unexplored.
+enhancement, leaving a deeply coupled frequency-spatial representation dedicated to road crack detection, the very
+focus of FANet, largely unexplored.
 }
 
 The above paragraph has been added to the end of \textbf{Section~II (Related Work)}, and the seven newly cited
@@ -254,8 +254,8 @@ selection criteria of the method-comparison figure (Fig.~5):}
 
 \textcolor{red}{
 The examples in Fig.~5 are typical cases selected from the test sets of the five datasets to cover the dominant
-challenge conditions --- thin hairline cracks, coarse pavement texture, shadows and uneven illumination, and
-crack-like distractors --- rather than randomly sampled or best-performing images; all methods are compared on
+challenge conditions (thin hairline cracks, coarse pavement texture, shadows and uneven illumination, and
+crack-like distractors) rather than randomly sampled or best-performing images; all methods are compared on
 identical inputs.
 }\\[10pt]
 
@@ -273,7 +273,7 @@ help interdisciplinary readers better understand the design motivations.}}
 \textbf{Response:}
 We thank the reviewer for this insightful suggestion, which has significantly improved the readability of the method
 section. In the revised manuscript, Sections~III-B and III-C have been restructured following exactly the principle
-suggested by the reviewer --- a clear separation between intuition and formalism:
+suggested by the reviewer, namely a clear separation between intuition and formalism:
 
 \begin{enumerate}
     \item \textbf{Intuition first.} Each of the three modules (FAM, T-M, and HFM) now begins with a concise
@@ -312,11 +312,11 @@ coarse localization map $S_1$.
 
 \textcolor{red}{
 \textbf{(Section~III-C, before the formulation of HFM)}
-\textbf{Design intuition of HFM.} The HFM addresses two questions during refinement: \emph{where to refine} --- the
-coarse map $S_g$ acts as a spatial prior that amplifies crack-relevant regions of the deeper feature; and \emph{what
-to keep} --- a channel-level association between adjacent layers determines which high-resolution details are
-consistent with this prior and should be preserved. Both operations are lightweight, so the refinement improves
-accuracy at a marginal computational cost. The following formulation details the two steps.
+\textbf{Design intuition of HFM.} The HFM addresses two questions during refinement. The first is \emph{where to
+refine}: the coarse map $S_g$ acts as a spatial prior that amplifies crack-relevant regions of the deeper feature.
+The second is \emph{what to keep}: a channel-level association between adjacent layers determines which
+high-resolution details are consistent with this prior and should be preserved. Both operations are lightweight, so
+the refinement improves accuracy at a marginal computational cost. The following formulation details the two steps.
 }
 
 In addition, the redundant explanatory passages of the previous round have been merged and condensed (the removed
@@ -336,8 +336,8 @@ provide a more balanced understanding of the model's behavior and practical boun
 \textbf{Response:}
 We thank the reviewer for this constructive suggestion, which makes the experimental analysis more balanced.
 In the revised manuscript, we have added a new subsection, \textbf{``Failure Cases and Limitations''
-(Section~IV-H)}, placed after the ablation studies. It presents representative failure examples --- taken directly
-from FANet's own predictions on the hardest crack categories --- grouped into two dominant failure modes, analyzes
+(Section~IV-H)}, placed after the ablation studies. It presents representative failure examples, taken directly
+from FANet's own predictions on the hardest crack categories, grouped into two dominant failure modes, analyzes
 the underlying reasons within the frequency-aware design, and summarizes the practical boundary conditions and future
 directions of FANet.
 
@@ -346,41 +346,44 @@ directions of FANet.
 \textcolor{red}{
 \textbf{IV-H. Failure Cases and Limitations.}
 Although FANet achieves state-of-the-art performance on all five datasets, it still struggles under two identifiable
-conditions. Fig.~7 shows representative failure cases drawn from FANet's own predictions on the most challenging crack
-categories; in each column the top is the input image and the bottom is the predicted crack map.
+conditions. Fig.~7 shows representative failure cases taken from FANet's own predictions on the most challenging crack
+categories. In each column, the top row is the input image, the middle row is the ground truth, and the bottom row is
+our prediction, so that the gap between the ground truth and our result can be read directly.
 }
 
 \textcolor{red}{
-\textbf{(1) Low-contrast and camouflaged cracks $\rightarrow$ fragmentation.} When a crack blends into the pavement
+\textbf{(1) Fragmentation of low-contrast and camouflaged cracks.} When a crack blends into the pavement
 and its intensity contrast is low, the high-frequency response of FAM becomes weak and intermittent, while the
-low-frequency contour prior is too smooth to bridge the gaps. Consequently, a single continuous crack is broken into
-disconnected blobs or short segments, as in Fig.~7(a) and~(b).
+low-frequency contour prior is too smooth to bridge the gaps. As shown in Fig.~7(a), the crack that forms a connected
+structure in the ground truth is broken into disconnected segments in our prediction.
 }
 
 \textcolor{red}{
-\textbf{(2) Fine hairline cracks $\rightarrow$ under-segmentation.} When cracks are only a few pixels wide, the
-frequency evidence they produce is faint relative to the surrounding pavement texture. Thin branches are then weakly
-activated or missed and the predicted mask becomes broken and low in confidence, as in Fig.~7(c).
+\textbf{(2) Under-segmentation of fine hairline cracks.} When cracks are only a few pixels wide, the
+frequency evidence they produce is faint relative to the surrounding pavement texture. As shown in Fig.~7(b) and~(c),
+the thin cracks that are complete in the ground truth are only weakly activated in our prediction, and some fine
+branches are missed.
 }
 
 \textcolor{red}{
-These two modes delineate the practical boundary condition of the proposed design: FANet implicitly assumes that
+These two modes delineate the practical boundary condition of the proposed design. FANet implicitly assumes that
 cracks constitute the dominant sparse high-frequency anomaly of the scene, an assumption that is violated when the
 contrast is very low or the crack is extremely thin. In addition, two limitations are worth noting. First, the
 two-step coarse-to-fine pipeline introduces extra inference cost compared with single-pass lightweight detectors, as
 reflected by the FPS comparison in Table~I. Second, FANet is trained with the binary cross-entropy loss only and
 imposes no explicit topological continuity constraint, which partially explains the fragmented predictions above. We
 plan to explore topology-aware objectives, contrast-adaptive frequency gating, and complementary sensing modalities
-(e.g., depth or infrared imaging) to push these boundaries in future work.
+such as depth or infrared imaging to push these boundaries in future work.
 }
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.72\linewidth]{Fig/failure_cases.pdf}
-\caption{\textcolor{red}{Representative failure cases of FANet, taken from its own predictions on the hardest crack
-categories. In each column the top is the input image and the bottom is the predicted crack map. (a) A camouflaged
-crack is fragmented into two disconnected blobs; (b) a low-contrast crack is broken into short segments; (c) fine
-hairline cracks are weakly activated and partly missed.}}
+\includegraphics[width=0.78\linewidth]{Fig/failure_cases.pdf}
+\caption{\textcolor{red}{Representative failure cases of FANet on the most challenging crack categories. In each
+column, the top row is the input image, the middle row is the ground truth, and the bottom row is our prediction.
+(a) A camouflaged, low-contrast crack whose connected ground-truth structure is fragmented into disconnected segments
+by our prediction. (b), (c) Fine hairline cracks whose complete ground truth is only weakly and partially recovered
+by our prediction.}}
 \label{failure_rebuttal}
 \end{figure}
 

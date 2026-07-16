@@ -99,7 +99,7 @@ Despite these advancements, deep learning methods predominantly focus on the RGB
 
 
 Recently, several studies have introduced frequency-domain cues into image segmentation, such as FsaNet~\cite{DBLP:journals/tip/ZhangPG23}, LGFFM~\cite{11129883TMI}, FMamba~\cite{DBLP:journals/tim/LiuLLWZS25}, and FINet~\cite{DBLP:journals/tcsv/WangZZGY25}. 
-Although these methods validate the potential of frequency features, they typically treat frequency information as auxiliary input rather than achieving a deeply coupled frequency–spatial representation. 
+Although these methods validate the potential of frequency features, they typically treat frequency information as auxiliary input rather than achieving a deeply coupled frequency-spatial representation. 
 For instance, FsaNet focuses only on low-frequency tokens without adaptive fusion with spatial branches, LGFFM employs dual encoders with heavy computation, FMamba emphasizes global consistency while losing fine texture detail, and FINet is restricted to ultrasound imagery. 
 These limitations reveal that existing frequency-based networks lack generalization and efficient integration with spatial representations, especially in complex natural scenes.
 
@@ -117,7 +117,7 @@ The core contributions of this paper are listed as follows:
     
     
     \item We propose a two-stage Frequency-Aware Network (FANet) that jointly models spatial and frequency information for robust crack detection. 
-    Unlike existing approaches that process frequency cues independently, FANet achieves unified frequency–spatial representation through frequency-guided coarse localization and detail-preserving fine segmentation, 
+    Unlike existing approaches that process frequency cues independently, FANet achieves unified frequency-spatial representation through frequency-guided coarse localization and detail-preserving fine segmentation, 
     significantly enhancing precision and generalization under complex textures and noise.
 
     \item We design a fully integrated frequency-aware module capable of automatically distinguishing between low- and high-frequency features. This module significantly improve the the localization of road cracks.
@@ -140,7 +140,7 @@ For traditional crack detection, Techniques such as intensity thresholding, morp
 \includegraphics[width=\linewidth]{IEEEtran/framework1019.pdf}
 \caption{Overall architecture of the proposed Frequency-Aware Network (FANet). 
 The solid arrows denote feature flow between modules, while dashed lines represent skip connections used for cross-layer feature fusion. 
-Each block (FAM, HFM, and Transformer-based backbone) corresponds to a specific processing stage described in Sections~\ref{overview}–\ref{sec:Detail-preserving-Fine-Localization}.}
+Each block (FAM, HFM, and Transformer-based backbone) corresponds to a specific processing stage described in Sections~\ref{overview} to~\ref{sec:Detail-preserving-Fine-Localization}.}
 \label{Framework}
 \vspace{-0.5cm}
 \end{figure*}
@@ -175,11 +175,11 @@ but it is task-specific and not easily generalizable to natural road scenes.
 
 These methods collectively demonstrate the potential of frequency features in segmentation, 
 yet they generally treat frequency cues as auxiliary enhancements rather than deeply integrating them with spatial representations. 
-\textbf{In contrast, our proposed FANet establishes a unified two-stage frequency–spatial synergy, 
+\textbf{In contrast, our proposed FANet establishes a unified two-stage frequency-spatial synergy, 
 where the frequency-guided coarse localization phase captures global structure and the detail-preserving fine segmentation phase refines local details.} 
 This design enables dynamic modulation between spectral and spatial features, achieving superior robustness, precision, and adaptability under complex road textures and illumination variations.
 
-\textcolor{red}{More recent studies from the past two years further advance both crack detection and frequency-aware representation learning. On the crack-detection side, UP-CrackNet~\cite{TITS24_UPCrackNet} formulates road crack detection as unsupervised adversarial image restoration to remove the dependence on pixel-wise annotations; SCSegamba~\cite{CVPR25_SCSegamba} designs a lightweight structure-aware vision Mamba that captures crack morphology and texture with minimal computational cost; and an ultra-lightweight Mamba network with frequency-domain feature extraction has been developed for pavement tiny-crack segmentation~\cite{ESWA25_MambaFreqCrack}. On the frequency-modeling side, FreqFusion~\cite{TPAMI24_FreqFusion} rectifies feature fusion for dense prediction with adaptive low-/high-pass filters, and FSEL~\cite{ECCV24_FSEL} entangles frequency and spatial representations for camouflaged object detection. Closely related inspection and segmentation problems have also been actively studied in IEEE Transactions on Cybernetics, including zero-shot industrial anomaly detection with hybrid vision--language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle structures~\cite{TCYB24_CTNet}. These advances confirm the growing interest in spectral cues and efficient architectures; however, they either address generic dense prediction or treat frequency information as an auxiliary enhancement, leaving a deeply coupled frequency--spatial representation dedicated to road crack detection --- the focus of FANet --- largely unexplored.}
+\textcolor{red}{More recent studies from the past two years further advance both crack detection and frequency-aware representation learning. On the crack-detection side, UP-CrackNet~\cite{TITS24_UPCrackNet} formulates road crack detection as unsupervised adversarial image restoration to remove the dependence on pixel-wise annotations; SCSegamba~\cite{CVPR25_SCSegamba} designs a lightweight structure-aware vision Mamba that captures crack morphology and texture with minimal computational cost; and an ultra-lightweight Mamba network with frequency-domain feature extraction has been developed for pavement tiny-crack segmentation~\cite{ESWA25_MambaFreqCrack}. On the frequency-modeling side, FreqFusion~\cite{TPAMI24_FreqFusion} rectifies feature fusion for dense prediction with adaptive low-/high-pass filters, and FSEL~\cite{ECCV24_FSEL} entangles frequency and spatial representations for camouflaged object detection. Closely related inspection and segmentation problems have also been actively studied in IEEE Transactions on Cybernetics, including zero-shot industrial anomaly detection with hybrid vision-language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle structures~\cite{TCYB24_CTNet}. These advances confirm the growing interest in spectral cues and efficient architectures; however, they either address generic dense prediction or treat frequency information as an auxiliary enhancement, leaving a deeply coupled frequency-spatial representation dedicated to road crack detection, the very focus of FANet, largely unexplored.}
 
 
 
@@ -264,7 +264,7 @@ Upon the coarse localization via frequency-domain insights, we underscore the im
 
 Central to this strategy is the HFM, shown in Fig. \ref{HFM}, a construct designed to seamlessly integrate features across layers, enriched by the insights from a coarse crack detection map $S_g = \{S_1, S_2\}$. To boost computational efficiency while retaining detection fidelity, input feature channels are initially condensed to 64, symbolized as $F_i$ and $F_{i+1}$.
 
-\textcolor{red}{\textbf{Design intuition of HFM.} The HFM addresses two questions during refinement: \emph{where to refine} --- the coarse map $S_g$ acts as a spatial prior that amplifies crack-relevant regions of the deeper feature; and \emph{what to keep} --- a channel-level association between adjacent layers determines which high-resolution details are consistent with this prior and should be preserved. Both operations are lightweight, so the refinement improves accuracy at a marginal computational cost. The following formulation details the two steps.}
+\textcolor{red}{\textbf{Design intuition of HFM.} The HFM addresses two questions during refinement. The first is \emph{where to refine}: the coarse map $S_g$ acts as a spatial prior that amplifies crack-relevant regions of the deeper feature. The second is \emph{what to keep}: a channel-level association between adjacent layers determines which high-resolution details are consistent with this prior and should be preserved. Both operations are lightweight, so the refinement improves accuracy at a marginal computational cost. The following formulation details the two steps.}
 
 %3-6
 The HFM leverages the coarse crack detection map $S_g$ as a spatial prior to refine subsequent layer features by modulating their activation intensity in crack-relevant regions. 
@@ -500,7 +500,7 @@ FMamba further integrates frequency enhancement into a lightweight Vision Mamba 
 
 
 
-By contrast, our proposed FANet establishes a \emph{two-stage frequency–spatial synergy}, consisting of a frequency-guided coarse localization followed by a detail-preserving fine segmentation. 
+By contrast, our proposed FANet establishes a \emph{two-stage frequency-spatial synergy}, consisting of a frequency-guided coarse localization followed by a detail-preserving fine segmentation. 
 This design enables dynamic modulation between high- and low-frequency representations under spatial constraints, yielding superior precision, robustness, and computational efficiency across diverse datasets.
 
 
@@ -527,8 +527,8 @@ Such consistent leading scores across diverse datasets signal our method's advan
 We conduct a comprehensive comparison of the inference efficiency of our FANet and other crack detection methods in Table~\ref{totaltable}.  
 All results are measured on an Intel(R) Xeon(R) Gold 5218R CPU and an NVIDIA RTX 3090 GPU.  
 The Frames-Per-Second (FPS) values are calculated as the reciprocal of the average inference time per image.  
-As shown in Table~\ref{totaltable}, our FANet achieves a balanced trade-off between accuracy and efficiency — attaining competitive FPS while delivering significantly higher segmentation accuracy than other baselines.  
-This demonstrates that the proposed frequency–spatial synergy design enhances detection robustness without introducing notable computational overhead.
+As shown in Table~\ref{totaltable}, our FANet achieves a balanced trade-off between accuracy and efficiency, attaining competitive FPS while delivering significantly higher segmentation accuracy than other baselines.  
+This demonstrates that the proposed frequency-spatial synergy design enhances detection robustness without introducing notable computational overhead.
 
 
 
@@ -558,7 +558,7 @@ Baseline + FAM + T-M + HFM        & {\color[HTML]{FE0000} 0.266} & {\color[HTML]
 
 \subsection{Qualitative Results} \label{sec:Qualitative-Results}
 Fig. \ref{QualitativeResults} showcases the proficiency of our FANet in detecting various types of road cracks, juxtaposed against the outcomes from competing methods. The visual comparisons strikingly illustrate the superior segmentation accuracy of FANet, highlighting its capability to delineate a wide array of crack categories with remarkable precision. This adeptness in accurately identifying and segmenting different forms of cracks underscores the method's robustness and its nuanced understanding of the crack detection task. Such precision is indispensable in fields where accurate crack detection plays a pivotal role, including structural health monitoring, quality assurance in manufacturing processes, and geological assessments. Through these visualized outcomes, the efficacy and applicational potential of FANet in critical real-world scenarios are vividly demonstrated, affirming its value as a significant advancement in the domain of crack detection.
-\textcolor{red}{The examples in Fig.~\ref{QualitativeResults} are typical cases selected from the test sets of the five datasets to cover the dominant challenge conditions --- thin hairline cracks, coarse pavement texture, shadows and uneven illumination, and crack-like distractors --- rather than randomly sampled or best-performing images; all methods are compared on identical inputs.}
+\textcolor{red}{The examples in Fig.~\ref{QualitativeResults} are typical cases selected from the test sets of the five datasets to cover the dominant challenge conditions (thin hairline cracks, coarse pavement texture, shadows and uneven illumination, and crack-like distractors) rather than randomly sampled or best-performing images; all methods are compared on identical inputs.}
 
 
 \subsection{Ablation Studies}
@@ -603,18 +603,18 @@ In summary, the frequency-guided crack localization step in FANet initially deli
 
 
 \subsection{\textcolor{red}{Failure Cases and Limitations}}
-\textcolor{red}{Although FANet achieves state-of-the-art performance on all five datasets, it still struggles under two identifiable conditions. Fig.~\ref{failurecase} shows representative failure cases drawn from FANet's own predictions on the most challenging crack categories; in each column the top is the input image and the bottom is the predicted crack map.}
+\textcolor{red}{Although FANet achieves state-of-the-art performance on all five datasets, it still struggles under two identifiable conditions. Fig.~\ref{failurecase} shows representative failure cases taken from FANet's own predictions on the most challenging crack categories. In each column, the top row is the input image, the middle row is the ground truth, and the bottom row is our prediction, so that the gap between the ground truth and our result can be read directly.}
 
-\textcolor{red}{\emph{(1) Low-contrast and camouflaged cracks $\rightarrow$ fragmentation.} When a crack blends into the pavement and its intensity contrast is low, the high-frequency response of FAM becomes weak and intermittent, while the low-frequency contour prior is too smooth to bridge the gaps. Consequently, a single continuous crack is broken into disconnected blobs or short segments, as in Fig.~\ref{failurecase}(a) and (b).}
+\textcolor{red}{\emph{(1) Fragmentation of low-contrast and camouflaged cracks.} When a crack blends into the pavement and its intensity contrast is low, the high-frequency response of FAM becomes weak and intermittent, while the low-frequency contour prior is too smooth to bridge the gaps. As shown in Fig.~\ref{failurecase}(a), the crack that forms a connected structure in the ground truth is broken into disconnected segments in our prediction.}
 
-\textcolor{red}{\emph{(2) Fine hairline cracks $\rightarrow$ under-segmentation.} When cracks are only a few pixels wide, the frequency evidence they produce is faint relative to the surrounding pavement texture. Thin branches are then weakly activated or missed and the predicted mask becomes broken and low in confidence, as in Fig.~\ref{failurecase}(c).}
+\textcolor{red}{\emph{(2) Under-segmentation of fine hairline cracks.} When cracks are only a few pixels wide, the frequency evidence they produce is faint relative to the surrounding pavement texture. As shown in Fig.~\ref{failurecase}(b) and (c), the thin cracks that are complete in the ground truth are only weakly activated in our prediction, and some fine branches are missed.}
 
-\textcolor{red}{These two modes delineate the practical boundary condition of the proposed design: FANet implicitly assumes that cracks constitute the dominant sparse high-frequency anomaly of the scene, an assumption that is violated when the contrast is very low or the crack is extremely thin. In addition, two limitations are worth noting. First, the two-step coarse-to-fine pipeline introduces extra inference cost compared with single-pass lightweight detectors, as reflected by the FPS comparison in Table~\ref{totaltable}. Second, FANet is trained with the binary cross-entropy loss only and imposes no explicit topological continuity constraint, which partially explains the fragmented predictions above. We plan to explore topology-aware objectives, contrast-adaptive frequency gating, and complementary sensing modalities (e.g., depth or infrared imaging) to push these boundaries in future work.}
+\textcolor{red}{These two modes delineate the practical boundary condition of the proposed design. FANet implicitly assumes that cracks constitute the dominant sparse high-frequency anomaly of the scene, an assumption that is violated when the contrast is very low or the crack is extremely thin. In addition, two limitations are worth noting. First, the two-step coarse-to-fine pipeline introduces extra inference cost compared with single-pass lightweight detectors, as reflected by the FPS comparison in Table~\ref{totaltable}. Second, FANet is trained with the binary cross-entropy loss only and imposes no explicit topological continuity constraint, which partially explains the fragmented predictions above. We plan to explore topology-aware objectives, contrast-adaptive frequency gating, and complementary sensing modalities such as depth or infrared imaging to push these boundaries in future work.}
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\linewidth]{IEEEtran/failure_cases.pdf}
-\caption{\textcolor{red}{Representative failure cases of FANet, taken from its own predictions on the hardest crack categories. In each column the top is the input image and the bottom is the predicted crack map. (a) A camouflaged crack is fragmented into two disconnected blobs; (b) a low-contrast crack is broken into short segments; (c) fine hairline cracks are weakly activated and partly missed.}}
+\caption{\textcolor{red}{Representative failure cases of FANet on the most challenging crack categories. In each column, the top row is the input image, the middle row is the ground truth, and the bottom row is our prediction. (a) A camouflaged, low-contrast crack whose connected ground-truth structure is fragmented into disconnected segments by our prediction. (b), (c) Fine hairline cracks whose complete ground truth is only weakly and partially recovered by our prediction.}}
 \label{failurecase}
 \end{figure}
 
@@ -649,7 +649,7 @@ In this study, we introduce the FANet, a novel approach tailored to overcome the
 
 
 
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{xiaobo.png}}]{Xiaobo Qu} is a chair professor at the School of Vehicle and Mobility, Tsinghua University, China. He is also an elected Member of Academia Europaea – the Academy of Europe since August 2020, and a Fellow of the Institution of Engineering and Technology (IET). His research is focused on enhancing urban mobility systems by incorporating emerging technologies, particularly for emergency
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{xiaobo.png}}]{Xiaobo Qu} is a chair professor at the School of Vehicle and Mobility, Tsinghua University, China. He is also an elected Member of Academia Europaea, the Academy of Europe, since August 2020, and a Fellow of the Institution of Engineering and Technology (IET). His research is focused on enhancing urban mobility systems by incorporating emerging technologies, particularly for emergency
 services and connected automated vehicles. He has authored or co-authored over 120 journal articles published in top-tier journals, including 14 ESI highly cited papers. He serves as an editor for 10 journals, including the Editor in Chief of Communications in Transportation Research, and Executive Editor in Chief of Journal of Intelligent and Connected Vehicles. To date, Dr. Qu has secured research funding well above 10 million Euros from the Australian Research Council, Swedish Innovation Agency Vinnova, STINT, and the European Union. He has been invited to serve as a panel/assessor for prestigious funding scheme such as the Australian Research Council Centre of Excellence (35 million AUD each), Future Fellowship (career grant, 1 million AUD each), Netherlands NWO VICI (career grant, 2.5 million Euros each), Hong Kong Research Council theme based scheme (30 million HKD each), Singapore Ministry of Education Thematic Research Program (5 million SD each), and the European Research Council, etc.
 \end{IEEEbiography}
 
