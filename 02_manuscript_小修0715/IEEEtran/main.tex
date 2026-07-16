@@ -611,9 +611,9 @@ In summary, the frequency-guided crack localization step in FANet initially deli
 
 \textcolor{red}{These two modes delineate the practical boundary condition of the proposed design. FANet implicitly assumes that cracks constitute the dominant sparse high-frequency anomaly of the scene, an assumption that is violated when the contrast is very low or the crack is extremely thin. In addition, two limitations are worth noting. First, the two-step coarse-to-fine pipeline introduces extra inference cost compared with single-pass lightweight detectors, as reflected by the FPS comparison in Table~\ref{totaltable}. Second, FANet is trained with the binary cross-entropy loss only and imposes no explicit topological continuity constraint, which partially explains the fragmented predictions above. We plan to explore topology-aware objectives, contrast-adaptive frequency gating, and complementary sensing modalities such as depth or infrared imaging to push these boundaries in future work.}
 
-\begin{figure}[!t]
+\begin{figure}[!ht]
 \centering
-\includegraphics[width=\linewidth]{IEEEtran/failure_cases.pdf}
+\includegraphics[width=0.75\linewidth]{IEEEtran/failure_cases.pdf}
 \caption{\textcolor{red}{Representative failure cases of FANet on the most challenging crack categories. In each column, the top row is the input image, the middle row is the ground truth, and the bottom row is our prediction. (a) A camouflaged, low-contrast crack whose connected ground-truth structure is fragmented into disconnected segments by our prediction. (b), (c) Fine hairline cracks whose complete ground truth is only weakly and partially recovered by our prediction.}}
 \label{failurecase}
 \end{figure}

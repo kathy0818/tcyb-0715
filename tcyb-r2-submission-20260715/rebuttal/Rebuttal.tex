@@ -19,6 +19,7 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{setspace}
 \usepackage{xcolor}
+\usepackage{float}
 \onehalfspacing
 \usepackage[bottom=2.0cm, top=2.0cm,left=2cm,right=2cm]{geometry}
 
@@ -376,9 +377,9 @@ plan to explore topology-aware objectives, contrast-adaptive frequency gating, a
 such as depth or infrared imaging to push these boundaries in future work.
 }
 
-\begin{figure}[!ht]
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.78\linewidth]{Fig/failure_cases.pdf}
+\includegraphics[width=0.58\linewidth]{Fig/failure_cases.pdf}
 \caption{\textcolor{red}{Representative failure cases of FANet on the most challenging crack categories. In each
 column, the top row is the input image, the middle row is the ground truth, and the bottom row is our prediction.
 (a) A camouflaged, low-contrast crack whose connected ground-truth structure is fragmented into disconnected segments
@@ -390,8 +391,6 @@ by our prediction.}}
 \vspace{6pt}
 
 %%%%%%%%%%%%%%%%%%  end R1-Q3  %%%%%%%%%%%%%%%%%%%%%%%%
-
-\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Response to Reviewer 2}
