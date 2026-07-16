@@ -41,18 +41,23 @@ tcyb-r2-submission-20260715/         # 本轮（第二轮/小修）交付
   的伪装/细裂缝类别裁出），带灰边框分隔，无需再出图（原 F5/F6/F7 已取消）。
 
 
-## 交付版本轨道（统一：一个 vN 文件夹里同时放正文+回复信）
+## 交付版本轨道（平铺，仿 eswa 参考仓库）
+
+`tcyb-r2-submission-20260715/releases/` 里所有版本平铺，命名带两位版本号+日期，tex+pdf 都在：
 
 ```
-tcyb-r2-submission-20260715/releases/<vN>/
-  main_<vN>_<时间戳>.tex / .pdf        # 正文
-  response_<vN>_<时间戳>.tex / .pdf     # 回复信
+main-revised_v01_20260716.tex / .pdf   ← 正文 3 版（v01 首个R2稿 / v02 失败图真图 / v03 IoU+边框）
+main-revised_v02_20260716.tex / .pdf
+main-revised_v03_20260716.tex / .pdf
+response-r2_v01_20260716.tex / .pdf     ← 回复信 4 版（v01 初稿 / v02 黄底高亮 / v03 失败图 / v04 IoU+边框）
+response-r2_v02_20260716.tex / .pdf
+response-r2_v03_20260716.tex / .pdf
+response-r2_v04_20260716.tex / .pdf
 ```
 
-- 发版脚本 `release.sh <vN>`（一次同时编译两份、带时间戳、不覆盖旧版）
-- 正文工作源: `02_manuscript_小修0715/IEEEtran/main.tex`
-- 回复信工作源: `tcyb-r2-submission-20260715/rebuttal/Rebuttal.tex`
-- 注：v1 之前的分轨迭代（回复信 v1–v4、正文 v1–v3）已并入统一轨道，历史保留在 git commit 记录里。
+- 最新＝正文 `main-revised_v03`、回复信 `response-r2_v04`（两份文档各自独立编号，版本数可不等，与 eswa 一致）。
+- 发版脚本：`./release.sh main <NN>` 或 `./release.sh response <NN>`（各自编译、带日期、不覆盖）。
+- 工作源：正文 `02_manuscript_小修0715/IEEEtran/main.tex`；回复信 `rebuttal/Rebuttal.tex`。
 
 ## 本轮正文改动 (R2)
 
