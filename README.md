@@ -27,10 +27,14 @@ tcyb-r2-submission-20260715/         # 本轮（第二轮/小修）交付
 - **Reviewer 1**：3 条——① 频域可视化的代表性/选样标准/图注加单图指标；② III-B/III-C 模块描述冗长，先直觉后公式；③ 新增失败案例与局限性小节。
 - **AE**：呼应 R1 三条 + Related Work 补充近两年文献（须含 TCYB 本刊）。
 
-## 待作者填写（PDF 中橙色 `[[TO FILL Fx]]` 标记）
+## 待作者填写（PDF 中黄底红字 `[[TO FILL Fx]]` 标记）
 
-见 `tcyb-r2-submission-20260715/rebuttal/Rebuttal.tex` 顶部「待填清单」注释块（F1–F8）：
-Fig.6 样本数据集与三个单图 IoU；失败案例拼图（3行×3列）及其数据集来源、三个单图 IoU。
+只剩 **4 处 F1–F4**，都在频率可视化图 Fig.6（abl1019）上：
+- F1：该样本所属数据集名（正文/回复信各出现，填一致）
+- F2/F3/F4：该样本上 FAM Full / High-Freq / Low-Freq 配置的单图 IoU
+
+失败案例图 Fig.7 已改用 **FANet 自己的真实预测裁片**（`failure_cases.pdf`，从
+`1more_result1106.pdf` 的伪装/细裂缝类别裁出），无需再出图或填数据集/IoU（原 F5/F6/F7 已取消）。
 
 
 ## 交付版本轨道

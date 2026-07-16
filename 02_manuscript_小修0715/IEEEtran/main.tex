@@ -26,13 +26,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 待填占位标记（黄底红字，投稿前必须全部替换掉；PDF 里不再有黄块＝填完）
-%% 与回复信 Rebuttal.tex 里的 F1–F7 一一对应，填一次两边同步：
-%%   F1 = Fig.\ref{ablavis} 样本所属数据集名（正文一处 + 图注一处）
-%%   F2/F3/F4 = 该样本上 FAM Full / High-Freq / Low-Freq 的单图 IoU
-%%   F5 = 失败案例拼图 failure_cases.pdf（3行×3列：输入/GT/预测），放入 IEEEtran/ 后
-%%        删掉占位框、取消注释 \includegraphics 那一行
-%%   F6a/b/c = 失败案例三行样本各自的数据集来源
-%%   F7a/b/c = 失败案例三行样本上 FANet 的单图 IoU
+%% 现在只剩 4 个空 F1–F4（都在频率可视化 Fig.\ref{ablavis} 上），与回复信一一对应：
+%%   F1 = Fig.\ref{ablavis} 样本所属数据集名（正文一处 + 图注一处，两处一致）
+%%   F2/F3/F4 = 该样本上 FAM Full / High-Freq / Low-Freq 配置的单图 IoU
+%% 【失败案例图 Fig.\ref{failurecase} 已用真实预测裁片 failure_cases.pdf，无需再填】
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \definecolor{fillorange}{RGB}{200,60,0}
 \definecolor{fillyellow}{RGB}{255,242,0}
@@ -601,30 +598,18 @@ In summary, the frequency-guided crack localization step in FANet initially deli
 
 
 \subsection{\textcolor{red}{Failure Cases and Limitations}}
-\textcolor{red}{Although FANet achieves state-of-the-art performance on all five datasets, it still fails under several identifiable conditions. Fig.~\ref{failurecase} presents representative failure cases; these examples are typical instances of the three dominant failure modes observed on the test sets, rather than isolated worst cases.}
+\textcolor{red}{Although FANet achieves state-of-the-art performance on all five datasets, it still struggles under two identifiable conditions. Fig.~\ref{failurecase} shows representative failure cases drawn from FANet's own predictions on the most challenging crack categories; in each column the top is the input image and the bottom is the predicted crack map.}
 
-\textcolor{red}{\emph{(1) Hairline cracks on coarsely textured pavement.} When the crack width becomes comparable to the granularity of the aggregate texture, the high-frequency branch of FAM responds to the crack and the surrounding texture simultaneously, and the low-frequency contour prior is too smooth to arbitrate between them. As a result, the predicted crack tends to be fragmented into disconnected segments (first row of Fig.~\ref{failurecase}).}
+\textcolor{red}{\emph{(1) Low-contrast and camouflaged cracks $\rightarrow$ fragmentation.} When a crack blends into the pavement and its intensity contrast is low, the high-frequency response of FAM becomes weak and intermittent, while the low-frequency contour prior is too smooth to bridge the gaps. Consequently, a single continuous crack is broken into disconnected blobs or short segments, as in Fig.~\ref{failurecase}(a) and (b).}
 
-\textcolor{red}{\emph{(2) Crack-like distractors.} Sealed crack repairs, tar lines, expansion joints, and sharp shadow boundaries exhibit spectral signatures similar to those of genuine cracks. When such distractors dominate the scene, FANet may segment them as false positives (second row of Fig.~\ref{failurecase}), since the frequency prior alone cannot encode the semantic difference between a crack and a crack-shaped artifact.}
+\textcolor{red}{\emph{(2) Fine hairline cracks $\rightarrow$ under-segmentation.} When cracks are only a few pixels wide, the frequency evidence they produce is faint relative to the surrounding pavement texture. Thin branches are then weakly activated or missed and the predicted mask becomes broken and low in confidence, as in Fig.~\ref{failurecase}(c).}
 
-\textcolor{red}{\emph{(3) Extremely low local contrast.} On wet, stained, or heavily worn surfaces, the intensity discontinuity of thin crack branches weakens. Both frequency bands then provide little evidence, so thin side branches are missed even though the main crack body is still recovered (third row of Fig.~\ref{failurecase}).}
-
-\textcolor{red}{These failure modes delineate the practical boundary conditions of the proposed design: FANet implicitly assumes that cracks constitute the dominant sparse high-frequency anomaly of the scene. In addition, two limitations are worth noting. First, the two-step coarse-to-fine pipeline introduces extra inference cost compared with single-pass lightweight detectors, as reflected by the FPS comparison in Table~\ref{totaltable}. Second, FANet is trained with the binary cross-entropy loss only and imposes no explicit topological continuity constraint, which partially explains the fragmented predictions in failure mode~(1). We plan to explore topology-aware objectives, distractor-aware hard-sample mining, and complementary sensing modalities (e.g., depth or infrared imaging) to push these boundaries in future work.}
+\textcolor{red}{These two modes delineate the practical boundary condition of the proposed design: FANet implicitly assumes that cracks constitute the dominant sparse high-frequency anomaly of the scene, an assumption that is violated when the contrast is very low or the crack is extremely thin. In addition, two limitations are worth noting. First, the two-step coarse-to-fine pipeline introduces extra inference cost compared with single-pass lightweight detectors, as reflected by the FPS comparison in Table~\ref{totaltable}. Second, FANet is trained with the binary cross-entropy loss only and imposes no explicit topological continuity constraint, which partially explains the fragmented predictions above. We plan to explore topology-aware objectives, contrast-adaptive frequency gating, and complementary sensing modalities (e.g., depth or infrared imaging) to push these boundaries in future work.}
 
 \begin{figure}[!t]
 \centering
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 【待填 F5】失败案例拼图：3 行×3 列（输入 / GT / FANet 预测），每行一个失败类型
-%%   第1行=粗糙纹理发丝裂缝断裂；第2行=类裂缝干扰误检；第3行=低对比度漏检
-%%   出好图后：① 删掉下面 \fbox 占位框整行；② 取消注释 \includegraphics 那一行
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\fbox{\colorbox{fillyellow}{\parbox[c][5.2cm][c]{0.9\linewidth}{\centering \textcolor{fillorange}{\textbf{[[TO FILL F5: failure-cases figure (\texttt{failure\_cases.pdf}),\\ 3 rows $\times$ 3 columns (Input / GT / FANet prediction),\\ one failure mode per row]]}}}}}
-% \includegraphics[width=\linewidth]{IEEEtran/failure_cases.pdf}
-\caption{\textcolor{red}{Representative failure cases of FANet, one failure mode per row.
-Row 1: hairline cracks on coarsely textured pavement, sample from \FILLIN{F6a: dataset}, per-sample IoU $=$ \FILLIN{F7a: IoU}.
-Row 2: crack-like distractors, sample from \FILLIN{F6b: dataset}, per-sample IoU $=$ \FILLIN{F7b: IoU}.
-Row 3: extremely low local contrast, sample from \FILLIN{F6c: dataset}, per-sample IoU $=$ \FILLIN{F7c: IoU}.
-Columns: (a) input, (b) ground truth, (c) FANet prediction.}}
+\includegraphics[width=\linewidth]{IEEEtran/failure_cases.pdf}
+\caption{\textcolor{red}{Representative failure cases of FANet, taken from its own predictions on the hardest crack categories. In each column the top is the input image and the bottom is the predicted crack map. (a) A camouflaged crack is fragmented into two disconnected blobs; (b) a low-contrast crack is broken into short segments; (c) fine hairline cracks are weakly activated and partly missed.}}
 \label{failurecase}
 \end{figure}
 
