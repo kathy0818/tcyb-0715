@@ -25,22 +25,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% ★★★★★★★★★★★★★★★★★  待填清单（给作者本人看）  ★★★★★★★★★★★★★★★★★
 %%
-%% PDF 里所有黄底红字的 [[TO FILL Fx: ...]] 都是需要你填的空。
-%% 现在只剩 4 处 F1–F4，都在频率可视化图 Fig.6（abl1019）上，全文搜 "FILLIN" 即可定位：
-%%
-%%   F1: Fig.6（FAM高低频可视化图 abl1019）中那张样本图来自哪个数据集
-%%       的测试集（例如 Crack500）。共出现两处（正文句子里一处、图注一处），
-%%       两处填同一个数据集名。
-%%   F2: 该样本上 FAM (Full 全频融合) 配置的单图 IoU 数值（图(c)）。
-%%   F3: 该样本上 FAM (High-Freq 仅高频) 配置的单图 IoU 数值（图(d)）。
-%%   F4: 该样本上 FAM (Low-Freq 仅低频) 配置的单图 IoU 数值（图(e)）。
-%%       ↑ F2–F4：用保存的三个消融模型对这张图各跑一次，算单图 IoU 即可。
-%%
-%% 【失败案例图 Fig.7 已改用 FANet 自己的真实预测裁片 failure_cases.pdf，
-%%   不再需要你出图或填数据集/IoU（原 F5/F6/F7 已取消）。】
-%%
-%% 填完后把 \FILLIN{...} 整个命令删掉换成真实数字/名称即可；
-%% 只要 PDF 里不再有黄块，就说明没有漏填。
+%% 本文件现已无黄底 \FILLIN 待填空——所有空要么已去掉、要么由 Claude 估算填入。
+%% 两种高亮的含义：
+%%  ① 黄底红字 \FILLIN{...} = 还需作者填（现已无）。
+%%  ② 青底 \AUTOVAL{...}    = Claude 从 abl1019 图里 Otsu 估算的单图 IoU
+%%     （Full=0.74 / High=0.49 / Low=0.43），作者请用真实模型复核后替换/确认；
+%%     确认无误后把 \AUTOVAL{x} 改成 x 去掉高亮即可。
+%% 说明：F1 样本数据集名已按作者要求去掉（不点名）；失败案例图 Fig.7 已用
+%%       FANet 真实预测裁片，无需再出图（原 F5/F6/F7 已取消）。
 %% ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -48,6 +40,9 @@
 \definecolor{fillorange}{RGB}{200,60,0}
 \definecolor{fillyellow}{RGB}{255,242,0}
 \newcommand{\FILLIN}[1]{\colorbox{fillyellow}{\textcolor{fillorange}{\textbf{[[TO FILL #1]]}}}}
+% \AUTOVAL：青色高亮＝Claude 从图里估算的数值（作者需自行用模型复核后替换/确认）
+\definecolor{autocyan}{RGB}{120,220,225}
+\newcommand{\AUTOVAL}[1]{\colorbox{autocyan}{\textbf{#1}}}
 
 \begin{document}
 
@@ -226,13 +221,9 @@ the representativeness of the frequency-based visualizations:
 
 \textcolor{red}{In the revised manuscript, the following text has been added to Section~IV-G (Ablation Studies):}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 【待填 F1】下面这段红字里的 \FILLIN{F1: ...} 要换成该样本所属数据集名，
-%%            例如 Crack500。注意：图注里还有一处 F1，两处保持一致。
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \textcolor{red}{
 To clarify the representativeness of the frequency-based visualization, the sample in Fig.~6
-is a typical case selected from the \FILLIN{F1: dataset name, e.g. Crack500} test set as an illustrative example,
+is a typical case selected from the test set as an illustrative example,
 rather than a randomly drawn or best-performing image: it simultaneously contains a wide trunk crack and hairline
 branches on coarsely textured pavement, the condition under which the differences among the three FAM configurations
 in Table~II are most visible. Panels (c)--(e) are produced by the \emph{FAM (Full)}, \emph{FAM (High-Freq)}, and
@@ -245,22 +236,14 @@ the caption to connect the qualitative and quantitative evidence.
 \begin{figure}[!hbpt]
 \centering
 \includegraphics[width=0.85\linewidth]{Fig/abl1019.pdf}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 【待填 F1/F2/F3/F4】图注中的四个橙色空：
-%%   F1 = 样本所属数据集名（与上一段一致）
-%%   F2 = 图(c) FAM (Full)      在这张样本上的单图 IoU，如 0.71
-%%   F3 = 图(d) FAM (High-Freq) 在这张样本上的单图 IoU
-%%   F4 = 图(e) FAM (Low-Freq)  在这张样本上的单图 IoU
-%% 计算方法：用消融实验保存的三个模型分别对这张图推理，
-%%           对预测二值化后与 GT 算 IoU（与论文 AIU 同一二值化阈值即可）。
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 青底 \AUTOVAL 值＝Claude 从 abl1019 图里 Otsu 估算的单图 IoU，作者请用真实模型复核后替换/确认。
 \caption{\textcolor{red}{Qualitative comparison of the three FAM configurations in Table~II on a typical sample
-selected from the \FILLIN{F1: dataset name} test set as an illustrative case.
+selected from the test set as an illustrative case.
 (a) Input. (b) Ground truth.
 (c) Prediction of \emph{FAM (Full)}, which fuses the high- and low-frequency branches, per-sample IoU $=$
-\FILLIN{F2: IoU of (c)}.
-(d) Prediction of \emph{FAM (High-Freq only)}, per-sample IoU $=$ \FILLIN{F3: IoU of (d)}.
-(e) Prediction of \emph{FAM (Low-Freq only)}, per-sample IoU $=$ \FILLIN{F4: IoU of (e)}.
+\AUTOVAL{0.74}.
+(d) Prediction of \emph{FAM (High-Freq only)}, per-sample IoU $=$ \AUTOVAL{0.49}.
+(e) Prediction of \emph{FAM (Low-Freq only)}, per-sample IoU $=$ \AUTOVAL{0.43}.
 The full-fusion configuration preserves both the main crack contour and the hairline branches, which is consistent
 with the quantitative gains reported in Table~II.}}
 \label{ablavis_rebuttal}
@@ -391,9 +374,9 @@ plan to explore topology-aware objectives, contrast-adaptive frequency gating, a
 (e.g., depth or infrared imaging) to push these boundaries in future work.
 }
 
-\begin{figure}[!hbpt]
+\begin{figure}[!ht]
 \centering
-\includegraphics[width=0.95\linewidth]{Fig/failure_cases.pdf}
+\includegraphics[width=0.72\linewidth]{Fig/failure_cases.pdf}
 \caption{\textcolor{red}{Representative failure cases of FANet, taken from its own predictions on the hardest crack
 categories. In each column the top is the input image and the bottom is the predicted crack map. (a) A camouflaged
 crack is fragmented into two disconnected blobs; (b) a low-contrast crack is broken into short segments; (c) fine
