@@ -41,12 +41,18 @@ tcyb-r2-submission-20260715/         # 本轮（第二轮/小修）交付
   的伪装/细裂缝类别裁出），带灰边框分隔，无需再出图（原 F5/F6/F7 已取消）。
 
 
-## 交付版本轨道
+## 交付版本轨道（统一：一个 vN 文件夹里同时放正文+回复信）
 
-- 回复信: `tcyb-r2-submission-20260715/releases/vN/Rebuttal_vN.{tex,pdf}` (发版脚本 `release.sh`)
-- 正文: `tcyb-r2-submission-20260715/manuscript_releases/vN/main_vN.{tex,pdf}` (发版脚本 `release_manuscript.sh`)
-- 两轨独立编号, 每次 v(n+1) 不覆盖旧版
+```
+tcyb-r2-submission-20260715/releases/<vN>/
+  main_<vN>_<时间戳>.tex / .pdf        # 正文
+  response_<vN>_<时间戳>.tex / .pdf     # 回复信
+```
+
+- 发版脚本 `release.sh <vN>`（一次同时编译两份、带时间戳、不覆盖旧版）
 - 正文工作源: `02_manuscript_小修0715/IEEEtran/main.tex`
+- 回复信工作源: `tcyb-r2-submission-20260715/rebuttal/Rebuttal.tex`
+- 注：v1 之前的分轨迭代（回复信 v1–v4、正文 v1–v3）已并入统一轨道，历史保留在 git commit 记录里。
 
 ## 本轮正文改动 (R2)
 
