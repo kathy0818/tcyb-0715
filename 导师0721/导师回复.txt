@@ -1,0 +1,637 @@
+这版不要只修改 Fig. 7，请按照下面的优先级整体修改正文和 rebuttal。P0 是必须解决的实质性问题；P1 是审稿人可能继续追问的问题；P2 是语言和最终一致性检查。
+
+一、P0：必须优先解决的实质性问题
+
+1. 重新核算 Fig. 6 的指标，统一 IoU 和 AIU
+
+【目前的问题】
+
+正文和 rebuttal 多处写的是：
+
+“per-sample IoU”
+
+中文：单样本 IoU。
+
+但是 Fig. 6 图注写的是：
+
+“per-sample AIU = 0.71, 0.28, and 0.55”
+
+中文：单样本 AIU 分别为 0.71、0.28 和 0.55。
+
+IoU 和 AIU 不是同一个指标：
+
+* IoU 通常是在一个固定阈值下计算；
+* AIU 是在多个二值化阈值下分别计算 IoU，然后取平均值。
+
+目前正文、图注和 rebuttal 的指标名称互相矛盾，而且 Evaluation Metrics 只写了 “over a range of binarization thresholds”，却没有给出具体阈值范围和步长，因此结果不可复现。
+
+另外，基于 PDF 内嵌图进行的粗略复算无法复现 0.71、0.28、0.55。这不代表要直接采用 PDF 粗算值，而是说明这三个数目前不能被认为已经核实正确。
+
+【为什么必须修改】
+
+Reviewer 1 明确要求在可视化图中增加 quantitative metric。如果新增的指标名称和计算方法不一致，反而会引发对实验结果可信度的质疑。
+
+【具体要做】
+
+请从原始文件重新计算，而不是使用 PDF/JPEG 图片：
+
+* Fig. 6 对应的 Crack500 样本 ID；
+* 原始 GT mask；
+* Full、High-Freq、Low-Freq 三个配置的原始概率图；
+* AIU/IoU 计算代码；
+* 完整阈值集合及步长；
+* 三个数值的程序输出日志。
+
+如果最终使用 AIU：
+
+* 正文、图注、rebuttal 全部统一写 “per-image AIU”；
+* 在 Evaluation Metrics 中给出明确阈值集合，例如只有实际代码确实如此时才能写 (T={0.01,0.02,\ldots,0.99})；
+* 说明 Fig. 6 使用与 Table II 完全相同的评估代码。
+
+如果最终使用固定阈值 IoU：
+
+* 全部统一写 “per-image IoU”；
+* 明确说明阈值；
+* 不得再写 AIU。
+
+不要在未重新运行原始评估程序的情况下继续保留 0.71、0.28、0.55。
+
+2. 重新制作 Fig. 6，解决图像尺寸和显示尺度问题
+
+【目前的问题】
+
+Fig. 6 的 Input/GT 与三个 prediction 的原始尺寸和宽高比不一致，但在论文中被放入相同大小的矩形，存在拉伸变形风险。
+
+此外，如果三个 prediction 分别进行了亮度归一化，读者就无法根据灰度强弱公平比较三个配置。
+
+【为什么必须修改】
+
+Fig. 6 的作用是比较 Full、High-Freq 和 Low-Freq。如果图片没有严格空间对齐，或者每张预测图使用不同显示尺度，定性比较就不可信。
+
+【具体要做】
+
+* 将三个预测结果根据实际 preprocessing 正确映射回与 GT 相同的空间坐标；
+* Input、GT、三个 Prediction 必须显示完全相同的区域；
+* 保持相同宽高比，不得为了排版随意拉伸；
+* 所有概率图统一使用 `[0,1]` 显示范围；
+* 不得对每张预测图分别做 min-max normalization；
+* 使用原始图重新导出，不要从 PDF 截图；
+* 图注中填入重新计算后的真实指标。
+
+建议图注中增加：
+
+“All probability maps are displayed on a common [0,1] scale without per-image normalization.”
+
+中文：所有概率图均采用统一的 `[0,1]` 显示范围，并且不进行逐图归一化。
+
+3. Fig. 6 只能称为 illustrative case，不能暗示它具有统计代表性
+
+【目前的问题】
+
+Fig. 6 被说明为：
+
+“a purposefully selected illustrative case”
+
+中文：有目的选择的说明性案例。
+
+这一点本身是诚实的，也是可以接受的。但该样本是专门选择出来展示三个配置差异的，因此不能再暗示它代表整个 Crack500 数据集。
+
+Table II 中 Crack500 的 FAM-only AIU 分别为：
+
+* Full：0.550；
+* High-Freq：0.541；
+* Low-Freq：0.538。
+
+三个数据集层面数值很接近，而 Fig. 6 当前给出的单图差异非常大。因此下面这句话过强：
+
+“consistent with the quantitative gains reported in Table II”
+
+中文：与 Table II 中的定量提升一致。
+
+【为什么要修改】
+
+Fig. 6 最多能展示一个案例中的定性现象，数据集层面的结论必须来自 Table II，不能用一个有目的挑选的案例代替总体结果。
+
+【建议改成】
+
+“This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table II.”
+
+中文：该说明性案例从定性角度展示了两个频率分支的互补行为；数据集层面的结论以 Table II 为依据。
+
+4. 重做 Fig. 7(a)，使用候选图中最左边第一组
+
+【目前的问题】
+
+现在 Fig. 7(a) 的 GT 本身就已经呈现多个不连续片段，不能有力支持下面这句话：
+
+“The crack that forms a connected structure in the ground truth is broken into disconnected segments in our prediction.”
+
+中文：真值中形成连续结构的裂缝在预测中被分割成不连续片段。
+
+【具体选图】
+
+请使用 `more_result0720.pdf` 中最左边的第一组，替换目前的 Fig. 7(a)。
+
+最终 Fig. 7 仍然只有两列：
+
+* (a)：换成最左边第一组；
+* (b)：保留目前的细发丝裂缝案例。
+
+不要使用第二组或第三组说明 fragmentation，因为它们更适合说明细分支漏检，而不是连续结构被预测成断裂。
+
+【使用第一组前必须确认】
+
+请使用原始文件检查：
+
+* GT 中目标裂缝确实形成一个连续主体；
+* 在论文实际使用的统一阈值下，prediction 确实出现多个中断；
+* 中断来自模型输出，而不是 JPEG 压缩、图片缩放或手工处理；
+* 不得为了强化失败效果而手工擦除预测区域。
+
+5. Fig. 7 建议展示二值化预测，而不是经过增强的概率图
+
+【目前的问题】
+
+正文使用的是 “disconnected segments”，即“不连续片段”。但如果底部展示未经二值化的灰度概率图，微弱响应可能仍然肉眼可见，读者会认为裂缝并没有真正断开。
+
+【为什么要修改】
+
+图像必须直接支持正文结论。如果正文讨论二值化后裂缝断裂，图中就应展示采用统一阈值获得的二值结果。
+
+【具体要做】
+
+Fig. 7 三行建议统一为：
+
+* Input：输入图像；
+* GT：真值；
+* Binarized Prediction：二值化预测结果。
+
+两个案例必须采用相同的阈值和处理方法。只有实际代码确实使用 0.5 时，才能写 threshold = 0.5，不能自行假设。
+
+如果决定继续展示概率图，则不能写 “disconnected segments”，而应改为：
+
+“weak and uneven prediction responses”
+
+中文：微弱且不均匀的预测响应。
+
+综合考虑，建议展示二值预测图。
+
+6. 修改 Fig. 7 的正文分析
+
+Section IV-H 的开头建议改成：
+
+“Although FANet achieves the highest values among the methods compared in Table I, it still struggles under two identifiable conditions. Fig. 7 presents two illustrative failure cases selected from the test sets. In each column, the top, middle, and bottom rows show the input image, ground truth, and binarized prediction, respectively.”
+
+中文：
+
+“尽管 FANet 在 Table I 所比较的方法中取得了最高数值，但在两种可识别的条件下仍然存在不足。Fig. 7 展示了从测试集中选出的两个说明性失败案例。每一列从上到下依次为输入图像、真值和二值化预测结果。”
+
+第一个 failure mode 建议改成：
+
+“(1) Fragmentation of low-contrast cracks. When the local contrast between a crack and the surrounding pavement is weak, some crack segments may receive insufficient prediction confidence and disappear during binarization. As shown in Fig. 7(a), the ground-truth crack forms a continuous structure, whereas several weak-response portions are missing from the binarized prediction, resulting in interruptions along the predicted crack.”
+
+中文：
+
+“（1）低对比度裂缝的断裂。当裂缝与周围路面之间的局部对比度较弱时，部分裂缝区域可能只能获得较低的预测置信度，并在二值化过程中消失。如 Fig. 7(a) 所示，真值裂缝形成了连续结构，但二值化预测遗漏了若干弱响应区域，从而导致预测裂缝出现中断。”
+
+第二个 failure mode 建议改成：
+
+“(2) Under-segmentation of fine hairline cracks. When cracks are only a few pixels wide, their responses may be weak relative to the surrounding pavement texture. As shown in Fig. 7(b), the main crack is recovered, but several fine branches visible in the ground truth are missed or only partially detected.”
+
+中文：
+
+“（2）细发丝裂缝分割不完整。当裂缝只有几个像素宽时，相对于周围路面纹理，其响应可能较弱。如 Fig. 7(b) 所示，模型恢复了主裂缝，但真值中可见的若干细小分支被漏检或仅得到部分检测。”
+
+7. 替换 Fig. 7 图注
+
+建议改成：
+
+“Fig. 7. Illustrative failure cases of FANet. In each column, the top, middle, and bottom rows show the input image, ground truth, and binarized prediction, respectively. (a) A low-contrast crack whose continuous ground-truth structure is interrupted at several weak-response locations in the prediction. (b) A fine hairline crack whose main structure is recovered, while several thin branches are missed or only partially detected.”
+
+中文：
+
+“Fig. 7. FANet 的说明性失败案例。每一列从上到下依次为输入图像、真值和二值化预测结果。(a) 一条低对比度裂缝，其真值结构是连续的，但预测在若干弱响应位置发生中断。(b) 一条细发丝裂缝，其主干结构得到恢复，但若干细小分支被漏检或仅得到部分检测。”
+
+建议使用：
+
+“Illustrative failure cases”
+
+中文：说明性失败案例。
+
+不要直接使用：
+
+“Representative failure cases”
+
+中文：具有代表性的失败案例。
+
+除非确实有客观选择标准，例如检查了单图 AIU 最低的 10% 样本并归纳出反复出现的失败模式。
+
+还应在图注或正文中补充两个案例的数据集名称和测试样本 ID。
+
+8. 重写 Related Work 最后一段的研究空白
+
+【目前的问题】
+
+新增的近两年文献本身基本真实、年份和发表平台也没有明显问题，形式上满足了 AE 的要求。
+
+但是最后写：
+
+“They either address generic dense prediction or treat frequency information as an auxiliary enhancement.”
+
+中文：这些研究要么面向通用稠密预测，要么仅将频率信息作为辅助增强。
+
+这个总结与新增文献本身冲突：
+
+* ULNet [43] 本身就是面向 pavement tiny-crack segmentation，并明确包含频域分支；
+* FSEL [45] 本身就是 frequency-spatial entanglement learning，即频域—空间纠缠学习。
+
+【为什么必须修改】
+
+不能一边引用 ULNet 和 FSEL，一边又说现有研究只把频率当成辅助信息。这会让审稿人认为作者没有准确理解新增文献。
+
+【建议替换为】
+
+“Recent work has also examined frequency–spatial interaction more directly. ULNet [43] combines a Mamba branch with an explicit frequency-domain branch for tiny-crack segmentation, whereas FSEL [45] performs frequency–spatial entanglement for camouflaged object detection. FANet differs from ULNet in using multi-level, octave-style high-/low-frequency interaction within a two-stage coarse-to-fine framework, and from FSEL in targeting road-crack localization and detail refinement. These differences position FANet as a task-specific frequency-aware architecture without implying that prior work uses frequency cues only as auxiliary information.”
+
+中文：
+
+“近期研究也开始更直接地探索频域—空间交互。ULNet [43] 针对微小裂缝分割，将 Mamba 分支与显式频域分支结合；FSEL [45] 则面向伪装目标检测进行频域—空间纠缠学习。与 ULNet 相比，FANet 的区别在于，它在多层特征上采用受 Octave Convolution 启发的高低频交互，并嵌入两阶段由粗到细框架；与 FSEL 相比，FANet 专门面向道路裂缝定位和细节细化。这些差异可以说明 FANet 的任务和结构特点，而不会错误暗示已有研究只把频率信息作为辅助。”
+
+新增的两篇 TCYB 文献分别面向工业异常检测和息肉分割，与道路裂缝不是同一任务。可以保留，但建议加：
+
+“Although developed for different application domains...”
+
+中文：尽管这些研究面向不同的应用领域……
+
+避免给人为了满足“包括本刊”而机械添加引用的感觉。
+
+9. 核对 Fig. 3 中 FAM 权重标注是否与 Eq. (3) 相反
+
+【目前的问题】
+
+Eq. (3) 中的对应关系是：
+
+* 高频分支 (f_i^h) 对应 (W_i^h)；
+* 低频分支 (f_i^l) 对应 (W_i^l)。
+
+但 Fig. 3 当前图示看起来像是高频分支连接了 (W_i^l)，低频分支连接了 (W_i^h)。
+
+【为什么必须修改】
+
+结构图和公式如果标注相反，会直接影响读者理解模块，也会让人怀疑实现到底采用哪一种对应关系。
+
+【具体要做】
+
+请对照实际代码检查：
+
+* 高频特征乘的是哪个权重；
+* 低频特征乘的是哪个权重；
+* 以代码实现为准，同步修正 Fig. 3 和 Eq. (3)。
+
+不能只凭变量名称猜测。
+
+10. 核对 Eq. (5) 和 Eq. (7) 的矩阵乘法符号
+
+【目前的问题】
+
+Eq. (5) 写成：
+
+(S_i \otimes F_{i+1})
+
+正文将 (\otimes) 定义为 matrix multiplication，即矩阵乘法。
+
+但是空间 guidance map 与特征图之间通常应采用沿通道广播后的 element-wise multiplication，即逐元素乘法。
+
+Eq. (7) 中 (\alpha) 被称为 weight map，但同样使用了矩阵乘法符号，也没有给出 reshape 方式和张量维度。
+
+【为什么必须修改】
+
+当前数学表达不可复现。读者不知道 (S_i)、(F_{i+1})、(\alpha) 和 (\beta) 的尺寸，也不知道所谓矩阵乘法如何进行。
+
+【具体要做】
+
+先对照代码：
+
+* 如果实际实现是逐元素乘法，请将公式符号改为逐元素乘法，并说明 broadcasting；
+* 如果实际实现确实是矩阵乘法，则必须给出张量尺寸、reshape 和乘法维度。
+
+如果实际是逐元素乘法，建议增加：
+
+“At stage (i), the resized guidance map (S_i\in[0,1]^{H_i\times W_i}) is broadcast across channels and multiplied element-wise with (F_{i+1}\in\mathbb{R}^{C\times H_i\times W_i}).”
+
+中文：
+
+“在第 (i) 个阶段，将引导图 (S_i) 调整到 (H_i\times W_i)，沿通道维复制后，与 (F_{i+1}) 逐元素相乘。”
+
+11. 检查 FAM 中 “adaptively re-weight” 是否成立
+
+【目前的问题】
+
+正文写：
+
+“adaptively re-weight and merge the two bands with learnable weights”
+
+中文：使用可学习权重对两个频带进行自适应重加权和融合。
+
+如果 (W_i^h) 和 (W_i^l) 只是训练后固定的全局参数，并不是根据每个输入动态生成，就不能称为 adaptive。
+
+【具体要做】
+
+* 如果权重根据输入特征动态生成，说明权重生成过程；
+* 如果只是普通可学习参数，改成：
+
+“re-weight and merge the two bands using learnable parameters”
+
+中文：使用可学习参数对两个频带进行重加权和融合。
+
+12. 弱化 T-M 中过于绝对的描述
+
+【目前的问题】
+
+正文写：
+
+“Multiplying adjacent levels retains only the responses that are confirmed by both.”
+
+中文：相邻层级相乘只保留两个层级共同确认的响应。
+
+逐元素相乘并不等于严格的逻辑交集，“retains only”过于绝对。
+
+【建议改成】
+
+“Multiplying adjacent feature maps promotes responses that are jointly activated across semantic levels, thereby suppressing level-specific noise and producing a cleaner coarse localization map.”
+
+中文：
+
+“相邻特征图相乘会增强多个语义层级上共同激活的响应，从而抑制只出现在单一层级的噪声，并生成更干净的粗定位图。”
+
+13. HFM 中的 “channel-level association” 要有公式支持
+
+【目前的问题】
+
+Design intuition 写：
+
+“a channel-level association between adjacent layers”
+
+中文：相邻层之间的通道级关联。
+
+但现有 Eq. (6) 主要表现为逐元素乘法和卷积，尚未明确展示所谓 channel-level association 是如何计算的。
+
+【具体要做】
+
+* 对照代码说明它到底是通道注意力、通道权重，还是普通卷积融合；
+* 给出 (\alpha)、(\beta) 的尺寸；
+* 说明它们是 spatial maps、channel weights，还是完整 feature maps；
+* 如果并不存在明确的通道关联操作，就不要使用 “channel-level association”，改成更保守的 “feature association” 或 “cross-layer feature interaction”。
+
+二、P1：重要的表述和证据问题
+
+14. 修改 Fig. 5 的样本代表性表述
+
+【目前的问题】
+
+正文写：
+
+“purposefully selected representative cases”
+
+中文：有目的选择的代表性案例。
+
+“有目的选择”只能证明这些样本是 illustrative，不能自动证明 statistically representative。
+
+【具体要做】
+
+如果没有客观抽样规则，改成：
+
+“The examples in Fig. 5 are purposefully selected illustrative cases from the five test sets.”
+
+中文：
+
+“Fig. 5 中的示例是从五个测试集中有目的选择的说明性案例。”
+
+同时：
+
+* 在每一行或每一组旁边标出数据集名称；
+* 最好补充样本 ID；
+* 说明所有方法使用完全相同的输入；
+* 不要写成 random samples，除非确实随机抽样。
+
+15. 弱化 Fig. 5 图注中的宣传性表述
+
+当前图注写：
+
+“FANet achieves impressive performance in all these cases.”
+
+中文：FANet 在所有这些案例中都取得了令人印象深刻的表现。
+
+这种语言比较宣传化，而且 Fig. 7 已经承认存在失败案例。
+
+建议改成更中性的：
+
+“FANet preserves the main crack structures and recovers more fine branches than the compared methods in these illustrative cases.”
+
+中文：
+
+“在这些说明性案例中，与所比较的方法相比，FANet 能够保留主要裂缝结构，并恢复更多细小分支。”
+
+前提是图中确实支持该结论。
+
+16. 将 “best reported accuracy” 改成限定性表述
+
+当前写：
+
+“FANet achieves the best reported accuracy on all five datasets.”
+
+中文：FANet 在五个数据集上取得了已报告的最佳准确率。
+
+Table I 只能证明 FANet 在表内比较的方法中取得最高值，不能证明整个文献范围内绝对最好。
+
+改成：
+
+“FANet achieves the highest values among the methods compared in Table I.”
+
+中文：
+
+“FANet 在 Table I 所比较的方法中取得了最高数值。”
+
+17. 速度下降的计算正确，但英文需要补 “by”
+
+13.2 FPS 降到 10.2 FPS：
+
+[
+(13.2-10.2)/13.2=22.7%
+]
+
+该数值正确，不需要重新计算。
+
+但英文应写：
+
+“reduces throughput by 22.7%”
+
+中文：使吞吐率降低了 22.7%。
+
+不要只写：
+
+“reduces throughput ... (22.7%)”。
+
+18. 保留 BCE 和拓扑约束的局限讨论
+
+下面这个分析是合理的，可以保留：
+
+“FANet is trained with binary cross-entropy only and imposes no explicit topological continuity constraint, which may contribute to fragmented predictions.”
+
+中文：
+
+“FANet 仅使用二元交叉熵进行训练，没有施加显式拓扑连续性约束，这可能导致预测结果发生断裂。”
+
+这句话使用了 “may contribute”，语气比较谨慎，没有把相关性写成确定因果，表述是合适的。
+
+三、P2：图中文字、英语和回复信一致性
+
+19. 修正 Fig. 3 的英文
+
+请修改：
+
+“Frequency-awared Step”
+
+改成：
+
+“Frequency-aware Step”
+
+中文：频率感知步骤。
+
+更推荐：
+
+“Frequency-guided Coarse Localization”
+
+中文：频率引导的粗定位。
+
+请修改：
+
+“Detail-preserved Step”
+
+改成：
+
+“Detail-preserving Fine Segmentation”
+
+中文：细节保持的精细分割。
+
+请修改：
+
+“Concate+Conv”
+
+改成：
+
+“Concat. + Conv”
+或者
+“Concatenate + Conv”
+
+中文：特征拼接后卷积。
+
+正文中的：
+
+“final ouput”
+
+改成：
+
+“final output”
+
+中文：最终输出。
+
+20. Fig. 3 图注补上 T-M
+
+当前 Fig. 3 图注只列出了 FAM、HFM 和 Transformer-based backbone，漏掉了 T-M。
+
+请将所有实际模块完整列出：
+
+* Transformer-based backbone；
+* FAM；
+* T-M decoder；
+* HFM。
+
+21. 修改 rebuttal 开头的过度承诺
+
+当前写：
+
+“All the remaining concerns have been fully addressed.”
+
+中文：所有剩余问题均已得到完全解决。
+
+建议改成：
+
+“We have addressed the remaining concerns as detailed below.”
+
+中文：我们已按下文所述对剩余问题进行了处理。
+
+当前还写：
+
+“all of which concern the clarity and completeness of the presentation”
+
+中文：这些意见均涉及论文表述的清晰性和完整性。
+
+这不够准确，因为 AE 还要求最新文献定位，Reviewer 1 还要求失败案例和局限。
+
+建议改成：
+
+“These suggestions concern visualization representativeness, module presentation, failure analysis, and positioning relative to recent work.”
+
+中文：
+
+“这些建议涉及可视化案例的代表性、模块表述、失败分析，以及与近期研究的定位关系。”
+
+22. 正文和 rebuttal 必须完全同步
+
+请逐项检查以下内容在正文和 rebuttal 中是否完全一致：
+
+* Fig. 6 使用 IoU 还是 AIU；
+* Fig. 6 的三个重新计算数值；
+* Fig. 6 三个配置名称和顺序；
+* AIU 的阈值范围和步长；
+* Fig. 6 是 illustrative case，不是 random 或 representative case；
+* Fig. 7(a) 换成最左边第一组；
+* Fig. 7 仍然只有两列 (a) 和 (b)；
+* Fig. 7 底部展示 probability map 还是 binarized prediction；
+* Fig. 7 使用的二值化阈值；
+* 两种 failure mode 的名称和解释；
+* Related Work 修改后的最终段落；
+* Fig. 3、Eq. (3)、Eq. (5) 和 Eq. (7) 的最终版本。
+
+不能出现正文写 AIU、rebuttal 写 IoU，或者正文换图后 rebuttal 仍然保留旧图的情况。
+
+23. Table II 中已经核对正确的数值不要随意改动
+
+以下计算目前是正确的：
+
+* T-M 在 GAPs384 上提升 0.031、0.035、0.033；
+* T-M 在 CFD 上提升 0.034、0.033、0.034；
+* T-M 在 Crack500 上下降 0.022、0.019、0.017；
+* HFM 对九项指标提升 0.031–0.035；
+* Full FAM 在三个 FAM-only 配置中均为最好；
+* 13.2 FPS 降到 10.2 FPS 为下降 22.7%。
+
+这些数值不需要为了修改文字而重新调整。当前需要重新核算的是 Fig. 6 的三个单样本指标。
+
+四、最终提交前的检查顺序
+
+请按下面顺序完成：
+
+1. 先用原始代码重新计算 Fig. 6 指标；
+2. 重新生成 Fig. 6；
+3. 使用最左边第一组重做 Fig. 7(a)；
+4. 确定 Fig. 7 展示的是二值预测还是概率图；
+5. 同步修改 Section IV-H 和 Fig. 7 图注；
+6. 重写 Related Work 最后一段；
+7. 对照代码核查 Fig. 3、Eq. (3)、Eq. (5)、Eq. (7)；
+8. 修改 Fig. 5 的样本选择表述及数据集标签；
+9. 同步更新 rebuttal 中的全部图、文字和数值；
+10. 重新导出 marked manuscript、clean manuscript 和 rebuttal；
+11. 将三个 PDF 并排检查，确认内容完全一致；
+12. 放大检查所有图，确保没有变形、模糊、越过栏宽或被裁切。
+
+完成后请同时提供：
+
+* 更新后的正文 PDF；
+* 更新后的 rebuttal PDF；
+* Fig. 6 三个数值的计算日志；
+* Fig. 6 和 Fig. 7 使用的原始样本 ID；
+* Eq. (5) 和 Eq. (7) 对应的代码操作说明。
+
+P0 项全部完成并核对后，再进行最终提交。
