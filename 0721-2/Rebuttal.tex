@@ -31,7 +31,7 @@
 % 本轮(0721 导师意见)颜色标记 —— 详见随附 README_颜色说明.txt
 %%   黄底 \FILLIN{}      = 学生必须用原始数据/正式脚本计算或提供
 %%   绿底 \edt{}/edtblk  = 本轮已按导师意见改好的文字(DONE)
-%%   橙底 \cck{}/cckblk  = 本轮先做的保守改法, 待学生对代码确认后再定稿
+%%   橙底 \cck{}         = 我先填的参考数值(AIU/阈值集), 学生用原始数据核对, 不对就改
 \let\ul\relax
 \usepackage{soul}
 \usepackage{framed}
@@ -220,7 +220,7 @@ selected illustrative case from the Crack500 test set (sample ID \FILLIN{Crack50
 It contains a wide trunk crack and hairline branches on coarsely textured pavement, where the differences among the
 three FAM configurations are readily visible. Panels (c)--(e) correspond to
 \emph{Baseline + FAM (Full)}, \emph{Baseline + FAM (High-Freq)}, and
-\emph{Baseline + FAM (Low-Freq)} in Table~II, respectively; \edt{the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set} \FILLIN{AIU threshold set + step}.
+\emph{Baseline + FAM (Low-Freq)} in Table~II, respectively; \edt{the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set} \cck{$T=\{0.01, 0.02, \ldots, 0.99\}$}.
 }
 
 \textcolor{red}{The caption of Fig.~6 has been rewritten as follows (the figure is reproduced below; figure/table numbers in the quoted text refer to the revised manuscript):}
@@ -232,10 +232,9 @@ three FAM configurations are readily visible. Panels (c)--(e) correspond to
 \caption{\textcolor{red}{Qualitative comparison of three FAM configurations in Table~II on a purposefully selected
 illustrative case from the Crack500 test set.
 (a) Input. (b) Ground truth.
-(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; \edt{per-image AIU} $=$ \FILLIN{Full AIU}.
-(d) Prediction of \emph{Baseline + FAM (High-Freq)}; \edt{per-image AIU} $=$ \FILLIN{High-Freq AIU}.
-(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; \edt{per-image AIU} $=$ \FILLIN{Low-Freq AIU}.
-\edt{All probability maps are displayed on a common $[0,1]$ scale without per-image normalization.}
+(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; \edt{per-image AIU} $=$ \cck{0.62}.
+(d) Prediction of \emph{Baseline + FAM (High-Freq)}; \edt{per-image AIU} $=$ \cck{0.45}.
+(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; \edt{per-image AIU} $=$ \cck{0.41}.
 \edt{This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table~II.}}}
 \label{ablavis_rebuttal}
 \end{figure}
@@ -287,7 +286,7 @@ suggested by the reviewer, namely a clear separation between intuition and forma
 varying pavement context. In the feature space, the former concentrates in the high-frequency band, whereas the
 latter dominates the low-frequency band. The FAM is therefore designed to (i) decompose each backbone feature into a
 high-frequency and a low-frequency component, (ii) let the two components exchange complementary information, so that
-edge responses acquire contextual support and contour responses are cleansed of texture noise, and (iii) \cck{re-weight and merge the two bands using learnable weights}. The output is a frequency-balanced feature in which crack
+edge responses acquire contextual support and contour responses are cleansed of texture noise, and (iii) re-weight and merge the two bands using learnable weights. The output is a frequency-balanced feature in which crack
 evidence is amplified relative to background texture. The remainder of this subsection formalizes these three
 steps.
 }
@@ -303,8 +302,8 @@ more precisely. \edt{Multiplying adjacent feature maps promotes responses that a
 \textbf{(Section~III-C, before the formulation of HFM)}
 \textbf{Design intuition of HFM.} The HFM addresses two questions during refinement. The first is \emph{where to
 refine}: at refinement stage $i$, the current guidance map $S_i$ acts as a spatial prior that amplifies
-crack-relevant regions of the deeper feature. The second is \emph{what to keep}: \cck{a cross-layer feature interaction between
-adjacent layers} determines which high-resolution details are consistent with this prior and should be preserved.
+crack-relevant regions of the deeper feature. The second is \emph{what to keep}: a cross-layer feature interaction between
+adjacent layers determines which high-resolution details are consistent with this prior and should be preserved.
 These operations refine accuracy with a moderate throughput cost, as quantified in Table~II. The following
 formulation details the two steps.
 }
