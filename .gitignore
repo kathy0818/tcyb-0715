@@ -5,3 +5,10 @@ tcyb-r2-submission-20260715/rebuttal/*.toc
 tcyb-r2-submission-20260715/rebuttal/*.bbl
 tcyb-r2-submission-20260715/rebuttal/*.blg
 tcyb-r2-submission-20260715/rebuttal/Rebuttal.pdf
+
+# 0721-2 LaTeX build artifacts (keep .tex, .pdf, .bbl tracked)
+0721-2/*.aux
+0721-2/*.blg
+0721-2/*.log
+0721-2/*.toc
+0721-2/*.out
