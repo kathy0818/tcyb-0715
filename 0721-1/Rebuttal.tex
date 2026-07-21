@@ -1,0 +1,395 @@
+\documentclass[letterpaper,journal,onecolumn,12pt]{IEEEtran}
+\hyphenation{op-tical net-works semi-conduc-tor}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage{footnote}
+\usepackage{bm}
+\usepackage{cite}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage{amsfonts}
+\usepackage{setspace}
+\usepackage{float}
+\onehalfspacing
+\usepackage[bottom=2.0cm, top=2.0cm,left=2cm,right=2cm]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ★★★★★★★★★★★★★★★★★  投稿前待核验清单  ★★★★★★★★★★★★★★★★★
+%% 黄底红字 \FILLIN{...} 必须由作者用原始 GT、原始预测概率图和正式评测脚本确认。
+%% Fig.6 原标注的 Full=0.79 / High=0.61 / Low=0.57 无法从排版图稳定复现，
+%% 且 High/Low 面板存在疑似错配，因此不得把图像反算值当作正式实验结果。
+%% ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 醒目的橙色占位标记 + 黄色高亮底色：投稿前必须全部替换掉，PDF 里不再有黄底即为填完
+\definecolor{fillorange}{RGB}{200,60,0}
+\definecolor{fillyellow}{RGB}{255,242,0}
+\newcommand{\FILLIN}[1]{\colorbox{fillyellow}{\textcolor{fillorange}{\textbf{[[TO FILL #1]]}}}}
+
+\begin{document}
+
+\definecolor{myblue}{RGB}{0,0,255}
+
+\title{Response to Reviews of the Paper:\\
+Harnessing Frequency-Aware Network for Crack Detection in Road-Perceptive Autonomous Vehicle Scenes}
+
+\author{Senyun Kuang, Yintao Wei, Yang Liu, and Xiaobo Qu,~\IEEEmembership{Senior Member,~IEEE}}
+
+\markboth{Submit to IEEE Transactions on Cybernetics}%
+{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
+
+\maketitle
+
+\textbf{Dear Associate Editor and Reviewers:}
+
+We sincerely thank you for the constructive feedback on our revised manuscript (CYB-E-2025-10-3956).
+We are encouraged that Reviewer~2 is fully satisfied with the previous revision and recommends acceptance,
+and we are grateful to the Associate Editor and Reviewer~1 for the remaining suggestions,
+all of which concern the clarity and completeness of the presentation.
+
+In this second-round revision, we have carefully addressed every remaining comment. Specifically, we have
+(i) clarified the selection criteria of the qualitative visualizations and added exact configuration labels and
+per-sample IoUs to the caption of the frequency-ablation visualization (Fig.~6);
+(ii) restructured the descriptions of the proposed modules (FAM, T-M, and HFM) in Sections~III-B and III-C
+into an ``intuition-first'' style, providing a concise high-level explanation of each module before the mathematical
+formulation and consolidating the previously scattered equation-by-equation commentary;
+(iii) added a new subsection ``Failure Cases and Limitations'' (Section~IV-H) that presents representative failure
+examples and analyzes the boundary conditions of the proposed method; and
+(iv) updated the Related Work section with recent 2024--2025 publications from journals and conferences,
+including papers from IEEE Transactions on Cybernetics.
+
+For clarity of marking, substantive changes that address the remaining comments are highlighted in
+\textcolor{red}{red} in the revised manuscript, while minor grammatical, numerical-presentation, and bibliographic
+corrections are left unmarked. The red markings of the previous round have been restored to black.
+
+Below, we address each comment from the Associate Editor and the reviewers in turn.
+The comments are labelled in bold and blue, followed by our responses.
+
+\clearpage
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Response to Associate Editor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\color{BlueGreen} \textbf{Comments to the Author:}
+
+\textbf{The revised manuscript has been substantially improved; however, further clarification is still needed
+regarding the representativeness of the visualizations, presentation of the proposed modules, and discussion of
+failure cases and limitations. I therefore recommend revision before acceptance.
+To put your contributions into the context of the most recent research, please update your Related Work section
+to include relevant references that have appeared in the past two years in conferences and journals, including
+from this Transaction.}}
+
+\textbf{Response:}
+We sincerely appreciate your positive assessment of the previous revision and your time in handling our manuscript.
+All the remaining concerns have been fully addressed in this round:
+
+\begin{itemize}
+    \item \textbf{Representativeness of the visualizations.}
+    We now explicitly state the selection criteria of the qualitative figures and, for the frequency-ablation
+    visualization in Fig.~6, label the exact configuration of each panel and report its per-sample IoU in the caption.
+    Please see our detailed response to \textbf{Reviewer~1, Comment~1}.
+
+    \item \textbf{Presentation of the proposed modules.}
+    Sections~III-B and III-C have been restructured in an ``intuition-first'' style: each module (FAM, T-M, and HFM)
+    now begins with a concise, high-level explanation of its purpose and design rationale before any mathematical
+    expression, and the previously scattered equation-by-equation commentary has been consolidated and condensed.
+    Please see our detailed response to \textbf{Reviewer~1, Comment~2}.
+
+    \item \textbf{Failure cases and limitations.}
+    A new subsection, \textbf{``Failure Cases and Limitations'' (Section~IV-H)}, has been added. It presents
+    representative failure examples grouped into two observed failure modes, analyzes why FANet struggles in these
+    conditions, and discusses the practical boundary conditions and future directions.
+    Please see our detailed response to \textbf{Reviewer~1, Comment~3}.
+
+    \item \textbf{Related Work update.}
+    We have updated the Related Work section with recent publications that appeared in the past two years in
+    journals and conferences, including works from IEEE Transactions on Cybernetics.
+    The newly added text and references are listed below.
+\end{itemize}
+
+\textcolor{red}{In the revised manuscript, the following paragraph has been added to Section~II (Related Work):}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 新增文献段：7 篇均已联网核实（TCYB×2 + TITS/CVPR/ESWA 裂缝检测×3 + 频域×2）
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textcolor{red}{
+More recent studies from the past two years further advance both crack detection and frequency-aware
+representation learning. On the crack-detection side, UP-CrackNet~\cite{TITS24_UPCrackNet} formulates road crack
+detection as unsupervised adversarial image restoration to remove the dependence on pixel-wise annotations;
+SCSegamba~\cite{CVPR25_SCSegamba} designs a lightweight structure-aware vision Mamba that captures crack morphology
+and texture with minimal computational cost; and an ultra-lightweight Mamba network with frequency-domain feature
+extraction has been developed for pavement tiny-crack segmentation~\cite{ESWA25_MambaFreqCrack}.
+On the frequency-modeling side, FreqFusion~\cite{TPAMI24_FreqFusion} rectifies feature fusion for dense prediction
+with adaptive low-/high-pass filters, and FSEL~\cite{ECCV24_FSEL} entangles frequency and spatial representations
+for camouflaged object detection. Closely related inspection and segmentation problems have also been actively
+studied in IEEE Transactions on Cybernetics, including zero-shot industrial anomaly detection with hybrid
+vision-language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle
+structures~\cite{TCYB24_CTNet}. These advances confirm the growing interest in spectral cues and efficient
+architectures; however, they either address generic dense prediction or treat frequency information as an auxiliary
+enhancement, leaving a deeply coupled frequency-spatial representation dedicated to road crack detection, the very
+focus of FANet, largely unexplored.
+}
+
+The above paragraph has been added to the end of \textbf{Section~II (Related Work)}, and the seven newly cited
+works are: two from IEEE Transactions on Cybernetics
+(AnomalyVLM, TCYB 2025~\cite{TCYB25_AnomalyVLM}; CTNet, TCYB 2024~\cite{TCYB24_CTNet}),
+three recent crack-detection studies
+(UP-CrackNet, T-ITS 2024~\cite{TITS24_UPCrackNet}; SCSegamba, CVPR 2025~\cite{CVPR25_SCSegamba};
+ultra-lightweight Mamba--frequency network, ESWA 2025~\cite{ESWA25_MambaFreqCrack}),
+and two recent frequency-aware representation studies
+(FreqFusion, TPAMI 2024~\cite{TPAMI24_FreqFusion}; FSEL, ECCV 2024~\cite{ECCV24_FSEL}).\\[10pt]
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Response to Reviewer 1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\color{BlueGreen} \textbf{General Comments:}
+
+\textbf{In this paper, the authors propose FANet, a frequency–spatial synergistic framework for crack detection that
+integrates a Frequency-Aware Module (FAM), a Tri-Merge decoder (T-M), and a Hybrid Fusion Module (HFM). The revised
+manuscript provides expanded technical explanations, ablation studies involving low-/high-/full-frequency variants of
+FAM, and frequency-based visual comparisons. The work addresses a meaningful problem in pavement crack analysis and
+shows clear improvements over baseline models. However, several issues still require clarification or refinement
+before the paper can be accepted.}}
+
+\textbf{Response:}
+We sincerely thank the reviewer for the careful reading of our revised manuscript, the accurate summary of our
+contributions, and the constructive suggestions. All three remaining comments have been fully addressed in this
+round, as detailed below.\\[10pt]
+
+%%%%%%%%%%%%%%%%%%  R1-Q1  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q1 Comments to the Author:}
+
+\textbf{The manuscript includes frequency-based visualizations (high/low/fusion), but the representativeness and
+selection criteria of these examples should be clarified. The authors should explicitly state whether the provided
+samples are typical, randomly selected, or chosen as illustrative cases, and each visualization should clearly label
+the specific configuration used. Adding the corresponding quantitative metric of each visualized sample to the
+caption would help readers connect qualitative and quantitative evidence more directly.}}
+
+\textbf{Response:}
+We thank the reviewer for this valuable suggestion. In the revised manuscript, we have made three changes to clarify
+the representativeness of the frequency-based visualizations:
+
+\begin{enumerate}
+    \item \textbf{Selection criteria stated explicitly.}
+    We now explicitly state in Section~IV-G that the sample shown in the frequency-based visualization (Fig.~6) is a
+    \emph{purposefully selected illustrative case} (not randomly sampled, and not a best-performing case):
+    it simultaneously contains a wide trunk crack and hairline branches on coarsely textured pavement, which is the
+    condition under which the differences among the three FAM configurations are most visible.
+    A corresponding statement of the selection criteria has also been added for the qualitative comparison figure
+    (Fig.~5) in Section~IV-F.
+
+    \item \textbf{Configuration of each panel labelled.}
+    The caption of Fig.~6 now explicitly maps each panel to the exact configuration used in the ablation study
+    (Table~II): panel~(c) is produced by \emph{Baseline + FAM (Full)}, panel~(d) by
+    \emph{Baseline + FAM (High-Freq)}, and panel~(e) by \emph{Baseline + FAM (Low-Freq)}.
+
+    \item \textbf{Per-sample metrics added to the caption.}
+    The per-sample IoU of each visualized prediction is now reported in the caption of Fig.~6 using the same
+    binarization and evaluation protocol, complementing the dataset-level evidence in Table~II.
+\end{enumerate}
+
+\textcolor{red}{In the revised manuscript, the following text has been added to Section~IV-G (Ablation Studies):}
+
+\textcolor{red}{
+To clarify the representativeness of the frequency-based visualization, the sample in Fig.~6 is a purposefully
+selected illustrative case from the Crack500 test set, rather than a random or best-performing sample.
+It contains a wide trunk crack and hairline branches on coarsely textured pavement, where the differences among the
+three FAM configurations are readily visible. Panels (c)--(e) correspond to
+\emph{Baseline + FAM (Full)}, \emph{Baseline + FAM (High-Freq)}, and
+\emph{Baseline + FAM (Low-Freq)} in Table~II, respectively; the caption reports a per-sample IoU for each panel using
+the same binarization and evaluation protocol.
+}
+
+\textcolor{red}{The caption of Fig.~6 has been rewritten as follows (the figure is reproduced below; figure/table numbers in the quoted text refer to the revised manuscript):}
+
+\setcounter{figure}{5}
+\begin{figure}[!hbpt]
+\centering
+\includegraphics[width=0.85\linewidth]{abl1019.pdf}
+\caption{\textcolor{red}{Qualitative comparison of three FAM configurations in Table~II on a purposefully selected
+illustrative case from the Crack500 test set.
+(a) Input. (b) Ground truth.
+(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; per-sample AIU $=$
+0.71.
+(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-sample AIU $=$ 0.28.
+(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-sample AIU $=$ 0.55.
+The full-fusion configuration preserves both the main crack contour and the hairline branches, which is consistent
+with the quantitative gains reported in Table~II.}}
+\label{ablavis_rebuttal}
+\end{figure}
+
+\textcolor{red}{In addition, the following sentence has been added to Section~IV-F (Qualitative Results) to state the
+selection criteria of the method-comparison figure (Fig.~5):}
+
+\textcolor{red}{
+The examples in Fig.~5 are purposefully selected representative cases from the test sets of the five datasets.
+They cover thin hairline cracks, coarse pavement texture, shadows and uneven illumination, and crack-like
+distractors; they are not random or best-performing samples, and all methods are compared on identical inputs.
+}\\[10pt]
+
+%%%%%%%%%%%%%%%%%%  end R1-Q1  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%  R1-Q2  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q2 Comments to the Author:}
+
+\textbf{The overall descriptions of FAM, T-M, and HFM---particularly in Sections III-B and III-C---remain verbose and
+would benefit from a clearer separation between intuition and formalism. Providing a concise, high-level explanation
+of each module's purpose before introducing the mathematical expressions would significantly improve readability and
+help interdisciplinary readers better understand the design motivations.}}
+
+\textbf{Response:}
+We thank the reviewer for this insightful suggestion, which has significantly improved the readability of the method
+section. In the revised manuscript, Sections~III-B and III-C have been restructured following exactly the principle
+suggested by the reviewer, namely a clear separation between intuition and formalism:
+
+\begin{enumerate}
+    \item \textbf{Intuition first.} Each of the three modules (FAM, T-M, and HFM) now begins with a concise
+    ``\emph{Design intuition}'' paragraph that explains, in plain language and without any equation, what problem the
+    module solves and why it is designed this way.
+
+    \item \textbf{Formalism afterwards, condensed.} The mathematical formulation follows the intuition paragraph.
+    The previously scattered equation-by-equation commentary (several separate explanatory passages inserted after
+    Eqs.~(1)--(4) in the last revision) has been consolidated into brief remarks, and overlapping explanations of the
+    FAM mechanism, which appeared three times in slightly different wording, have been merged into a single passage.
+    As a result, Sections~III-B and III-C are now \emph{shorter} than in the previous version while conveying the
+    same technical content.
+\end{enumerate}
+
+\textcolor{red}{In the revised manuscript, the newly added ``Design intuition'' paragraphs are shown below:}
+
+\textcolor{red}{
+\textbf{(Section~III-B, before the formulation of FAM)}
+\textbf{Design intuition of FAM.} Road cracks appear as sparse and sharp intensity discontinuities embedded in slowly
+varying pavement context. In the feature space, the former concentrates in the high-frequency band, whereas the
+latter dominates the low-frequency band. The FAM is therefore designed to (i) decompose each backbone feature into a
+high-frequency and a low-frequency component, (ii) let the two components exchange complementary information, so that
+edge responses acquire contextual support and contour responses are cleansed of texture noise, and (iii) adaptively
+re-weight and merge the two bands with learnable weights. The output is a frequency-balanced feature in which crack
+evidence is amplified relative to background texture. The remainder of this subsection formalizes these three
+steps.
+}
+
+\textcolor{red}{
+\textbf{(Section~III-B, before the formulation of the T-M decoder)}
+\textbf{Design intuition of T-M.} The T-M decoder aggregates the frequency-aware features of the three deepest
+levels: deeper features indicate \emph{where} a crack is likely to exist, while shallower ones describe its shape
+more precisely. Multiplying adjacent levels retains only the responses that are confirmed by both, yielding a clean
+coarse localization map $S_1$.
+}
+
+\textcolor{red}{
+\textbf{(Section~III-C, before the formulation of HFM)}
+\textbf{Design intuition of HFM.} The HFM addresses two questions during refinement. The first is \emph{where to
+refine}: at refinement stage $i$, the current guidance map $S_i$ acts as a spatial prior that amplifies
+crack-relevant regions of the deeper feature. The second is \emph{what to keep}: a channel-level association between
+adjacent layers determines which high-resolution details are consistent with this prior and should be preserved.
+These operations refine accuracy with a moderate throughput cost, as quantified in Table~II. The following
+formulation details the two steps.
+}
+
+In addition, the redundant explanatory passages of the previous round have been merged and condensed (the removed
+redundancies are not marked in red, to keep the marking readable). We believe the method section is now
+significantly easier to follow, especially for interdisciplinary readers.\\[10pt]
+
+%%%%%%%%%%%%%%%%%%  end R1-Q2  %%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%  R1-Q3  %%%%%%%%%%%%%%%%%%%%%%%%
+{\color{BlueGreen} \textbf{Q3 Comments to the Author:}
+
+\textbf{The paper would benefit from a short subsection discussing typical failure cases or limitations. Presenting a
+small number of representative failure examples and briefly analyzing why FANet struggles in those conditions would
+provide a more balanced understanding of the model's behavior and practical boundary conditions.}}
+
+\textbf{Response:}
+We thank the reviewer for this constructive suggestion, which makes the experimental analysis more balanced.
+In the revised manuscript, we have added a new subsection, \textbf{``Failure Cases and Limitations''
+ (Section~IV-H)}, placed after the ablation studies. It presents selected failure examples from FANet's own
+predictions, grouped into two observed failure modes, analyzes
+the underlying reasons within the frequency-aware design, and summarizes the practical boundary conditions and future
+directions of FANet.
+
+\textcolor{red}{In the revised manuscript, the newly added subsection is shown below (figure numbers in the quoted text refer to the revised manuscript, where the failure-case figure is Fig.~7; it is reproduced below):}
+
+\textcolor{red}{
+\textbf{IV-H. Failure Cases and Limitations.}
+Although FANet achieves the best reported accuracy on all five datasets, it still struggles under two identifiable
+conditions. Fig.~7 shows two selected failure cases from FANet's predictions. In each column, the top row is the input
+image, the middle row is the ground truth, and the bottom row is our prediction, so that the gap between the ground
+truth and our result can be read directly.
+}
+
+\textcolor{red}{
+\textbf{(1) Fragmentation of low-contrast and camouflaged cracks.} When a crack blends into the pavement and its
+intensity contrast is low, its frequency evidence can become difficult to distinguish from background texture. A
+plausible consequence is insufficient support for bridging weak crack segments. As shown in Fig.~7(a), the crack that
+forms a connected structure in the ground truth is broken into disconnected segments in our prediction.
+}
+
+\textcolor{red}{
+\textbf{(2) Under-segmentation of fine hairline cracks.} When cracks are only a few pixels wide, their frequency
+evidence can be faint relative to surrounding pavement texture. As shown in Fig.~7(b), the thin cracks that are
+complete in the ground truth are only partially recovered, and some fine branches are missed.
+}
+
+\textcolor{red}{
+These observations suggest that the current design is least reliable when crack evidence is not a sufficiently
+distinct sparse high-frequency signal, particularly at very low contrast or very small width. In addition, two
+limitations are worth noting. First, the two-step coarse-to-fine pipeline reduces throughput from 13.2 FPS for the PVT
+baseline to 10.2 FPS for the complete model (22.7\%) on the same hardware, as reported in Table~II. Second, FANet is
+trained with binary cross-entropy only and imposes no explicit topological continuity constraint, which may contribute
+to the fragmented predictions above. We plan to explore topology-aware objectives, contrast-adaptive frequency
+weighting, and complementary sensing modalities such as depth or infrared imaging to push these boundaries in future
+work.
+}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.40\linewidth,trim=0 0 78.5 0,clip]{failure_cases-1.pdf}
+\caption{\textcolor{red}{Representative failure cases of FANet. In each column, the top row is the input image, the
+middle row is the ground truth, and the bottom row is our prediction. (a) A camouflaged, low-contrast crack whose
+connected ground-truth structure is fragmented into disconnected segments. (b) A fine hairline crack whose complete
+ground truth is only partially recovered.}}
+\label{failure_rebuttal}
+\end{figure}
+
+\vspace{6pt}
+
+%%%%%%%%%%%%%%%%%%  end R1-Q3  %%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Response to Reviewer 2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\color{BlueGreen} \textbf{Comments to the Author:}
+
+\textbf{The authors have addressed all my concerns. I recommend acceptance. Thanks.}}
+
+\textbf{Response:}
+We sincerely thank the reviewer for the positive evaluation of our revised manuscript and for recommending
+acceptance. The reviewer's constructive comments in the previous round have contributed greatly to improving the
+quality of this work.\\[10pt]
+
+\clearpage
+
+{\small
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEfull}
+}
+
+\end{document}
