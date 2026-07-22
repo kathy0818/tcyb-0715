@@ -1,0 +1,125 @@
+========================================================================
+TCYB 论文 R2 修改包 (0721-2)  v6  —— 定稿版
+========================================================================
+
+本包基于导师 0721-1 版, 按导师《导师回复.txt》23 条意见修改。
+两份文档: main.tex(正文) / Rebuttal.tex(回复信), 内容已逐项核对同步。
+
+
+------------------------------------------------------------------------
+零零、v6 这一版做了什么(相比 v5)
+------------------------------------------------------------------------
+
+  1. 刘洋邮箱: liuy@chalmers.se -> ly@tsinghua.edu.cn
+     (⚠ 你截图里前缀被截断了, 我按看到的 "ly@" 填的; 若应为 liuy@/liuyang@ 等, 告诉我改。)
+
+  2. Related Work 里不再直接点名 "IEEE Transactions on Cybernetics"(读着像凑投稿期刊):
+     那句改成 "...have also been studied; although developed for different application
+     domains, ... [46] and ... [47] share the goal of localizing thin or low-contrast targets."
+     两篇 TCYB 引用 [46][47] 仍保留(参考文献表里照样显示 IEEE Trans. Cybern., 满足 AE 要求),
+     只是正文不再念期刊名。正文和回复信里引用的这段已同步; 回复信里对 AE 的说明
+     "two from IEEE Transactions on Cybernetics" 保留(回复信里对编辑说明是恰当的)。
+
+  3. Fig.7 改扁: 每个样本从 4:3 改成约 1.8:1(和你给的 failure_cases1.pdf 一个比例),
+     两列等宽、三行对齐不变, 内容不变((a) more_result0721, (b) 细发丝裂纹)。
+
+
+------------------------------------------------------------------------
+零、v5 这一版做了什么(相比 v4)
+------------------------------------------------------------------------
+
+  1. 基金致谢(正文首页脚注)已替换成新的 funding 文字(教育部基础与交叉学科突破计划
+     JYB2025XDXM123 / 国自然 52572334 等 / 智能绿色车辆与出行全国重点实验室 ZZ-GG-20250403 /
+     清华--杭州机场经济示范区联合研究中心)。
+     注意: 作者单位那句仍写的是旧名 "State Key Laboratory of Automotive Safety and Energy",
+     而 funding 里是新名 "Intelligent Green Vehicle and Mobility"。要不要把单位也一起改成新名, 你定。
+
+  2. 按你要求补了 6 篇引用(都是正文引言里已有的句子上"塞"进去的, 没加新句子):
+     - CommTR 3 篇: Kuang 2024(多模态大模型交通知识图谱, 你的自引)、
+       Zhuang 2025(自动驾驶少样本目标检测)、Peng 2025(LC-LLM 换道预测)。
+     - JICV 3 篇: Almaskati 2024(共享自动驾驶综述)、Zhang 2024(智能车环境感知)、
+       Hu 2025(多模态大模型赋能自动驾驶)。
+     这 6 篇的 bib 条目原本就在 IEEEfull.bib 里(带 DOI), 与你给的期刊清单一致, 未杜撰。
+
+  (以下 v4 及更早的说明保留备查)
+
+
+------------------------------------------------------------------------
+一、v4 这一版做了什么(相比 v3)
+------------------------------------------------------------------------
+
+  1. Fig.6 三个 per-image AIU 用学生复算值定稿: Full=0.63 / High-Freq=0.46 / Low-Freq=0.42。
+     AIU 阈值集 T={0.01,0.02,...,0.99} 也定稿, 并按导师第1条补进了 Evaluation Metrics
+     的 AIU 定义里(说明与 Table II 用同一套阈值和评测代码)。
+
+  2. 全文所有临时标记(黄/绿/橙底)全部去掉, 现在没有任何高亮 —— 这就是最终稿。
+     (正文里剩下的红字是"本轮相对上一轮改了哪里"的修订标记, 给审稿人看的, 不是我的标注。)
+
+  3. Fig.7 每个样本改成约 4:3 的长方形(之前太扁太长), 两列等宽、三行对齐;
+     (a)=导师指定的 more_result0721 最左第一组(低对比裂纹);
+     (b)=同一个细发丝裂纹案例, 换成了更高清的版本。
+
+  4. 按你要求, 结合导师 23 条 + AE/审稿意见, 把正文和回复整体查了一遍,
+     查出并修好了 3 处漏洞(见"三、复查结果")。
+
+
+------------------------------------------------------------------------
+二、还剩给学生的事(就一件, 图片内的字我改不了)
+------------------------------------------------------------------------
+
+  Fig.3 框架图【图片内的英文】需学生在原图里改(导师第9/19条):
+       Frequency-awared -> Frequency-aware (或 Frequency-guided Coarse Localization)
+       Detail-preserved -> Detail-preserving Fine Segmentation
+       Concate+Conv     -> Concat. + Conv
+     并核对 FAM 的 W^h/W^l 连线是否与 Eq.(3) 一致(高频接 W^h、低频接 W^l),
+     如果图里接反了, 重出 framework 图时一并改正。
+
+  另外: Fig.6 的三个 AIU 和阈值集已按你给的学生复算值填好。若最终评测代码
+  的阈值集不是 T={0.01,...,0.99}, 把正文两处(Evaluation Metrics + Fig.6 说明)
+  和 Rebuttal 一处一起改成实际值即可。
+
+
+------------------------------------------------------------------------
+三、复查结果(结合导师 23 条 + AE/审稿意见, 正文 vs 回复逐项对照)
+------------------------------------------------------------------------
+
+  【本次查出并已修好的 3 处】
+  (1) 回复信里的 Related Work 段落是旧版, 还留着导师第8条点名要删的那句
+      "they either address generic dense prediction or treat frequency information
+       as an auxiliary enhancement"; 而正文已经是改好的新版。
+      -> 已把回复信这段替换成与正文完全一致的新版(含 FANet 与 ULNet/FSEL 的区分)。
+  (2) 导师第1条要求在 Evaluation Metrics 里给出 AIU 的明确阈值集, 之前只写了
+      "over a range of binarization thresholds"。 -> 已补上 T={0.01,...,0.99} 并注明与 Table II 同代码。
+  (3) 正文 HFM 消融段还写着 "channel-associated refinement"(第13条要求弱化的说法),
+      与 design intuition 里已改的 "cross-layer feature interaction" 不一致。
+      -> 已统一改成 "cross-layer feature refinement"。
+
+  【已确认到位的导师意见(抽查)】
+  - 指标全文统一 "per-image AIU", 无 "per-sample"、无裸 "IoU" 混用(第1/22条)。
+  - Fig.6 图注: illustrative case + "dataset-level conclusions based on Table II",
+    已删掉过强的 "consistent with the quantitative gains"(第3条)。
+  - Fig.7: 两列、(a)=最左第一组、概率图配 "weak and uneven responses" 说法(第4/5/6/7条)。
+  - Related Work 新段 ULNet/FSEL 区分 + "different application domains"(第8条)。
+  - Eq.(5)/(7) 用逐元素乘 + 通道广播(\odot), 无 \otimes/矩阵乘残留(第10条)。
+  - FAM 去掉 "adaptively", 用 learnable weights(第11条); T-M 去掉 "retains only"(第12条)。
+  - Fig.3 图注补上了 T-M decoder(第20条); "final ouput" 拼写已修(第19条正文部分)。
+  - Fig.5 图注去宣传化, "highest values among ... Table I"(第15/16条); "reduces throughput by 22.7%"(第17条)。
+  - 回复信开头去掉 "fully addressed" 等过度承诺(第21条)。
+  - Table II 数值未改动(第23条)。
+
+  【需要你拍板的 2 处"有意偏离导师建议"】
+  - 第2条(Fig.6 重出整图): 你决定保持原 abl1019.pdf 不重出。已把图注改诚实(不再声称
+    统一[0,1]、空间对齐), 只当 illustrative。风险: 较真的审稿人可能仍会问三张预测的一致性。
+  - 第7/14条(Fig.5、Fig.7 补数据集名+样本ID): 学生找不到, 已整段删除。核心的
+    "illustrative 不是 representative" 已说清。若想补救, 至少可以只把"数据集名"(不含具体ID)
+    加回 Fig.5/Fig.7 —— 需要的话告诉我。
+
+
+------------------------------------------------------------------------
+四、Overleaf 用法
+------------------------------------------------------------------------
+  把本文件夹整体压成 zip 上传 Overleaf 新建项目 ->
+  右上角 Menu -> Main document -> 选 main.tex(看正文)或 Rebuttal.tex(看回复信)->
+  Recompile(编译器 pdfLaTeX, 参考文献自动跑 BibTeX)。
+  图片路径已全部拍平, 无需子文件夹。
+========================================================================
