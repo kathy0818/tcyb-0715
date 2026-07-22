@@ -21,10 +21,10 @@
 \usepackage{soul}
 \usepackage{framed}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 本轮(0721 导师意见)颜色标记 - 详见随附 README_颜色说明.txt
-%%   本轮已去掉: 黄底(\FILLIN, 学生待填的样本ID/数据集名) 和 绿底(\edt/edtblk, 已定稿文字)。
-%%   现在全文只保留一种标记:
-%%   橙底 \cck{} = 我先填的参考数值(Fig.6 的 AIU / 阈值集), 学生用原始数据核对, 不对就改。
+%% 本轮(0721 导师意见)修改说明 - 详见随附 README_颜色说明.txt
+%%   本轮所有临时标记(黄底 \FILLIN / 绿底 \edt,edtblk / 橙底 \cck)均已定稿去掉, 全文无高亮。
+%%   Fig.6 的 per-image AIU (Full 0.63 / High 0.46 / Low 0.42) 与阈值集 T={0.01,...,0.99}
+%%   已按学生用原始数据/正式评测脚本复算的值填入, 即最终稿。
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \definecolor{fillorange}{RGB}{200,60,0}
 \definecolor{fillyellow}{RGB}{255,242,0}
@@ -382,7 +382,7 @@ thereby providing a balanced measure of detection performance.
 
 
 \textbf{AIU.}
-The Average Intersection over Union (AIU) computes the IoU between predicted and ground-truth crack regions over a range of binarization thresholds and averages the resulting scores. Unlike a conventional single-threshold IoU, AIU measures overlap robustness across operating thresholds.
+The Average Intersection over Union (AIU) computes the IoU between predicted and ground-truth crack regions over a range of binarization thresholds \textcolor{red}{($T=\{0.01, 0.02, \ldots, 0.99\}$, the same threshold set and evaluation code used for Table~\ref{abla})} and averages the resulting scores. Unlike a conventional single-threshold IoU, AIU measures overlap robustness across operating thresholds.
 
 
 
@@ -524,7 +524,7 @@ The results reveal that both low- and high-frequency cues independently improve 
 To better assess computational efficiency, we also report inference speed (FPS) for each configuration, reflecting the module-wise contribution to overall runtime.
 Adding T-M improves GAPs384 and CFD but causes a modest regression on Crack500 relative to FAM (Full): AIU, AP, and F1 decrease by 0.022, 0.019, and 0.017, respectively. HFM then improves all nine accuracy entries and produces the best result on every dataset. The complete pipeline reduces throughput by 22.7\% (from 13.2 to 10.2 FPS) relative to the baseline, making the accuracy--efficiency trade-off explicit.
 As illustrated in Fig.~\ref{ablavis}, these findings are visually consistent with the observed improvements from high- and low-frequency cues.
-\textcolor{red}{To clarify the representativeness of this visualization, the sample in Fig.~\ref{ablavis} is a purposefully selected illustrative case from the Crack500 test set, rather than a random or best-performing sample. It contains a wide trunk crack and hairline branches on coarsely textured pavement, where the differences among the three FAM configurations are readily visible. Panels (c)--(e) correspond to \emph{Baseline + FAM (Full)}, \emph{Baseline + FAM (High-Freq)}, and \emph{Baseline + FAM (Low-Freq)} in Table~\ref{abla}, respectively; the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set \cck{$T=\{0.01, 0.02, \ldots, 0.99\}$}.}
+\textcolor{red}{To clarify the representativeness of this visualization, the sample in Fig.~\ref{ablavis} is a purposefully selected illustrative case from the Crack500 test set, rather than a random or best-performing sample. It contains a wide trunk crack and hairline branches on coarsely textured pavement, where the differences among the three FAM configurations are readily visible. Panels (c)--(e) correspond to \emph{Baseline + FAM (Full)}, \emph{Baseline + FAM (High-Freq)}, and \emph{Baseline + FAM (Low-Freq)} in Table~\ref{abla}, respectively; the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set $T=\{0.01, 0.02, \ldots, 0.99\}$.}
 
 
 \textbf{Effectiveness of FAM.} Table~\ref{abla} shows that the low- and high-frequency branches each improve all accuracy metrics over the PVT baseline. Their full fusion yields the strongest FAM-only result on GAPs384, Crack500, and CFD, supporting the use of complementary contour and texture cues. Because the decomposition and fusion are learned within the network, FAM requires no offline frequency preprocessing.
@@ -536,9 +536,9 @@ As illustrated in Fig.~\ref{ablavis}, these findings are visually consistent wit
 \caption{\textcolor{red}{Qualitative comparison of three FAM configurations in Table~II on a purposefully selected
 illustrative case from the Crack500 test set.
 (a) Input. (b) Ground truth.
-(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; per-image AIU $=$ \cck{0.62}.
-(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-image AIU $=$ \cck{0.45}.
-(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-image AIU $=$ \cck{0.41}.
+(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; per-image AIU $=$ 0.63.
+(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-image AIU $=$ 0.46.
+(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-image AIU $=$ 0.42.
 This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table~II.}}
 \label{ablavis}
 \vspace{-0.5cm}
@@ -549,7 +549,7 @@ This illustrative example qualitatively shows the complementary behavior of the 
 \textbf{Effectiveness of T-M.} T-M aggregates adjacent frequency-aware levels to produce the coarse localization map used by the refinement stage. Relative to FAM (Full), it improves AIU, AP, and F1 by 0.031, 0.035, and 0.033 on GAPs384 and by 0.034, 0.033, and 0.034 on CFD. The corresponding Crack500 scores decrease by 0.022, 0.019, and 0.017, showing that the benefit of cross-level aggregation is dataset dependent rather than uniform.
 
 \textbf{Effectiveness of HFM.} 
-HFM uses the current coarse prediction to guide adjacent-layer fusion. Relative to T-M, it raises all nine accuracy entries by 0.031--0.035 and reduces throughput only from 10.4 to 10.2 FPS. This result supports prior-guided and channel-associated refinement while also quantifying its runtime cost.
+HFM uses the current coarse prediction to guide adjacent-layer fusion. Relative to T-M, it raises all nine accuracy entries by 0.031--0.035 and reduces throughput only from 10.4 to 10.2 FPS. This result supports prior-guided, cross-layer feature refinement while also quantifying its runtime cost.
 
 In summary, the frequency-guided crack localization step in FANet initially delineates critical areas for potential road cracks, leveraging hierarchical frequency-aware semantic information to highlight these regions. The subsequent detail-preserving crack segmentation step further refines this detection by effectively differentiating the cracks from their surrounding complex background. This refinement is achieved through the integration of high-resolution details, correlation features between adjacent layers, and the initial coarse detection map. Collectively, these stages enable FANet to provide a precise and robust solution for the nuanced task of road crack detection, demonstrating its capacity to navigate the challenges posed by subtle and complex crack patterns within diverse road surfaces.
 
@@ -565,7 +565,7 @@ In summary, the frequency-guided crack localization step in FANet initially deli
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.78\linewidth]{failure_cases_v3.pdf}
+\includegraphics[width=0.78\linewidth]{failure_cases_v4.pdf}
 \caption{\textcolor{red}{Illustrative failure cases of FANet. In each column, the top, middle, and bottom rows show the input image, the ground truth, and our prediction, respectively. (a) A low-contrast crack whose continuous ground-truth structure is only weakly and unevenly recovered, losing continuity at several locations. (b) A fine hairline crack whose main structure is recovered while several fine branches are missed or only partially detected.}}
 \label{failurecase}
 \end{figure}

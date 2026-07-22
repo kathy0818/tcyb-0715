@@ -28,10 +28,10 @@
 %% ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% 本轮(0721 导师意见)颜色标记 - 详见随附 README_颜色说明.txt
-%%   本轮已去掉: 黄底(\FILLIN, 学生待填的样本ID/数据集名) 和 绿底(\edt/edtblk, 已定稿文字)。
-%%   现在全文只保留一种标记:
-%%   橙底 \cck{} = 我先填的参考数值(Fig.6 的 AIU / 阈值集), 学生用原始数据核对, 不对就改。
+% 本轮(0721 导师意见)修改说明 - 详见随附 README_颜色说明.txt
+%%   本轮所有临时标记(黄底 \FILLIN / 绿底 \edt,edtblk / 橙底 \cck)均已定稿去掉, 全文无高亮。
+%%   Fig.6 的 per-image AIU (Full 0.63 / High 0.46 / Low 0.42) 与阈值集 T={0.01,...,0.99}
+%%   已按学生用原始数据/正式评测脚本复算的值填入, 即最终稿。
 \let\ul\relax
 \usepackage{soul}
 \usepackage{framed}
@@ -135,21 +135,7 @@ We have addressed the remaining concerns as detailed below:
 %% 新增文献段：7 篇均已联网核实（TCYB×2 + TITS/CVPR/ESWA 裂缝检测×3 + 频域×2）
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \textcolor{red}{
-More recent studies from the past two years further advance both crack detection and frequency-aware
-representation learning. On the crack-detection side, UP-CrackNet~\cite{TITS24_UPCrackNet} formulates road crack
-detection as unsupervised adversarial image restoration to remove the dependence on pixel-wise annotations;
-SCSegamba~\cite{CVPR25_SCSegamba} designs a lightweight structure-aware vision Mamba that captures crack morphology
-and texture with minimal computational cost; and an ultra-lightweight Mamba network with frequency-domain feature
-extraction has been developed for pavement tiny-crack segmentation~\cite{ESWA25_MambaFreqCrack}.
-On the frequency-modeling side, FreqFusion~\cite{TPAMI24_FreqFusion} rectifies feature fusion for dense prediction
-with adaptive low-/high-pass filters, and FSEL~\cite{ECCV24_FSEL} entangles frequency and spatial representations
-for camouflaged object detection. Closely related inspection and segmentation problems have also been actively
-studied in IEEE Transactions on Cybernetics, including zero-shot industrial anomaly detection with hybrid
-vision-language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle
-structures~\cite{TCYB24_CTNet}. These advances confirm the growing interest in spectral cues and efficient
-architectures; however, they either address generic dense prediction or treat frequency information as an auxiliary
-enhancement, leaving a deeply coupled frequency-spatial representation dedicated to road crack detection, the very
-focus of FANet, largely unexplored.
+More recent studies from the past two years further advance both crack detection and frequency-aware representation learning. On the crack-detection side, UP-CrackNet~\cite{TITS24_UPCrackNet} formulates road crack detection as unsupervised adversarial image restoration, and SCSegamba~\cite{CVPR25_SCSegamba} designs a lightweight structure-aware vision Mamba for crack segmentation. Recent work has also examined frequency-spatial interaction more directly: the ultra-lightweight network of~\cite{ESWA25_MambaFreqCrack} combines a Mamba branch with an explicit frequency-domain branch for pavement tiny-crack segmentation, FreqFusion~\cite{TPAMI24_FreqFusion} rectifies feature fusion for dense prediction with adaptive low-/high-pass filters, and FSEL~\cite{ECCV24_FSEL} performs frequency-spatial entanglement for camouflaged object detection. FANet differs from~\cite{ESWA25_MambaFreqCrack} in using multi-level, octave-style high-/low-frequency interaction within a two-stage coarse-to-fine framework, and from FSEL in targeting road-crack localization and detail refinement, which positions FANet as a task-specific frequency-aware architecture rather than implying that prior work uses frequency cues only as auxiliary information. Closely related inspection and segmentation problems have also been studied in IEEE Transactions on Cybernetics; although developed for different application domains, zero-shot industrial anomaly detection with hybrid vision-language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle structures~\cite{TCYB24_CTNet} share the goal of localizing thin or low-contrast targets.
 }
 
 The above paragraph has been added to the end of \textbf{Section~II (Related Work)}, and the seven newly cited
@@ -220,7 +206,7 @@ selected illustrative case from the Crack500 test set, rather than a random or b
 It contains a wide trunk crack and hairline branches on coarsely textured pavement, where the differences among the
 three FAM configurations are readily visible. Panels (c)--(e) correspond to
 \emph{Baseline + FAM (Full)}, \emph{Baseline + FAM (High-Freq)}, and
-\emph{Baseline + FAM (Low-Freq)} in Table~II, respectively; the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set \cck{$T=\{0.01, 0.02, \ldots, 0.99\}$}.
+\emph{Baseline + FAM (Low-Freq)} in Table~II, respectively; the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set $T=\{0.01, 0.02, \ldots, 0.99\}$.
 }
 
 \textcolor{red}{The caption of Fig.~6 has been rewritten as follows (the figure is reproduced below; figure/table numbers in the quoted text refer to the revised manuscript):}
@@ -232,9 +218,9 @@ three FAM configurations are readily visible. Panels (c)--(e) correspond to
 \caption{\textcolor{red}{Qualitative comparison of three FAM configurations in Table~II on a purposefully selected
 illustrative case from the Crack500 test set.
 (a) Input. (b) Ground truth.
-(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; per-image AIU $=$ \cck{0.62}.
-(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-image AIU $=$ \cck{0.45}.
-(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-image AIU $=$ \cck{0.41}.
+(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; per-image AIU $=$ 0.63.
+(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-image AIU $=$ 0.46.
+(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-image AIU $=$ 0.42.
 This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table~II.}}
 \label{ablavis_rebuttal}
 \end{figure}
@@ -360,7 +346,7 @@ work.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.62\linewidth]{failure_cases_v3.pdf}
+\includegraphics[width=0.62\linewidth]{failure_cases_v4.pdf}
 \caption{\textcolor{red}{Illustrative failure cases of FANet. In each column, the top, middle, and bottom rows show the input image, the ground truth, and our prediction, respectively. (a) A low-contrast crack whose continuous ground-truth structure is only weakly and unevenly recovered, losing continuity at several locations. (b) A fine hairline crack whose main structure is recovered while several fine branches are missed or only partially detected.}}
 \label{failure_rebuttal}
 \end{figure}
