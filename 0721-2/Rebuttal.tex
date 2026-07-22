@@ -28,10 +28,10 @@
 %% ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% 本轮(0721 导师意见)颜色标记 —— 详见随附 README_颜色说明.txt
-%%   黄底 \FILLIN{}      = 学生必须用原始数据/正式脚本计算或提供
-%%   绿底 \edt{}/edtblk  = 本轮已按导师意见改好的文字(DONE)
-%%   橙底 \cck{}         = 我先填的参考数值(AIU/阈值集), 学生用原始数据核对, 不对就改
+% 本轮(0721 导师意见)颜色标记 - 详见随附 README_颜色说明.txt
+%%   本轮已去掉: 黄底(\FILLIN, 学生待填的样本ID/数据集名) 和 绿底(\edt/edtblk, 已定稿文字)。
+%%   现在全文只保留一种标记:
+%%   橙底 \cck{} = 我先填的参考数值(Fig.6 的 AIU / 阈值集), 学生用原始数据核对, 不对就改。
 \let\ul\relax
 \usepackage{soul}
 \usepackage{framed}
@@ -63,15 +63,15 @@ Harnessing Frequency-Aware Network for Crack Detection in Road-Perceptive Autono
 
 We sincerely thank you for the constructive feedback on our revised manuscript (CYB-E-2025-10-3956).
 We are encouraged that Reviewer~2 is fully satisfied with the previous revision and recommends acceptance,
-and we are grateful to the Associate Editor and Reviewer~1 for the remaining suggestions. \edt{These suggestions concern visualization representativeness, module presentation, failure analysis, and positioning relative to recent work.}
+and we are grateful to the Associate Editor and Reviewer~1 for the remaining suggestions. These suggestions concern visualization representativeness, module presentation, failure analysis, and positioning relative to recent work.
 
-In this second-round revision, \edt{we have addressed the remaining comments as detailed below.} Specifically, we have
+In this second-round revision, we have addressed the remaining comments as detailed below. Specifically, we have
 (i) clarified the selection criteria of the qualitative visualizations and added exact configuration labels and
-\edt{per-image AIU values} to the caption of the frequency-ablation visualization (Fig.~6);
+per-image AIU values to the caption of the frequency-ablation visualization (Fig.~6);
 (ii) restructured the descriptions of the proposed modules (FAM, T-M, and HFM) in Sections~III-B and III-C
 into an ``intuition-first'' style, providing a concise high-level explanation of each module before the mathematical
 formulation and consolidating the previously scattered equation-by-equation commentary;
-(iii) added a new subsection ``Failure Cases and Limitations'' (Section~IV-H) that presents \edt{illustrative} failure
+(iii) added a new subsection ``Failure Cases and Limitations'' (Section~IV-H) that presents illustrative failure
 examples and analyzes the boundary conditions of the proposed method; and
 (iv) updated the Related Work section with recent 2024--2025 publications from journals and conferences,
 including papers from IEEE Transactions on Cybernetics.
@@ -103,12 +103,12 @@ from this Transaction.}}
 
 \textbf{Response:}
 We sincerely appreciate your positive assessment of the previous revision and your time in handling our manuscript.
-\edt{We have addressed the remaining concerns as detailed below:}
+We have addressed the remaining concerns as detailed below:
 
 \begin{itemize}
     \item \textbf{Representativeness of the visualizations.}
     We now explicitly state the selection criteria of the qualitative figures and, for the frequency-ablation
-    visualization in Fig.~6, label the exact configuration of each panel and report its \edt{per-image AIU} in the caption.
+    visualization in Fig.~6, label the exact configuration of each panel and report its per-image AIU in the caption.
     Please see our detailed response to \textbf{Reviewer~1, Comment~1}.
 
     \item \textbf{Presentation of the proposed modules.}
@@ -119,7 +119,7 @@ We sincerely appreciate your positive assessment of the previous revision and yo
 
     \item \textbf{Failure cases and limitations.}
     A new subsection, \textbf{``Failure Cases and Limitations'' (Section~IV-H)}, has been added. It presents
-    \edt{illustrative} failure examples grouped into two observed failure modes, analyzes why FANet struggles in these
+    illustrative failure examples grouped into two observed failure modes, analyzes why FANet struggles in these
     conditions, and discusses the practical boundary conditions and future directions.
     Please see our detailed response to \textbf{Reviewer~1, Comment~3}.
 
@@ -178,7 +178,7 @@ before the paper can be accepted.}}
 
 \textbf{Response:}
 We sincerely thank the reviewer for the careful reading of our revised manuscript, the accurate summary of our
-contributions, and the constructive suggestions. \edt{We address the three remaining comments as detailed below.}\\[10pt]
+contributions, and the constructive suggestions. We address the three remaining comments as detailed below.\\[10pt]
 
 %%%%%%%%%%%%%%%%%%  R1-Q1  %%%%%%%%%%%%%%%%%%%%%%%%
 {\color{BlueGreen} \textbf{Q1 Comments to the Author:}
@@ -207,20 +207,20 @@ the representativeness of the frequency-based visualizations:
     (Table~II): panel~(c) is produced by \emph{Baseline + FAM (Full)}, panel~(d) by
     \emph{Baseline + FAM (High-Freq)}, and panel~(e) by \emph{Baseline + FAM (Low-Freq)}.
 
-    \item \textbf{\edt{Per-image metrics added to the caption.}}
-    \edt{The per-image AIU of each visualized prediction is now reported in the caption of Fig.~6, computed with the same
-    evaluation code as Table~II}, complementing the dataset-level evidence in Table~II.
+    \item \textbf{Per-image metrics added to the caption.}
+    The per-image AIU of each visualized prediction is now reported in the caption of Fig.~6, computed with the same
+    evaluation code as Table~II, complementing the dataset-level evidence in Table~II.
 \end{enumerate}
 
 \textcolor{red}{In the revised manuscript, the following text has been added to Section~IV-G (Ablation Studies):}
 
 \textcolor{red}{
 To clarify the representativeness of the frequency-based visualization, the sample in Fig.~6 is a purposefully
-selected illustrative case from the Crack500 test set (sample ID \FILLIN{Crack500 sample ID}), rather than a random or best-performing sample.
+selected illustrative case from the Crack500 test set, rather than a random or best-performing sample.
 It contains a wide trunk crack and hairline branches on coarsely textured pavement, where the differences among the
 three FAM configurations are readily visible. Panels (c)--(e) correspond to
 \emph{Baseline + FAM (Full)}, \emph{Baseline + FAM (High-Freq)}, and
-\emph{Baseline + FAM (Low-Freq)} in Table~II, respectively; \edt{the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set} \cck{$T=\{0.01, 0.02, \ldots, 0.99\}$}.
+\emph{Baseline + FAM (Low-Freq)} in Table~II, respectively; the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set \cck{$T=\{0.01, 0.02, \ldots, 0.99\}$}.
 }
 
 \textcolor{red}{The caption of Fig.~6 has been rewritten as follows (the figure is reproduced below; figure/table numbers in the quoted text refer to the revised manuscript):}
@@ -232,10 +232,10 @@ three FAM configurations are readily visible. Panels (c)--(e) correspond to
 \caption{\textcolor{red}{Qualitative comparison of three FAM configurations in Table~II on a purposefully selected
 illustrative case from the Crack500 test set.
 (a) Input. (b) Ground truth.
-(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; \edt{per-image AIU} $=$ \cck{0.62}.
-(d) Prediction of \emph{Baseline + FAM (High-Freq)}; \edt{per-image AIU} $=$ \cck{0.45}.
-(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; \edt{per-image AIU} $=$ \cck{0.41}.
-\edt{This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table~II.}}}
+(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; per-image AIU $=$ \cck{0.62}.
+(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-image AIU $=$ \cck{0.45}.
+(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-image AIU $=$ \cck{0.41}.
+This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table~II.}}
 \label{ablavis_rebuttal}
 \end{figure}
 
@@ -243,10 +243,9 @@ illustrative case from the Crack500 test set.
 selection criteria of the method-comparison figure (Fig.~5):}
 
 \textcolor{red}{
-The examples in Fig.~5 are purposefully selected \edt{illustrative} cases from the five test sets.
+The examples in Fig.~5 are purposefully selected illustrative cases from the five test sets.
 They cover thin hairline cracks, coarse pavement texture, shadows and uneven illumination, and crack-like
 distractors; they are not random or best-performing samples, and all methods are compared on identical inputs.
-\edt{The dataset and sample ID of each row are listed in} \FILLIN{dataset name + sample ID per row of Fig.5}.
 }\\[10pt]
 
 %%%%%%%%%%%%%%%%%%  end R1-Q1  %%%%%%%%%%%%%%%%%%%%%%%%
@@ -295,7 +294,7 @@ steps.
 \textbf{(Section~III-B, before the formulation of the T-M decoder)}
 \textbf{Design intuition of T-M.} The T-M decoder aggregates the frequency-aware features of the three deepest
 levels: deeper features indicate \emph{where} a crack is likely to exist, while shallower ones describe its shape
-more precisely. \edt{Multiplying adjacent feature maps promotes responses that are jointly activated across semantic levels, thereby suppressing level-specific noise and producing a cleaner coarse localization map} $S_1$.
+more precisely. Multiplying adjacent feature maps promotes responses that are jointly activated across semantic levels, thereby suppressing level-specific noise and producing a cleaner coarse localization map $S_1$.
 }
 
 \textcolor{red}{
@@ -334,24 +333,24 @@ directions of FANet.
 
 \textcolor{red}{
 \textbf{IV-H. Failure Cases and Limitations.}
-Although FANet achieves \edt{the highest values among the methods compared in Table~I}, it still struggles under two identifiable
-conditions. Fig.~7 shows two \edt{illustrative} failure cases selected from the test sets. In each column, the top row is the input
+Although FANet achieves the highest values among the methods compared in Table~I, it still struggles under two identifiable
+conditions. Fig.~7 shows two illustrative failure cases selected from the test sets. In each column, the top row is the input
 image, the middle row is the ground truth, and the bottom row is our prediction, so that the gap between the ground
 truth and our result can be read directly.
 }
 
-\begin{edtblk}\textcolor{red}{
+\textcolor{red}{
 \textbf{(1) Fragmentation of low-contrast cracks.} When the local contrast between a crack and the surrounding pavement is weak, some crack segments receive low prediction confidence. As shown in Fig.~7(a), the ground-truth crack forms a continuous structure, whereas the prediction exhibits weak and uneven responses along the crack, so that several portions are barely activated and the predicted crack loses continuity.
-}\end{edtblk}
+}
 
-\begin{edtblk}\textcolor{red}{
+\textcolor{red}{
 \textbf{(2) Under-segmentation of fine hairline cracks.} When cracks are only a few pixels wide, their responses can be weak relative to the surrounding pavement texture. As shown in Fig.~7(b), the main crack is recovered, but several fine branches visible in the ground truth are missed or only partially detected.
-}\end{edtblk}
+}
 
 \textcolor{red}{
 These observations suggest that the current design is least reliable when crack evidence is not a sufficiently
 distinct sparse high-frequency signal, particularly at very low contrast or very small width. In addition, two
-limitations are worth noting. First, the two-step coarse-to-fine pipeline \edt{reduces throughput by 22.7\%} (from 13.2 FPS for the PVT
+limitations are worth noting. First, the two-step coarse-to-fine pipeline reduces throughput by 22.7\% (from 13.2 FPS for the PVT
 baseline to 10.2 FPS for the complete model) on the same hardware, as reported in Table~II. Second, FANet is
 trained with binary cross-entropy only and imposes no explicit topological continuity constraint, which may contribute
 to the fragmented predictions above. We plan to explore topology-aware objectives, contrast-adaptive frequency
@@ -361,8 +360,8 @@ work.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.62\linewidth]{failure_cases_v2.pdf}
-\caption{\textcolor{red}{\edt{Illustrative} failure cases of FANet. In each column, the top, middle, and bottom rows show the input image, the ground truth, and our prediction, respectively. (a) \edt{A low-contrast crack whose continuous ground-truth structure is only weakly and unevenly recovered, losing continuity at several locations.} (b) A fine hairline crack whose main structure is recovered while several fine branches are missed or only partially detected. \edt{Dataset and sample ID:} \FILLIN{dataset + sample ID for (a) and (b)}.}}
+\includegraphics[width=0.62\linewidth]{failure_cases_v3.pdf}
+\caption{\textcolor{red}{Illustrative failure cases of FANet. In each column, the top, middle, and bottom rows show the input image, the ground truth, and our prediction, respectively. (a) A low-contrast crack whose continuous ground-truth structure is only weakly and unevenly recovered, losing continuity at several locations. (b) A fine hairline crack whose main structure is recovered while several fine branches are missed or only partially detected.}}
 \label{failure_rebuttal}
 \end{figure}
 

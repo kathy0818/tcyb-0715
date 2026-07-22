@@ -21,10 +21,10 @@
 \usepackage{soul}
 \usepackage{framed}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 本轮(0721 导师意见)修改的颜色标记 —— 详见随附 README_颜色说明.txt
-%%   黄底 \FILLIN{...}      = 学生必须用原始数据/正式脚本计算或提供(不可用图像反算值)
-%%   绿底 \edt{} / edtblk   = 本轮已按导师意见改好的文字(DONE)
-%%   橙底 \cck{}            = 我先填的参考数值(AIU/阈值集), 学生用原始数据核对, 不对就改
+%% 本轮(0721 导师意见)颜色标记 - 详见随附 README_颜色说明.txt
+%%   本轮已去掉: 黄底(\FILLIN, 学生待填的样本ID/数据集名) 和 绿底(\edt/edtblk, 已定稿文字)。
+%%   现在全文只保留一种标记:
+%%   橙底 \cck{} = 我先填的参考数值(Fig.6 的 AIU / 阈值集), 学生用原始数据核对, 不对就改。
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \definecolor{fillorange}{RGB}{200,60,0}
 \definecolor{fillyellow}{RGB}{255,242,0}
@@ -131,7 +131,7 @@ For traditional crack detection, Techniques such as intensity thresholding, morp
 \includegraphics[width=\linewidth]{framework1019.pdf}
 \caption{Overall architecture of the proposed Frequency-Aware Network (FANet). 
 The solid arrows denote feature flow between modules, while dashed lines represent skip connections used for cross-layer feature fusion. 
-\edt{Each block (the Transformer-based backbone, FAM, the T-M decoder, and HFM) corresponds to a specific processing stage} described in Sections~\ref{overview} to~\ref{sec:Detail-preserving-Fine-Localization}.}
+Each block (the Transformer-based backbone, FAM, the T-M decoder, and HFM) corresponds to a specific processing stage described in Sections~\ref{overview} to~\ref{sec:Detail-preserving-Fine-Localization}.}
 \label{Framework}
 \vspace{-0.5cm}
 \end{figure*}
@@ -170,7 +170,7 @@ yet they generally treat frequency cues as auxiliary enhancements rather than de
 where the frequency-guided coarse localization phase captures global structure and the detail-preserving fine segmentation phase refines local details.} 
 This design enables dynamic modulation between spectral and spatial features, achieving superior robustness, precision, and adaptability under complex road textures and illumination variations.
 
-\begin{edtblk}\textcolor{red}{More recent studies from the past two years further advance both crack detection and frequency-aware representation learning. On the crack-detection side, UP-CrackNet~\cite{TITS24_UPCrackNet} formulates road crack detection as unsupervised adversarial image restoration, and SCSegamba~\cite{CVPR25_SCSegamba} designs a lightweight structure-aware vision Mamba for crack segmentation. Recent work has also examined frequency-spatial interaction more directly: the ultra-lightweight network of~\cite{ESWA25_MambaFreqCrack} combines a Mamba branch with an explicit frequency-domain branch for pavement tiny-crack segmentation, FreqFusion~\cite{TPAMI24_FreqFusion} rectifies feature fusion for dense prediction with adaptive low-/high-pass filters, and FSEL~\cite{ECCV24_FSEL} performs frequency-spatial entanglement for camouflaged object detection. FANet differs from~\cite{ESWA25_MambaFreqCrack} in using multi-level, octave-style high-/low-frequency interaction within a two-stage coarse-to-fine framework, and from FSEL in targeting road-crack localization and detail refinement, which positions FANet as a task-specific frequency-aware architecture rather than implying that prior work uses frequency cues only as auxiliary information. Closely related inspection and segmentation problems have also been studied in IEEE Transactions on Cybernetics; although developed for different application domains, zero-shot industrial anomaly detection with hybrid vision-language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle structures~\cite{TCYB24_CTNet} share the goal of localizing thin or low-contrast targets.}\end{edtblk}
+\textcolor{red}{More recent studies from the past two years further advance both crack detection and frequency-aware representation learning. On the crack-detection side, UP-CrackNet~\cite{TITS24_UPCrackNet} formulates road crack detection as unsupervised adversarial image restoration, and SCSegamba~\cite{CVPR25_SCSegamba} designs a lightweight structure-aware vision Mamba for crack segmentation. Recent work has also examined frequency-spatial interaction more directly: the ultra-lightweight network of~\cite{ESWA25_MambaFreqCrack} combines a Mamba branch with an explicit frequency-domain branch for pavement tiny-crack segmentation, FreqFusion~\cite{TPAMI24_FreqFusion} rectifies feature fusion for dense prediction with adaptive low-/high-pass filters, and FSEL~\cite{ECCV24_FSEL} performs frequency-spatial entanglement for camouflaged object detection. FANet differs from~\cite{ESWA25_MambaFreqCrack} in using multi-level, octave-style high-/low-frequency interaction within a two-stage coarse-to-fine framework, and from FSEL in targeting road-crack localization and detail refinement, which positions FANet as a task-specific frequency-aware architecture rather than implying that prior work uses frequency cues only as auxiliary information. Closely related inspection and segmentation problems have also been studied in IEEE Transactions on Cybernetics; although developed for different application domains, zero-shot industrial anomaly detection with hybrid vision-language prompts~\cite{TCYB25_AnomalyVLM} and contrastive transformer-based segmentation of subtle structures~\cite{TCYB24_CTNet} share the goal of localizing thin or low-contrast targets.}
 
 
 
@@ -180,7 +180,7 @@ This design enables dynamic modulation between spectral and spatial features, ac
 \subsection{Overview} \label{overview}
 Our objective is to harness and integrate the unique benefits of both the RGB and frequency domains, aiming to boost the discriminative capabilities for detecting road cracks via intelligent road-perceptive vehicles. In pursuit of this, we present the FANet, a novel architecture tailor-made for crack detection, as depicted in Fig.~\ref{Framework}. FANet is architected around three core components: the Transformer-based feature extraction, the frequency-guided coarse crack localization step, and the detail-preserving fine crack segmentation step. Given an input image $S \in \mathbb{R}^{H \times W \times 3}$, FANet begins with the feature extraction with the Pyramid Vision Transformer (PVT)~\cite{DBLP:journals/cvm/WangXLFSLLLS22} as its feature extractor. This feature extractor generates multi-level feature maps $F_i$, $i \in \{1,2,3,4\}$, each catering to different facets of the detection challenge. The first-level feature map $F_1$, captures intricate details of the road surface essential for spotting minor cracks, whereas the subsequent levels ($F_2, F_3, F_4$) encapsulate progressively higher-level semantic information, pivotal for robust crack localization. In the frequency-guided coarse crack localization phase, our proposed novel frequency-aware module (FAM) extracts frequency domain features from the high-level features ($F_2, F_3, F_4$), which are then synergized using a {tri-merge (T-M) decoder}. This process yields a preliminary crack map $S_1$. 
 
-After the coarse step, the detail-preserving fine crack segmentation step refines the initial map by using $S_1$ to steer the embedding of high-level features into a hybrid fusion module (HFM). This module facilitates layer-wise, prior-guided adjustments and fusion, significantly enhancing segmentation accuracy. After this step, the final \edt{output} crack map is $S_{\text{output}}$.
+After the coarse step, the detail-preserving fine crack segmentation step refines the initial map by using $S_1$ to steer the embedding of high-level features into a hybrid fusion module (HFM). This module facilitates layer-wise, prior-guided adjustments and fusion, significantly enhancing segmentation accuracy. After this step, the final output crack map is $S_{\text{output}}$.
 
 \begin{figure}
 \centering
@@ -212,7 +212,7 @@ f_i = \{ \text{Resize}(f^{h}_{i}) \odot W^{h}_{i} \} \oplus  \{ \text{Resize}(f^
 where $\text{Resize}$ adjusts the features to a common spatial resolution, $W^{h}_{i}$ and $W^{l}_{i}$ are learnable weights, $\oplus$ denotes element-wise addition, and $\odot$ denotes element-wise multiplication.
 
 
-\textcolor{red}{\textbf{Design intuition of T-M.} The T-M decoder aggregates the frequency-aware features of the three deepest levels: deeper features indicate \emph{where} a crack is likely to exist, while shallower ones describe its shape more precisely. \edt{Multiplying adjacent feature maps promotes responses that are jointly activated across semantic levels, thereby suppressing level-specific noise and producing a cleaner coarse localization map} $S_1$.}
+\textcolor{red}{\textbf{Design intuition of T-M.} The T-M decoder aggregates the frequency-aware features of the three deepest levels: deeper features indicate \emph{where} a crack is likely to exist, while shallower ones describe its shape more precisely. Multiplying adjacent feature maps promotes responses that are jointly activated across semantic levels, thereby suppressing level-specific noise and producing a cleaner coarse localization map $S_1$.}
 
 The T-M decoder implements this adjacent-level interaction as follows:
 
@@ -252,9 +252,9 @@ Two weight maps, $\alpha$ and $\beta$, are derived from $A$ using separate $3 \t
 f^{out}_{i} = f^r_{i+1} + Conv(F_{i}) \odot \alpha + \beta.
 \end{equation}
 
-\begin{edtblk}
+
 Here, $\odot$ denotes element-wise multiplication with channel broadcasting: at stage $i$, the guidance map $S_i\in[0,1]^{H_i\times W_i}$ and the weight map $\alpha$ are broadcast across channels and multiplied element-wise with the feature maps in $\mathbb{R}^{C\times H_i\times W_i}$, consistent with the operators in Fig.~\ref{HFM}.
-\end{edtblk}
+
 
 After the two refinement stages, two $3 \times 3$ convolutions generate the final prediction $S_{\text{output}}$.
 
@@ -271,7 +271,7 @@ where $\mathcal{G}^T$ is the ground-truth.
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.9\linewidth]{com0322.pdf}
-\caption{Comparison between our FANet and other SOTA methods. \edt{In these illustrative cases, FANet preserves the main crack structures and recovers more fine branches than the compared methods.} Best viewed by zooming in.}
+\caption{Comparison between our FANet and other SOTA methods. In these illustrative cases, FANet preserves the main crack structures and recovers more fine branches than the compared methods. Best viewed by zooming in.}
 \label{QualitativeResults}
 \end{figure*}
 
@@ -481,7 +481,7 @@ Table~\ref{totaltable} reports F1, AIU, and AP on five datasets. FANet obtains t
 We conduct a comprehensive comparison of the inference efficiency of our FANet and other crack detection methods in Table~\ref{totaltable}.  
 All results are measured on an Intel(R) Xeon(R) Gold 5218R CPU and an NVIDIA RTX 3090 Ti GPU.  
 The Frames-Per-Second (FPS) values are calculated as the reciprocal of the average inference time per image.  
-As shown in Table~\ref{totaltable}, FANet runs at 10.2 FPS while \edt{attaining the highest accuracy among the methods compared in Table~I}. The method therefore prioritizes segmentation accuracy over the peak throughput of the lightest comparison models; the module-wise cost is quantified further in Table~\ref{abla}.
+As shown in Table~\ref{totaltable}, FANet runs at 10.2 FPS while attaining the highest accuracy among the methods compared in Table~I. The method therefore prioritizes segmentation accuracy over the peak throughput of the lightest comparison models; the module-wise cost is quantified further in Table~\ref{abla}.
 
 
 
@@ -511,7 +511,7 @@ Baseline + FAM + T-M + HFM        & {\color[HTML]{FE0000} 0.266} & {\color[HTML]
 
 \subsection{Qualitative Results} \label{sec:Qualitative-Results}
 Fig. \ref{QualitativeResults} showcases the proficiency of our FANet in detecting various types of road cracks, juxtaposed against the outcomes from competing methods. The visual comparisons strikingly illustrate the superior segmentation accuracy of FANet, highlighting its capability to delineate a wide array of crack categories with remarkable precision. This adeptness in accurately identifying and segmenting different forms of cracks underscores the method's robustness and its nuanced understanding of the crack detection task. Such precision is indispensable in fields where accurate crack detection plays a pivotal role, including structural health monitoring, quality assurance in manufacturing processes, and geological assessments. Through these visualized outcomes, the efficacy and applicational potential of FANet in critical real-world scenarios are vividly demonstrated, affirming its value as a significant advancement in the domain of crack detection.
-\textcolor{red}{The examples in Fig.~\ref{QualitativeResults} are purposefully selected \edt{illustrative} cases from the five test sets. They cover thin hairline cracks, coarse pavement texture, shadows and uneven illumination, and crack-like distractors; they are not random or best-performing samples, and all methods are compared on identical inputs. \edt{The dataset and sample ID of each row are listed in} \FILLIN{dataset name + sample ID per row of Fig.5}.}
+\textcolor{red}{The examples in Fig.~\ref{QualitativeResults} are purposefully selected illustrative cases from the five test sets. They cover thin hairline cracks, coarse pavement texture, shadows and uneven illumination, and crack-like distractors; they are not random or best-performing samples, and all methods are compared on identical inputs.}
 
 
 \subsection{Ablation Studies}
@@ -522,9 +522,9 @@ The outcomes of these comparisons are detailed in Table~\ref{abla}, which identi
 In particular, we further divide the Frequency-aware Module (FAM) into three configurations, namely Low-Frequency, High-Frequency, and Full fusion, to quantify their individual and joint contributions.
 The results reveal that both low- and high-frequency cues independently improve all nine accuracy entries over the baseline, while their full fusion gives the strongest FAM-only result on all three datasets.
 To better assess computational efficiency, we also report inference speed (FPS) for each configuration, reflecting the module-wise contribution to overall runtime.
-Adding T-M improves GAPs384 and CFD but causes a modest regression on Crack500 relative to FAM (Full): AIU, AP, and F1 decrease by 0.022, 0.019, and 0.017, respectively. HFM then improves all nine accuracy entries and produces the best result on every dataset. The complete pipeline \edt{reduces throughput by 22.7\% (from 13.2 to 10.2 FPS)} relative to the baseline, making the accuracy--efficiency trade-off explicit.
+Adding T-M improves GAPs384 and CFD but causes a modest regression on Crack500 relative to FAM (Full): AIU, AP, and F1 decrease by 0.022, 0.019, and 0.017, respectively. HFM then improves all nine accuracy entries and produces the best result on every dataset. The complete pipeline reduces throughput by 22.7\% (from 13.2 to 10.2 FPS) relative to the baseline, making the accuracy--efficiency trade-off explicit.
 As illustrated in Fig.~\ref{ablavis}, these findings are visually consistent with the observed improvements from high- and low-frequency cues.
-\textcolor{red}{To clarify the representativeness of this visualization, the sample in Fig.~\ref{ablavis} is a purposefully selected illustrative case from the Crack500 test set (sample ID \FILLIN{Crack500 sample ID}), rather than a random or best-performing sample. It contains a wide trunk crack and hairline branches on coarsely textured pavement, where the differences among the three FAM configurations are readily visible. Panels (c)--(e) correspond to \emph{Baseline + FAM (Full)}, \emph{Baseline + FAM (High-Freq)}, and \emph{Baseline + FAM (Low-Freq)} in Table~\ref{abla}, respectively; \edt{the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set} \cck{$T=\{0.01, 0.02, \ldots, 0.99\}$}.}
+\textcolor{red}{To clarify the representativeness of this visualization, the sample in Fig.~\ref{ablavis} is a purposefully selected illustrative case from the Crack500 test set, rather than a random or best-performing sample. It contains a wide trunk crack and hairline branches on coarsely textured pavement, where the differences among the three FAM configurations are readily visible. Panels (c)--(e) correspond to \emph{Baseline + FAM (Full)}, \emph{Baseline + FAM (High-Freq)}, and \emph{Baseline + FAM (Low-Freq)} in Table~\ref{abla}, respectively; the caption reports a per-image AIU for each panel, computed with the same evaluation code as Table~II over the threshold set \cck{$T=\{0.01, 0.02, \ldots, 0.99\}$}.}
 
 
 \textbf{Effectiveness of FAM.} Table~\ref{abla} shows that the low- and high-frequency branches each improve all accuracy metrics over the PVT baseline. Their full fusion yields the strongest FAM-only result on GAPs384, Crack500, and CFD, supporting the use of complementary contour and texture cues. Because the decomposition and fusion are learned within the network, FAM requires no offline frequency preprocessing.
@@ -536,10 +536,10 @@ As illustrated in Fig.~\ref{ablavis}, these findings are visually consistent wit
 \caption{\textcolor{red}{Qualitative comparison of three FAM configurations in Table~II on a purposefully selected
 illustrative case from the Crack500 test set.
 (a) Input. (b) Ground truth.
-(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; \edt{per-image AIU} $=$ \cck{0.62}.
-(d) Prediction of \emph{Baseline + FAM (High-Freq)}; \edt{per-image AIU} $=$ \cck{0.45}.
-(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; \edt{per-image AIU} $=$ \cck{0.41}.
-\edt{This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table~II.}}}
+(c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; per-image AIU $=$ \cck{0.62}.
+(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-image AIU $=$ \cck{0.45}.
+(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-image AIU $=$ \cck{0.41}.
+This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table~II.}}
 \label{ablavis}
 \vspace{-0.5cm}
 \end{figure}
@@ -555,18 +555,18 @@ In summary, the frequency-guided crack localization step in FANet initially deli
 
 
 \subsection{\textcolor{red}{Failure Cases and Limitations}}
-\textcolor{red}{Although FANet achieves \edt{the highest values among the methods compared in Table~I}, it still struggles under two identifiable conditions. Fig.~\ref{failurecase} shows two \edt{illustrative} failure cases selected from the test sets. In each column, the top row is the input image, the middle row is the ground truth, and the bottom row is our prediction, so that the gap between the ground truth and our result can be read directly.}
+\textcolor{red}{Although FANet achieves the highest values among the methods compared in Table~I, it still struggles under two identifiable conditions. Fig.~\ref{failurecase} shows two illustrative failure cases selected from the test sets. In each column, the top row is the input image, the middle row is the ground truth, and the bottom row is our prediction, so that the gap between the ground truth and our result can be read directly.}
 
-\begin{edtblk}\textcolor{red}{\emph{(1) Fragmentation of low-contrast cracks.} When the local contrast between a crack and the surrounding pavement is weak, some crack segments receive low prediction confidence. As shown in Fig.~\ref{failurecase}(a), the ground-truth crack forms a continuous structure, whereas the prediction exhibits weak and uneven responses along the crack, so that several portions are barely activated and the predicted crack loses continuity.}\end{edtblk}
+\textcolor{red}{\emph{(1) Fragmentation of low-contrast cracks.} When the local contrast between a crack and the surrounding pavement is weak, some crack segments receive low prediction confidence. As shown in Fig.~\ref{failurecase}(a), the ground-truth crack forms a continuous structure, whereas the prediction exhibits weak and uneven responses along the crack, so that several portions are barely activated and the predicted crack loses continuity.}
 
-\begin{edtblk}\textcolor{red}{\emph{(2) Under-segmentation of fine hairline cracks.} When cracks are only a few pixels wide, their responses can be weak relative to the surrounding pavement texture. As shown in Fig.~\ref{failurecase}(b), the main crack is recovered, but several fine branches visible in the ground truth are missed or only partially detected.}\end{edtblk}
+\textcolor{red}{\emph{(2) Under-segmentation of fine hairline cracks.} When cracks are only a few pixels wide, their responses can be weak relative to the surrounding pavement texture. As shown in Fig.~\ref{failurecase}(b), the main crack is recovered, but several fine branches visible in the ground truth are missed or only partially detected.}
 
-\textcolor{red}{These observations suggest that the current design is least reliable when crack evidence is not a sufficiently distinct sparse high-frequency signal, particularly at very low contrast or very small width. In addition, two limitations are worth noting. First, the two-step coarse-to-fine pipeline \edt{reduces throughput by 22.7\%} (from 13.2 FPS for the PVT baseline to 10.2 FPS for the complete model) on the same hardware, as reported in Table~\ref{abla}. Second, FANet is trained with binary cross-entropy only and imposes no explicit topological continuity constraint, which may contribute to the fragmented predictions above. We plan to explore topology-aware objectives, contrast-adaptive frequency weighting, and complementary sensing modalities such as depth or infrared imaging to push these boundaries in future work.}
+\textcolor{red}{These observations suggest that the current design is least reliable when crack evidence is not a sufficiently distinct sparse high-frequency signal, particularly at very low contrast or very small width. In addition, two limitations are worth noting. First, the two-step coarse-to-fine pipeline reduces throughput by 22.7\% (from 13.2 FPS for the PVT baseline to 10.2 FPS for the complete model) on the same hardware, as reported in Table~\ref{abla}. Second, FANet is trained with binary cross-entropy only and imposes no explicit topological continuity constraint, which may contribute to the fragmented predictions above. We plan to explore topology-aware objectives, contrast-adaptive frequency weighting, and complementary sensing modalities such as depth or infrared imaging to push these boundaries in future work.}
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[width=0.78\linewidth]{failure_cases_v2.pdf}
-\caption{\textcolor{red}{\edt{Illustrative} failure cases of FANet. In each column, the top, middle, and bottom rows show the input image, the ground truth, and our prediction, respectively. (a) \edt{A low-contrast crack whose continuous ground-truth structure is only weakly and unevenly recovered, losing continuity at several locations.} (b) A fine hairline crack whose main structure is recovered while several fine branches are missed or only partially detected. \edt{Dataset and sample ID:} \FILLIN{dataset + sample ID for (a) and (b)}.}}
+\includegraphics[width=0.78\linewidth]{failure_cases_v3.pdf}
+\caption{\textcolor{red}{Illustrative failure cases of FANet. In each column, the top, middle, and bottom rows show the input image, the ground truth, and our prediction, respectively. (a) A low-contrast crack whose continuous ground-truth structure is only weakly and unevenly recovered, losing continuity at several locations. (b) A fine hairline crack whose main structure is recovered while several fine branches are missed or only partially detected.}}
 \label{failurecase}
 \end{figure}
 
