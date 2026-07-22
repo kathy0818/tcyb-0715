@@ -46,6 +46,22 @@ Y.~Zhang, X.~Liang, D.~Li, S.~S. Ge, B.~Gao, H.~Chen, and T.~H. Lee, ``Adaptive
   \url{https://doi.org/10.1109/TCYB.2023.3283771}
 \BIBentrySTDinterwordspacing
 
+\bibitem{Hu2025}
+\BIBentryALTinterwordspacing
+Z.~Hu, M.~Xu, and Q.~Cheng, ``Multimodal large-language model empowering
+  next-generation autonomous driving systems,'' \emph{Journal of Intelligent
+  and Connected Vehicles}, vol.~8, no.~2, p. 9210059, 2025. [Online].
+  Available: \url{https://www.sciopen.com/article/10.26599/JICV.2025.9210059}
+\BIBentrySTDinterwordspacing
+
+\bibitem{ZHUANG2025100194}
+\BIBentryALTinterwordspacing
+Y.~Zhuang, P.~Liu, H.~Yang, K.~Zhang, Y.~Wang, and Z.~Pu, ``Few-shot learning
+  for novel object detection in autonomous driving,'' \emph{Communications in
+  Transportation Research}, vol.~5, p. 100194, 2025. [Online]. Available:
+  \url{https://www.sciencedirect.com/science/article/pii/S2772424725000344}
+\BIBentrySTDinterwordspacing
+
 \bibitem{9543474}
 K.~Li, B.~Wang, Y.~Tian, and Z.~Qi, ``Fast and accurate road crack detection
   based on adaptive cost-sensitive loss function,'' \emph{{IEEE} Trans.
@@ -76,6 +92,24 @@ D.~Almaskati, S.~Kermanshachi, and A.~Pamidimukkala, ``Convergence of emerging
   vehicles,'' \emph{Journal of Intelligent and Connected Vehicles}, vol.~7,
   no.~3, pp. 177--189, 2024. [Online]. Available:
   \url{https://www.sciopen.com/article/10.26599/JICV.2023.9210043}
+\BIBentrySTDinterwordspacing
+
+\bibitem{KUANG2024100146}
+\BIBentryALTinterwordspacing
+S.~Kuang, Y.~Liu, X.~Wang, X.~Wu, and Y.~Wei, ``Harnessing multimodal large
+  language models for traffic knowledge graph generation and decision-making,''
+  \emph{Communications in Transportation Research}, vol.~4, p. 100146, 2024.
+  [Online]. Available:
+  \url{https://www.sciencedirect.com/science/article/pii/S2772424724000295}
+\BIBentrySTDinterwordspacing
+
+\bibitem{PENG2025100170}
+\BIBentryALTinterwordspacing
+M.~Peng, X.~Guo, X.~Chen, K.~Chen, M.~Zhu, L.~Chen, and F.-Y. Wang, ``{LC-LLM:}
+  explainable lane-change intention and trajectory predictions with large
+  language models,'' \emph{Communications in Transportation Research}, vol.~5,
+  p. 100170, 2025. [Online]. Available:
+  \url{https://www.sciencedirect.com/science/article/pii/S2772424725000101}
 \BIBentrySTDinterwordspacing
 
 \bibitem{Zhang2024}
@@ -252,38 +286,12 @@ D.~Zhang, Q.~Li, Y.~Chen, M.~Cao, L.~He, and B.~Zhang, ``An efficient and
   \url{https://doi.org/10.1016/j.imavis.2016.11.018}
 \BIBentrySTDinterwordspacing
 
-\bibitem{Hu2025}
-\BIBentryALTinterwordspacing
-Z.~Hu, M.~Xu, and Q.~Cheng, ``Multimodal large-language model empowering
-  next-generation autonomous driving systems,'' \emph{Journal of Intelligent
-  and Connected Vehicles}, vol.~8, no.~2, p. 9210059, 2025. [Online].
-  Available: \url{https://www.sciopen.com/article/10.26599/JICV.2025.9210059}
-\BIBentrySTDinterwordspacing
-
 \bibitem{DBLP:journals/pami/ChenLLSWZ21}
 \BIBentryALTinterwordspacing
 K.~Chen, W.~Lin, J.~Li, J.~See, J.~Wang, and J.~Zou, ``{AP-Loss} for accurate
   one-stage object detection,'' \emph{{IEEE} Trans. Pattern Anal. Mach.
   Intell.}, vol.~43, no.~11, pp. 3782--3798, 2021. [Online]. Available:
   \url{https://doi.org/10.1109/TPAMI.2020.2991457}
-\BIBentrySTDinterwordspacing
-
-\bibitem{KUANG2024100146}
-\BIBentryALTinterwordspacing
-S.~Kuang, Y.~Liu, X.~Wang, X.~Wu, and Y.~Wei, ``Harnessing multimodal large
-  language models for traffic knowledge graph generation and decision-making,''
-  \emph{Communications in Transportation Research}, vol.~4, p. 100146, 2024.
-  [Online]. Available:
-  \url{https://www.sciencedirect.com/science/article/pii/S2772424724000295}
-\BIBentrySTDinterwordspacing
-
-\bibitem{PENG2025100170}
-\BIBentryALTinterwordspacing
-M.~Peng, X.~Guo, X.~Chen, K.~Chen, M.~Zhu, L.~Chen, and F.-Y. Wang, ``{LC-LLM:}
-  explainable lane-change intention and trajectory predictions with large
-  language models,'' \emph{Communications in Transportation Research}, vol.~5,
-  p. 100170, 2025. [Online]. Available:
-  \url{https://www.sciencedirect.com/science/article/pii/S2772424725000101}
 \BIBentrySTDinterwordspacing
 
 \bibitem{DBLP:journals/cacie/RodriguezLozanoGPO23}
@@ -315,14 +323,6 @@ Q.~Zou, Z.~Zhang, Q.~Li, X.~Qi, Q.~Wang, and S.~Wang, ``{DeepCrack:} learning
   hierarchical convolutional features for crack detection,'' \emph{{IEEE}
   Trans. Image Process.}, vol.~28, no.~3, pp. 1498--1512, 2019. [Online].
   Available: \url{https://doi.org/10.1109/TIP.2018.2878966}
-\BIBentrySTDinterwordspacing
-
-\bibitem{ZHUANG2025100194}
-\BIBentryALTinterwordspacing
-Y.~Zhuang, P.~Liu, H.~Yang, K.~Zhang, Y.~Wang, and Z.~Pu, ``Few-shot learning
-  for novel object detection in autonomous driving,'' \emph{Communications in
-  Transportation Research}, vol.~5, p. 100194, 2025. [Online]. Available:
-  \url{https://www.sciencedirect.com/science/article/pii/S2772424725000344}
 \BIBentrySTDinterwordspacing
 
 \bibitem{TITS24_UPCrackNet}
