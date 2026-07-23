@@ -42,7 +42,7 @@
 
 
 \author{Senyun Kuang, Yintao Wei, Yang Liu, and Xiaobo Qu,~\IEEEmembership{Senior Member,~IEEE}%
-\thanks{This work was supported by the Fundamental and Interdisciplinary Disciplines Breakthrough Plan of the Ministry of Education of China (No. JYB2025XDXM123), the National Natural Science Foundation of China (Nos. 52572334, T2588101, 52221005, and 52220105001), the Independent Research Project of the State Key Laboratory of Intelligent Green Vehicle and Mobility, Tsinghua University (No. ZZ-GG-20250403), and Tsinghua University (State Key Laboratory of Intelligent Green Vehicle and Mobility) -- Hangzhou Airport Economic Demonstration Zone Joint Research Center for Integrated Transportation. The authors are with the State Key Laboratory of Automotive Safety and Energy, Tsinghua University, Beijing 100084, China. The authors' email addresses are: ksy23@mails.tsinghua.edu.cn, weiyt@tsinghua.edu.cn, xiaobo@tsinghua.edu.cn, and ly@tsinghua.edu.cn.}}
+\thanks{This work was supported by the Fundamental and Interdisciplinary Disciplines Breakthrough Plan of the Ministry of Education of China (No. JYB2025XDXM123), the National Natural Science Foundation of China (Nos. 52572334, T2588101, 52221005, and 52220105001), the Independent Research Project of the State Key Laboratory of Intelligent Green Vehicle and Mobility, Tsinghua University (No. ZZ-GG-20250403), and Tsinghua University (State Key Laboratory of Intelligent Green Vehicle and Mobility) -- Hangzhou Airport Economic Demonstration Zone Joint Research Center for Integrated Transportation. All authors are with the School of Vehicle and Mobility, Tsinghua University, Beijing 100084, China. Yang Liu and Xiaobo Qu are also with the State Key Laboratory of Intelligent Green Vehicle and Mobility, Tsinghua University, Beijing 100084, China. The authors' email addresses are: ksy23@mails.tsinghua.edu.cn, weiyt@tsinghua.edu.cn, and xiaobo@tsinghua.edu.cn.}}
 
 \markboth{Submit to IEEE Transactions on Cybernetics}%
 {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
@@ -61,9 +61,9 @@ Crack Detection, Frequency-aware Feature Learning, Road-perceptive Vehicles
 
 \section{Introduction}\label{sec1}
 
-Maintaining the structural integrity of infrastructure is paramount, with crack detection playing a crucial role in safeguarding facilities against the detrimental effects of deterioration. Timely detection and remediation of cracks are essential for preventing potentially irreversible damage. The advent of autonomous vehicles and advanced environmental perception technologies~\cite{DBLP:journals/tcyb/HuzaefaL23,DBLP:journals/tcyb/CaoRS23,DBLP:journals/tcyb/ZhangLLGGCL24,Hu2025,ZHUANG2025100194} heralds a new era in automated road condition monitoring, with autonomous road-perceptive vehicles poised to revolutionize how we maintain our roadways~\cite{9543474,
+Maintaining the structural integrity of infrastructure is paramount, with crack detection playing a crucial role in safeguarding facilities against the detrimental effects of deterioration. Timely detection and remediation of cracks are essential for preventing potentially irreversible damage. The advent of autonomous vehicles and advanced environmental perception technologies~\cite{DBLP:journals/tcyb/HuzaefaL23,DBLP:journals/tcyb/CaoRS23,DBLP:journals/tcyb/ZhangLLGGCL24,Hu2025,ZHUANG2025100194,TANG2025100229,ZHANG2025InVDriver,XUE2025APMSLAM} heralds a new era in automated road condition monitoring, with autonomous road-perceptive vehicles poised to revolutionize how we maintain our roadways~\cite{9543474,
 mohan2018crack,9998084,
-DBLP:journals/tcyb/XieWLLLWZJ24,Almaskati2024,KUANG2024100146,PENG2025100170}. Integrating crack detection capabilities into these vehicles offers a promising pathway for continuous road condition surveillance~\cite{Zhang2024}.
+DBLP:journals/tcyb/XieWLLLWZJ24,KUANG2024100146,PENG2025100170}. Integrating crack detection capabilities into these vehicles offers a promising pathway for continuous road condition surveillance~\cite{GAO2025Complexity}.
 
 \begin{figure}
 \centering
@@ -537,8 +537,8 @@ As illustrated in Fig.~\ref{ablavis}, these findings are visually consistent wit
 illustrative case from the Crack500 test set.
 (a) Input. (b) Ground truth.
 (c) Prediction of \emph{Baseline + FAM (Full)}, which fuses the high- and low-frequency branches; per-image AIU $=$ 0.63.
-(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-image AIU $=$ 0.46.
-(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-image AIU $=$ 0.42.
+(d) Prediction of \emph{Baseline + FAM (High-Freq)}; per-image AIU $=$ 0.31.
+(e) Prediction of \emph{Baseline + FAM (Low-Freq)}; per-image AIU $=$ 0.50.
 This illustrative example qualitatively shows the complementary behavior of the two frequency branches; dataset-level conclusions are based on Table~II.}}
 \label{ablavis}
 \vspace{-0.5cm}
