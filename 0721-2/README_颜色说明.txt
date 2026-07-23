@@ -1,5 +1,5 @@
 ========================================================================
-TCYB 论文 R2 修改包 (0721-2)  v7  —— 定稿版
+TCYB 论文 R2 修改包 (0721-2)  v8  —— 定稿版
 ========================================================================
 
 本包基于导师 0721-1 版, 按导师《导师回复.txt》23 条意见修改。
@@ -20,11 +20,10 @@ TCYB 论文 R2 修改包 (0721-2)  v7  —— 定稿版
      - 所有作者第一单位 = School of Vehicle and Mobility, Tsinghua University, Beijing 100084, China.
      - 刘洋(Yang Liu)、曲小波(Xiaobo Qu)第二单位 = State Key Laboratory of Intelligent
        Green Vehicle and Mobility, Tsinghua University.
-     (⚠ 国家重点实验室我用了新名 "Intelligent Green Vehicle and Mobility"(和 funding 一致);
-      若要用旧名 "Automotive Safety and Energy" 告诉我。)
+     (国家重点实验室已按你确认用新名 "Intelligent Green Vehicle and Mobility"(和 funding 一致)。)
 
-  3. 邮箱: 之前那个 thu_ets_ly@tsinghua.edu.cn 你说改, 但没给新的, 我先把它去掉了,
-     现在只列 3 个(Kuang/Wei/Qu)。⚠ 刘洋正确邮箱发我, 我补上。
+  3. 邮箱: 4 位作者邮箱齐全, 刘洋 = thu_ets_ly@tsinghua.edu.cn
+     (下划线在 LaTeX 里用 \_ 转义, 已处理, PDF 里正常显示下划线)。
 
   4. 引用调整(老板要求):
      - 加了 Ziyou Gao 等, Engineering 2025, "A Discussion on the Complexity and Transit
